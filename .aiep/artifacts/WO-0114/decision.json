@@ -1,0 +1,85 @@
+{
+  "workOrder": "WO-0114",
+  "title": "Việt hóa tài liệu Nhóm 3 (SOP + Library + Release + PMO)",
+  "reviewLevel": "L1",
+  "reviewers": [
+    "claude"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 41,
+    "files": [
+      "docs/release/FINAL-RELEASE-REVIEW-PACKAGE.md",
+      "docs/release/QUALITY-GATES.md",
+      "docs/release/RELEASE-CHECKLIST.md",
+      "docs/release/RELEASE-NOTES-v1.0.md",
+      "docs/release/RELEASE-NOTES-v1.1.md",
+      "docs/release/RELEASE-NOTES-v1.2.md",
+      "docs/sop/INDEX.md",
+      "docs/sop/SOP-001-work-order-lifecycle.md",
+      "docs/sop/SOP-002-review-execution.md",
+      "docs/sop/SOP-003-codex-l4-audit.md",
+      "docs/sop/SOP-004-release-preparation.md",
+      "library/README.md",
+      "library/knowledge/INDEX.md",
+      "library/knowledge/codex-token-preservation.md",
+      "library/knowledge/frontmatter-conventions.md",
+      "library/knowledge/lessons-learned-v1.0.md",
+      "library/knowledge/local-ai-review-with-ollama.md",
+      "library/knowledge/review-level-policy-explained.md",
+      "library/mcp/README.md",
+      "library/prompts/INDEX.md",
+      "library/prompts/adr-drafting.md",
+      "library/prompts/code-review-deepseek.md",
+      "library/prompts/code-review-qwen.md",
+      "library/prompts/design-review-gemini.md",
+      "library/prompts/review-summary-synthesis.md",
+      "library/prompts/work-order-authoring.md",
+      "library/skills/INDEX.md",
+      "library/skills/git-delta-review.md",
+      "library/skills/graceful-degradation.md",
+      "library/skills/review-routing.md",
+      "library/skills/secret-hygiene.md",
+      "pmo/README.md",
+      "pmo/backlog/PRODUCT-BACKLOG.md",
+      "pmo/decisions/DECISION-LOG.md",
+      "pmo/issues/ISSUES.md",
+      "pmo/milestones/MILESTONES.md",
+      "pmo/risks/RISK-REGISTER.md",
+      "pmo/sprints/SPRINT-01-foundation.md",
+      "pmo/sprints/SPRINT-02-core-platform.md",
+      "pmo/sprints/SPRINT-03-production-readiness.md",
+      "pmo/work-orders/WO-0114/work-order.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 0,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 0,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    }
+  ],
+  "verdict": "PASS"
+}
