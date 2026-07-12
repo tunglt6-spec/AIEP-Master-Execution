@@ -51,8 +51,8 @@ matrix & Codex guard, WO loader, findings parser, dispositions, validation.
 
 ## 7. Packaging
 
-`aiep package` produces `dist/aiep-1.0.0.tgz`. Install: `npm install -g
-./dist/aiep-1.0.0.tgz`.
+`aiep package` produces `dist/tunglt6-aiep-1.0.0.tgz`. Install: `npm install -g
+./dist/tunglt6-aiep-1.0.0.tgz`.
 
 ## 8. Artifacts index (review evidence)
 

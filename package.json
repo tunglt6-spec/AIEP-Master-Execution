@@ -1,5 +1,5 @@
 {
-  "name": "aiep",
+  "name": "@tunglt6/aiep",
   "version": "1.0.0",
   "description": "AI Engineering Platform (AIEP) — governance-driven engineering platform with AI-assisted multi-level code review, PMO, knowledge library and dashboard.",
   "type": "module",
@@ -44,5 +44,8 @@
   ],
   "author": "AIEP Engineering Team",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {}
 }

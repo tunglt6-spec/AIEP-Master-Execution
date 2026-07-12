@@ -69,16 +69,23 @@ aiep --version
 aiep doctor
 ```
 
-Gỡ cài: `npm uninstall -g aiep`.
+Gỡ cài: `npm uninstall -g @tunglt6/aiep`. (Lệnh vẫn là `aiep`; tên package là scoped `@tunglt6/aiep`.)
 
 ### Cách 3 — Cài từ tarball đã đóng gói
 
 ```bash
-aiep package                       # tạo dist/aiep-1.0.0.tgz
-npm install -g ./dist/aiep-1.0.0.tgz
+aiep package                       # tạo dist/tunglt6-aiep-1.0.0.tgz
+npm install -g ./dist/tunglt6-aiep-1.0.0.tgz
 ```
 
-### Cách 4 — Script bootstrap/install
+### Cách 4 — Cài từ npm registry (sau khi đã publish)
+
+```bash
+npm install -g @tunglt6/aiep       # tên package scoped; lệnh cài đặt vẫn là `aiep`
+aiep --version
+```
+
+### Cách 5 — Script bootstrap/install
 
 ```bash
 # Windows (PowerShell)
@@ -265,7 +272,7 @@ Knowledge Assets, Work Order Status. Nhấn `Ctrl+C` để dừng server.
 ### `aiep package`
 
 ```bash
-aiep package               # chạy gates → tạo dist/aiep-1.0.0.tgz
+aiep package               # chạy gates → tạo dist/tunglt6-aiep-1.0.0.tgz
 aiep package --dry-run     # xem nội dung package, không tạo tarball
 aiep package --force       # đóng gói kể cả khi gates fail (không khuyến nghị)
 ```

@@ -39,7 +39,7 @@ không mở rộng v2.0.
 
 - ✅ `aiep validate` — **9/9 quality gate PASS, 0 warning**
 - ✅ `npm test` — **23/23 tests PASS** (`node:test`)
-- ✅ `aiep package` — tạo `dist/aiep-1.0.0.tgz`
+- ✅ `aiep package` — tạo `dist/tunglt6-aiep-1.0.0.tgz`
 - ✅ Dashboard render đã xác minh trên browser
 
 ## Review evidence & disposition

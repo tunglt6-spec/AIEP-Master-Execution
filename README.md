@@ -8,6 +8,15 @@ A governance-driven engineering platform with **AI-assisted multi-level code
 review** (L1–L4), a **PMO**, a reusable **AI engineering library**, and a live
 **dashboard** — delivered as a single **zero-dependency** Node.js CLI.
 
+Published on npm as **[`@tunglt6/aiep`](https://www.npmjs.com/package/@tunglt6/aiep)** (the installed command is `aiep`):
+
+```bash
+npm install -g @tunglt6/aiep    # install the CLI globally
+aiep doctor
+```
+
+Or run from a clone without installing:
+
 ```bash
 node bin/aiep.js doctor      # check your environment
 node bin/aiep.js status      # see platform status

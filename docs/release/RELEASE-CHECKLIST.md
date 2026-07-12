@@ -33,7 +33,7 @@ Use this checklist to promote a release candidate. Tick every item.
 
 - [ ] `node bin/aiep.js package --dry-run` reviewed.
 - [ ] `node bin/aiep.js package` produces a tarball in `dist/`.
-- [ ] Local install verified: `npm install -g ./dist/aiep-1.0.0.tgz`.
+- [ ] Local install verified: `npm install -g ./dist/tunglt6-aiep-1.0.0.tgz`.
 
 ## Sign-off
 
