@@ -3,7 +3,7 @@
 - **Work Order:** WO-0110 — SOP-005 — AI Coding with AIEP
 - **ReviewLevel:** L1
 - **Role:** Engineering Team & Execution Lead (self review)
-- **Changed files:** 3
+- **Changed files:** 1
 
 ## Automated checks
 

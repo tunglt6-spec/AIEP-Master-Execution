@@ -11,11 +11,9 @@
     "guardBlockedCodex": false
   },
   "delta": {
-    "changedFiles": 3,
+    "changedFiles": 1,
     "files": [
-      "docs/sop/INDEX.md",
-      "docs/sop/SOP-005-ai-coding-with-aiep.md",
-      "pmo/work-orders/WO-0110/work-order.md"
+      "docs/sop/SOP-005-ai-coding-with-aiep.md"
     ]
   },
   "severityCounts": {
