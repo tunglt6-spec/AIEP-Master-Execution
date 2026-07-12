@@ -12,7 +12,7 @@ import { cmdDoctor } from './doctor.js';
 import { cmdDashboard } from './dashboard.js';
 import { cmdPackage } from './package.js';
 
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
 
 const COMMANDS = {
   init: { fn: cmdInit, help: 'Initialize an AIEP workspace in the current (or given) project' },

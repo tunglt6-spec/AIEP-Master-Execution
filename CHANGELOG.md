@@ -4,6 +4,29 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.3.0] — 2026-07-12
+
+### Changed
+
+- **Dashboard giao diện tiếng Việt** (WO-0111) — toàn bộ nhãn hiển thị (tiêu đề
+  panel, header bảng, badges, loading/footer) và ánh xạ giá trị dữ liệu
+  (present/missing, verdict, status, deliverable, tài sản tri thức, item doctor)
+  được Việt hóa tại thời điểm render. Dữ liệu gốc `dashboard.json` và CLI giữ
+  nguyên; thuật ngữ kỹ thuật (ReviewLevel, L1–L4, severity, Scope Lock,
+  Architecture Freeze) giữ tiếng Anh.
+
+### Added
+
+- **SOP-005 — Lập trình với AI kết hợp AIEP** (WO-0110, viết bằng tiếng Việt):
+  quy trình implement → audit độc lập → human-gated deploy, kèm mẫu prompt.
+
+### Notes
+
+- Theo yêu cầu Product Owner: tài liệu & giao diện AIEP viết bằng tiếng Việt để
+  kiểm soát/phê duyệt (giữ English cho command/tên file/config key/thuật ngữ).
+- WO-0110/0111 reviewed (L1/L2); các false-positive của DeepSeek đã dispositioned.
+  31 tests pass, 9/9 gates.
+
 ## [1.2.0] — 2026-07-12
 
 ### Added
