@@ -1,0 +1,64 @@
+{
+  "workOrder": "WO-0111",
+  "title": "Việt hóa giao diện Dashboard",
+  "reviewLevel": "L2",
+  "reviewers": [
+    "claude",
+    "deepseek",
+    "qwen"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 3,
+    "files": [
+      "dashboard/app.js",
+      "dashboard/index.html",
+      "pmo/work-orders/WO-0111/work-order.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 1,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    },
+    {
+      "severity": "CRITICAL",
+      "message": "Dashboard tiếng Việt và CLI giữ nguyên tiếng Anh khi render được dịch.",
+      "reviewer": "deepseek"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 1,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 1,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    },
+    {
+      "reviewer": "deepseek",
+      "status": "completed",
+      "model": "deepseek-coder:1.3b"
+    },
+    {
+      "reviewer": "qwen",
+      "status": "degraded",
+      "model": null
+    }
+  ],
+  "verdict": "CHANGES_REQUESTED"
+}

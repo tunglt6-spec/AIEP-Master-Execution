@@ -1,0 +1,17 @@
+{
+  "workOrder": "WO-0111",
+  "dispositions": [
+    {
+      "reviewer": "deepseek",
+      "severity": "CRITICAL",
+      "matches": "CLI giữ nguyên",
+      "status": "dismissed",
+      "rationale": "False positive. Finding tối nghĩa, chỉ lặp lại mô tả Work Order chứ không chỉ ra defect cụ thể nào. Thay đổi là thuần tầng hiển thị (i18n): app.js chỉ bọc nhãn qua hàm t()/chuỗi tiếng Việt, giữ nguyên toàn bộ logic render và dữ liệu gốc; dashboard.json và CLI không đổi. Đã xác minh trực quan trong trình duyệt: đủ 10 panel hiển thị đúng dữ liệu với nhãn tiếng Việt; aiep validate 9/9 PASS. DeepSeek (deepseek-coder:1.3b) không nêu được vấn đề hành vi. Execution Lead xác minh.",
+      "by": "claude-execution-lead",
+      "date": "2026-07-12"
+    }
+  ],
+  "notes": [
+    "qwen (qwen3:8b) degraded (Ollama timeout trên CPU với delta 3 file). Documented disposition theo Review Execution policy. DeepSeek đã chạy; thay đổi là i18n trình bày, rủi ro thấp."
+  ]
+}
