@@ -46,7 +46,7 @@ disposition), no secrets, Scope Lock.
 
 ## 6. Tests
 
-`npm test` — **26 tests, all passing** (`node:test`): frontmatter parser, review
+`npm test` — **23 tests, all passing** (`node:test`): frontmatter parser, review
 matrix & Codex guard, WO loader, findings parser, dispositions, validation.
 
 ## 7. Packaging

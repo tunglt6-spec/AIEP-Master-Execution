@@ -30,7 +30,7 @@ dashboard.
 
 ## Quality
 
-- 20 automated tests (`node:test`) — all passing.
+- 23 automated tests (`node:test`) — all passing.
 - 8 quality gates via `aiep validate`.
 - No unresolved CRITICAL/HIGH findings; no secrets committed; Scope Lock respected.
 
