@@ -4,18 +4,18 @@
 [![runtime](https://img.shields.io/badge/node-%3E%3D18-2f9e44)](package.json)
 [![deps](https://img.shields.io/badge/dependencies-0-2f9e44)](package.json)
 
-A governance-driven engineering platform with **AI-assisted multi-level code
-review** (L1–L4), a **PMO**, a reusable **AI engineering library**, and a live
-**dashboard** — delivered as a single **zero-dependency** Node.js CLI.
+Một nền tảng kỹ thuật được dẫn dắt bởi quản trị với **review code đa cấp có sự
+hỗ trợ của AI** (L1–L4), một **PMO**, một **thư viện kỹ thuật AI** có thể tái sử dụng,
+và một **dashboard** trực tiếp — được cung cấp như một CLI Node.js **zero-dependency** duy nhất.
 
-Published on npm as **[`@tunglt6/aiep`](https://www.npmjs.com/package/@tunglt6/aiep)** (the installed command is `aiep`):
+Được phát hành trên npm dưới tên **[`@tunglt6/aiep`](https://www.npmjs.com/package/@tunglt6/aiep)** (lệnh sau khi cài là `aiep`):
 
 ```bash
 npm install -g @tunglt6/aiep    # install the CLI globally
 aiep doctor
 ```
 
-Or run from a clone without installing:
+Hoặc chạy từ một bản clone mà không cần cài đặt:
 
 ```bash
 node bin/aiep.js doctor      # check your environment
@@ -24,28 +24,28 @@ node bin/aiep.js review      # run AI review on your Work Orders
 node bin/aiep.js dashboard   # open the live dashboard
 ```
 
-## Highlights
+## Điểm nổi bật
 
-- **Review Levels L1–L4** map each Work Order to an ordered reviewer pipeline.
-- **Local AI review** with DeepSeek + Qwen via Ollama; **Gemini** design review
-  and **Codex** external audit are CLI-backed.
-- **Codex guard:** the external auditor runs **only at L4** — enforced in code and
-  by the quality gates to preserve scarce tokens.
-- **Graceful degradation:** an unavailable backend produces a documented
-  integration decision, never a fake pass.
-- **Quality gates** (`aiep validate`): docs present, Work Orders valid, Codex
-  guard, artifact completeness, no unresolved CRITICAL, no secrets, scope lock.
-- **Zero dependencies:** Node built-ins only — installs and runs offline.
+- **Review Levels L1–L4** ánh xạ mỗi Work Order tới một reviewer pipeline có thứ tự.
+- **Review AI cục bộ** với DeepSeek + Qwen qua Ollama; review design bằng **Gemini**
+  và audit bên ngoài bằng **Codex** được hỗ trợ qua CLI.
+- **Codex guard:** auditor bên ngoài chỉ chạy **ở L4** — được thực thi trong code và
+  bởi các quality gates để bảo toàn số token khan hiếm.
+- **Suy giảm nhẹ nhàng (graceful degradation):** một backend không khả dụng sẽ tạo ra một quyết định
+  tích hợp được ghi chép, không bao giờ là một lần pass giả.
+- **Quality gates** (`aiep validate`): tài liệu hiện diện, Work Orders hợp lệ, Codex
+  guard, tính đầy đủ của artifact, không còn CRITICAL chưa giải quyết, không có secret, scope lock.
+- **Zero dependencies:** chỉ dùng Node built-ins — cài đặt và chạy offline.
 
-## Documentation
+## Tài liệu
 
-- [PROJECT.md](PROJECT.md) — overview, install, usage, layout.
-- [User Guide](docs/USER-GUIDE.md) — detailed, step-by-step usage for every command.
+- [PROJECT.md](PROJECT.md) — tổng quan, cài đặt, cách dùng, bố cục.
+- [User Guide](docs/USER-GUIDE.md) — hướng dẫn sử dụng chi tiết, từng bước cho mọi lệnh.
 - [Documentation index](docs/README.md).
 - [Review Level Policy](docs/governance/REVIEW-LEVEL-POLICY.md).
 - [Design Specification](docs/design/DESIGN-SPECIFICATION-v1.0.md).
 
-## Development
+## Phát triển
 
 ```bash
 npm test              # run the node:test suites
@@ -53,6 +53,6 @@ npm run validate      # quality gates
 npm run dashboard     # build dashboard data
 ```
 
-## License
+## Giấy phép
 
-MIT — see [LICENSE](LICENSE).
+MIT — xem [LICENSE](LICENSE).

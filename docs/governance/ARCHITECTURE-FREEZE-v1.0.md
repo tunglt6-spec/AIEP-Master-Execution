@@ -1,48 +1,48 @@
 # Architecture Freeze v1.0
 
-The following architectural decisions are frozen for v1.0. They may be changed
-only by the Product Owner and ARB. The rationale for each is recorded in the ADRs
+Các quyết định architecture sau đây được đóng băng cho v1.0. Chúng chỉ có thể được thay đổi
+bởi Product Owner và ARB. Lý do cho mỗi quyết định được ghi nhận trong các ADR
 (`docs/adr/`).
 
-## Frozen decisions
+## Các quyết định đã đóng băng
 
 1. **Runtime: Node.js (>= 18), ESM, zero runtime dependencies.**
-   The platform uses only Node built-ins. This guarantees offline install, fast
-   startup, a small supply-chain surface, and one runtime for CLI + dashboard +
-   packaging. See ADR-0001.
+   Nền tảng chỉ sử dụng Node built-ins. Điều này bảo đảm cài đặt offline, khởi động
+   nhanh, một bề mặt supply-chain nhỏ, và một runtime duy nhất cho CLI + dashboard +
+   packaging. Xem ADR-0001.
 
-2. **Data format: Markdown + a controlled YAML frontmatter subset; JSON for
-   config and machine artifacts.**
-   Work Orders are Markdown with frontmatter parsed by a small in-house parser.
-   `.aiep/config.json` and `decision.json` are JSON. See ADR-0001.
+2. **Định dạng dữ liệu: Markdown + một tập con YAML frontmatter được kiểm soát; JSON cho
+   config và machine artifact.**
+   Work Orders là Markdown với frontmatter được phân tích bởi một parser nội bộ nhỏ.
+   `.aiep/config.json` và `decision.json` là JSON. Xem ADR-0001.
 
-3. **Layered module architecture.**
+3. **Kiến trúc module phân lớp.**
    `bin/aiep.js` → `src/cli/*` (commands) → `src/core/*` (config, paths,
-   frontmatter, workorders, gitdelta, reviewMatrix, secrets) and
+   frontmatter, workorders, gitdelta, reviewMatrix, secrets) và
    `src/reviewers/*` (claude, ollama, cli-reviewer, gemini, codex, findings,
-   router). The dashboard is built by `src/dashboard/build.js` and served
-   statically.
+   router). Dashboard được build bởi `src/dashboard/build.js` và được phục vụ
+   tĩnh.
 
-4. **Review routing by ReviewLevel with the Codex L4 guard.**
-   The `reviewLevels` map in config is the routing source of truth; the Codex
-   guard restricts Codex to L4. See ADR-0002 and ADR-0003.
+4. **Định tuyến review theo ReviewLevel với Codex L4 guard.**
+   Map `reviewLevels` trong config là nguồn chân lý về định tuyến; Codex
+   guard giới hạn Codex ở L4. Xem ADR-0002 và ADR-0003.
 
-5. **Reviewer backends are pluggable and degrade gracefully.**
-   Local reviewers use the Ollama HTTP API; Gemini and Codex are CLI-backed. Any
-   unavailable backend yields a documented integration decision, never a fake
-   pass.
+5. **Các reviewer backend có thể cắm được (pluggable) và suy giảm nhẹ nhàng.**
+   Các reviewer cục bộ dùng Ollama HTTP API; Gemini và Codex được hỗ trợ qua CLI. Bất kỳ
+   backend không khả dụng nào cũng tạo ra một integration decision được ghi chép, không bao giờ là một lần pass
+   giả.
 
-6. **Artifacts are the unit of review evidence.**
-   Every reviewed Work Order writes per-reviewer artifacts, a `review-summary.md`
-   (L2+) and a `decision.json` under `.aiep/artifacts/<WO-ID>/`.
+6. **Artifact là đơn vị của bằng chứng review.**
+   Mỗi Work Order đã được review ghi các artifact theo từng reviewer, một `review-summary.md`
+   (L2+) và một `decision.json` dưới `.aiep/artifacts/<WO-ID>/`.
 
-7. **Dashboard reads live data only.**
-   `dashboard/data/dashboard.json` is generated from real repository state; no
-   demo numbers are presented as production data.
+7. **Dashboard chỉ đọc dữ liệu trực tiếp.**
+   `dashboard/data/dashboard.json` được sinh ra từ trạng thái repository thực; không có
+   con số demo nào được trình bày như dữ liệu production.
 
-## Non-frozen (implementation detail, may evolve within v1.0)
+## Không đóng băng (chi tiết triển khai, có thể tiến hóa trong v1.0)
 
-- Exact CLI output formatting and colours.
-- Additional reviewer focus keywords.
-- Dashboard visual styling (within the "light, modern, professional" direction).
-- Additional library assets and templates.
+- Định dạng và màu sắc chính xác của output CLI.
+- Các keyword trọng tâm reviewer bổ sung.
+- Kiểu dáng trực quan của dashboard (trong định hướng "nhẹ, hiện đại, chuyên nghiệp").
+- Các library asset và template bổ sung.

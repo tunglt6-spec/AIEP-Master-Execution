@@ -1,26 +1,26 @@
 # Scope Lock v1.0
 
-This document freezes the scope of AIEP v1.0. It is changeable only by the
-Product Owner and ARB. `aiep validate` enforces the out-of-scope list by failing
-if any forbidden surface appears in the repository.
+Tài liệu này đóng băng phạm vi của AIEP v1.0. Nó chỉ có thể thay đổi bởi
+Product Owner và ARB. `aiep validate` thực thi danh sách ngoài phạm vi bằng cách fail
+nếu bất kỳ bề mặt bị cấm nào xuất hiện trong repository.
 
-## In scope — the five Product Deliverables
+## Trong phạm vi — năm Product Deliverable
 
-1. **Core Repository** — repository foundation, bootstrap, runtime foundation,
+1. **Core Repository** — nền tảng repository, bootstrap, nền tảng runtime,
    source code, scripts, tools, validation, CLI.
 2. **Documentation System** — constitution, governance, PROJECT.md, design
-   specification, ADR, RFC, SOP, implementation package, work order, review
-   package, release documentation, checklists.
-3. **AI Engineering Library** — prompt library, skill library, MCP library,
-   knowledge library, reusable engineering assets.
+   specification, ADR, RFC, SOP, gói triển khai, work order, gói review,
+   tài liệu release, checklist.
+3. **AI Engineering Library** — thư viện prompt, thư viện skill, thư viện MCP,
+   thư viện knowledge, các reusable engineering asset.
 4. **PMO** — product backlog, sprint, milestone, release, issue, risk, decision
    log.
 5. **Dashboard** — architecture status, sprint status, AI runtime status,
-   knowledge assets, review status (and the other required panels).
+   knowledge asset, review status (và các panel bắt buộc khác).
 
-## Explicitly OUT OF SCOPE for v1.0
+## Rõ ràng NGOÀI PHẠM VI cho v1.0
 
-The following must **not** be built in v1.0. Their presence fails validation:
+Những mục sau **không được** xây dựng trong v1.0. Sự hiện diện của chúng làm fail validation:
 
 - Multi-Repository Platform
 - AI Council
@@ -29,15 +29,15 @@ The following must **not** be built in v1.0. Their presence fails validation:
 - Enterprise License Manager
 - Platinum Governance
 - Full Compliance Platform
-- Any AIEP v2.0 feature
+- Bất kỳ tính năng nào của AIEP v2.0
 
-Directory-level tripwires enforced by validation: `labs/`, `multi-org/`,
+Các tripwire cấp thư mục được thực thi bởi validation: `labs/`, `multi-org/`,
 `multi-organization/`, `ai-council/`, `enterprise-license-manager/`.
 
-## Boundary of authority
+## Ranh giới thẩm quyền
 
-The Execution Lead operates only within the AIEP repository. It must not modify
-other repositories (e.g. PickleFund), delete data outside AIEP, commit secrets,
-incur cloud cost, purchase services, publish public production, or alter this
-Scope Lock or the Architecture Freeze. Any such need is escalated as a hard
-blocker.
+Execution Lead chỉ hoạt động trong phạm vi repository AIEP. Nó không được sửa đổi
+các repository khác (ví dụ PickleFund), xóa dữ liệu bên ngoài AIEP, commit secret,
+phát sinh chi phí cloud, mua dịch vụ, phát hành production công khai, hoặc thay đổi
+Scope Lock này hay Architecture Freeze. Bất kỳ nhu cầu nào như vậy đều được leo thang như một blocker
+cứng.

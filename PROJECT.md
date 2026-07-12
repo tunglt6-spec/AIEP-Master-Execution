@@ -1,35 +1,35 @@
 # AIEP — AI Engineering Platform (v1.0)
 
-AIEP is a governance-driven engineering platform that runs **AI-assisted,
-multi-level code review**, tracks work through a **PMO**, curates a reusable **AI
-engineering library**, and surfaces everything in a **dashboard** — all from a
-single zero-dependency Node.js CLI.
+AIEP là một nền tảng kỹ thuật được dẫn dắt bởi quản trị, chạy **review code
+đa cấp có sự hỗ trợ của AI**, theo dõi công việc qua một **PMO**, tuyển chọn một
+**thư viện kỹ thuật AI** có thể tái sử dụng, và hiển thị mọi thứ trên một
+**dashboard** — tất cả từ một CLI Node.js zero-dependency duy nhất.
 
-## Why
+## Vì sao
 
-AI can write and review code quickly, but ungoverned it produces changes that are
-hard to audit and reviewers that are hard to trust. AIEP makes the process
-**governed, auditable and repeatable**: every material change is a Work Order,
-reviewed at a level proportional to its risk (L1–L4), leaving durable evidence.
+AI có thể viết và review code nhanh chóng, nhưng khi không được quản trị nó tạo ra
+những thay đổi khó audit và những reviewer khó tin cậy. AIEP làm cho quy trình trở nên
+**được quản trị, có thể audit và có thể lặp lại**: mọi thay đổi trọng yếu đều là một Work Order,
+được review ở mức độ tương xứng với rủi ro của nó (L1–L4), để lại bằng chứng bền vững.
 
-## The five product deliverables
+## Năm deliverable sản phẩm
 
-1. **Core Repository** — CLI, review engine, validation, scripts, tools.
+1. **Core Repository** — CLI, engine review, validation, scripts, tools.
 2. **Documentation System** — constitution, governance, design, ADR/RFC/SOP, release.
 3. **AI Engineering Library** — prompts, skills, MCP descriptors, knowledge.
 4. **PMO** — backlog, sprints, milestones, work orders, issues, risks, decisions.
-5. **Dashboard** — ten live-data panels for architecture, sprints, reviews and health.
+5. **Dashboard** — mười panel dữ liệu trực tiếp cho architecture, sprints, reviews và tình trạng sức khỏe.
 
-## Architecture (frozen — Architecture Freeze v1.0)
+## Kiến trúc (đã đóng băng — Architecture Freeze v1.0)
 
-- **Runtime:** Node.js (>= 18), ESM, **zero runtime dependencies** (built-ins only).
-- **Layers:** `bin/aiep.js` → `src/cli/*` → `src/core/*` (+ `src/reviewers/*`).
-- **Data:** Markdown + controlled YAML frontmatter; JSON config & artifacts.
-- **Dashboard:** static HTML/CSS/JS reading generated `dashboard/data/dashboard.json`.
+- **Runtime:** Node.js (>= 18), ESM, **zero runtime dependencies** (chỉ dùng built-ins).
+- **Các lớp:** `bin/aiep.js` → `src/cli/*` → `src/core/*` (+ `src/reviewers/*`).
+- **Dữ liệu:** Markdown + YAML frontmatter được kiểm soát; config & artifact dạng JSON.
+- **Dashboard:** HTML/CSS/JS tĩnh đọc file `dashboard/data/dashboard.json` được sinh ra.
 
-See [docs/design/DESIGN-SPECIFICATION-v1.0.md](docs/design/DESIGN-SPECIFICATION-v1.0.md).
+Xem [docs/design/DESIGN-SPECIFICATION-v1.0.md](docs/design/DESIGN-SPECIFICATION-v1.0.md).
 
-## AI operating model & Review Levels
+## Mô hình vận hành AI & các Review Level
 
 | Level | Reviewer pipeline |
 |-------|-------------------|
@@ -38,13 +38,13 @@ See [docs/design/DESIGN-SPECIFICATION-v1.0.md](docs/design/DESIGN-SPECIFICATION-
 | L3 | Claude → DeepSeek → Qwen → Gemini |
 | L4 | Claude → DeepSeek → Qwen → Gemini → **Codex** |
 
-- DeepSeek & Qwen run **locally via Ollama**; Gemini & Codex are CLI-backed.
-- **Codex is invoked only at L4** (token-preservation guard, enforced in code and
-  validation). See [Review Level Policy](docs/governance/REVIEW-LEVEL-POLICY.md).
-- Missing backends degrade gracefully with a documented integration decision —
-  never a fake pass.
+- DeepSeek & Qwen chạy **cục bộ qua Ollama**; Gemini & Codex được hỗ trợ qua CLI.
+- **Codex chỉ được gọi ở L4** (guard bảo toàn token, được thực thi trong code và
+  validation). Xem [Review Level Policy](docs/governance/REVIEW-LEVEL-POLICY.md).
+- Các backend bị thiếu sẽ suy giảm nhẹ nhàng (graceful degradation) với một quyết định tích hợp được ghi chép —
+  không bao giờ là một lần pass giả.
 
-## Install
+## Cài đặt
 
 ```bash
 # From the repository (zero dependencies — no network needed)
@@ -53,10 +53,10 @@ npm install -g .
 node bin/aiep.js <command>
 ```
 
-Cross-platform install helpers: `scripts/install.ps1` (Windows) and
+Các trình trợ giúp cài đặt đa nền tảng: `scripts/install.ps1` (Windows) và
 `scripts/install.sh` (macOS/Linux).
 
-## Usage
+## Cách dùng
 
 ```bash
 aiep status                 # platform, work-order, review & release status
@@ -69,7 +69,7 @@ aiep dashboard              # build live data + serve the dashboard
 aiep package                # verify gates & prepare the release tarball
 ```
 
-## Repository layout
+## Bố cục repository
 
 ```
 .aiep/            config.json + artifacts/<WO-ID>/ (review evidence)
@@ -87,14 +87,14 @@ scripts/          bootstrap & install (ps1/sh), scaffold-workorders.mjs
 test/             node:test suites
 ```
 
-## Governance
+## Quản trị
 
-Start with the [Constitution](docs/constitution/CONSTITUTION.md), then
+Bắt đầu với [Constitution](docs/constitution/CONSTITUTION.md), sau đó
 [Governance](docs/governance/GOVERNANCE.md), the
 [Review Level Policy](docs/governance/REVIEW-LEVEL-POLICY.md), the
-[Scope Lock v1.0](docs/governance/SCOPE-LOCK-v1.0.md) and the
+[Scope Lock v1.0](docs/governance/SCOPE-LOCK-v1.0.md) và
 [Architecture Freeze v1.0](docs/governance/ARCHITECTURE-FREEZE-v1.0.md).
 
-## Status
+## Trạng thái
 
-AIEP v1.0.0 — **release candidate** pending Product Owner & ARB final review.
+AIEP v1.0.0 — **release candidate** đang chờ review cuối cùng của Product Owner & ARB.
