@@ -1,0 +1,52 @@
+{
+  "workOrder": "WO-0112",
+  "title": "Việt hóa tài liệu Nhóm 1 (Governance + PROJECT/README)",
+  "reviewLevel": "L1",
+  "reviewers": [
+    "claude"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 8,
+    "files": [
+      "PROJECT.md",
+      "README.md",
+      "docs/constitution/CONSTITUTION.md",
+      "docs/governance/ARCHITECTURE-FREEZE-v1.0.md",
+      "docs/governance/GOVERNANCE.md",
+      "docs/governance/REVIEW-LEVEL-POLICY.md",
+      "docs/governance/SCOPE-LOCK-v1.0.md",
+      "pmo/work-orders/WO-0112/work-order.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 0,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 0,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    }
+  ],
+  "verdict": "PASS"
+}
