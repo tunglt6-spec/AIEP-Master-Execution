@@ -12,6 +12,7 @@ motivation, detailed design, drawbacks, alternatives and open questions.
 | RFC | Title | Status |
 | --- | --- | --- |
 | [0001](./RFC-0001-review-level-policy.md) | Review Level Policy (L1–L4) and the Codex-L4-only Token-Preservation Guard | Accepted |
+| [0002](./RFC-0002-ai-coding-agent.md) | AIEP × AI Coding Agent ("Idea → Code → Audit → Deploy") | Proposed |
 
 ## Conventions
 

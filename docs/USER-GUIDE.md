@@ -163,6 +163,7 @@ aiep <command> [options]
 | Command | Chức năng |
 |---------|-----------|
 | `init [dir]` | Khởi tạo workspace AIEP cho một dự án bất kỳ |
+| `plan "<idea>"` | Nháp một Work Order từ ý tưởng (PoC RFC-0002; chỉ tạo bản nháp, không sinh code/deploy) |
 | `status` | Trạng thái platform, work order, review, release readiness |
 | `validate` | Chạy quality gates |
 | `review [WO-ID...]` | Chạy review pipeline theo ReviewLevel |

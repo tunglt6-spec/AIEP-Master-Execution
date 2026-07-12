@@ -3,6 +3,7 @@
 
 import { c, log } from '../core/logger.js';
 import { cmdInit } from './init.js';
+import { cmdPlan } from './plan.js';
 import { cmdStatus } from './status.js';
 import { cmdValidate } from './validate.js';
 import { cmdReview } from './review.js';
@@ -15,6 +16,7 @@ const VERSION = '1.1.0';
 
 const COMMANDS = {
   init: { fn: cmdInit, help: 'Initialize an AIEP workspace in the current (or given) project' },
+  plan: { fn: cmdPlan, help: 'Draft a Work Order from an idea (RFC-0002 PoC; drafts only, no code/deploy)' },
   status: { fn: cmdStatus, help: 'Show platform, work-order, review and release status' },
   validate: { fn: cmdValidate, help: 'Run repository & governance validation (quality gates)' },
   review: { fn: cmdReview, help: 'Run the review pipeline for a Work Order per its ReviewLevel' },
@@ -37,6 +39,7 @@ function printHelp() {
   log.info(c.bold('Examples:'));
   log.info('  aiep init              ' + c.dim('# scaffold AIEP into the current project'));
   log.info('  aiep init ./my-app');
+  log.info('  aiep plan "Add CSV export to the revenue report"');
   log.info('  aiep status');
   log.info('  aiep validate');
   log.info('  aiep review WO-0105');

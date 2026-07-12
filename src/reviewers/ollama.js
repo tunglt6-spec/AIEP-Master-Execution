@@ -36,6 +36,42 @@ export async function probeOllama(endpoint) {
   }
 }
 
+/**
+ * Generic single-shot generation against Ollama. Shared by reviewers and the
+ * `aiep plan` command. Throws on unreachable backend / HTTP error / timeout so
+ * callers can decide how to degrade.
+ * @param {string} endpoint
+ * @param {string} model
+ * @param {string} prompt
+ * @param {{ timeoutMs?: number, numPredict?: number, temperature?: number }} [opts]
+ * @returns {Promise<string>}
+ */
+export async function ollamaGenerate(endpoint, model, prompt, opts = {}) {
+  const res = await withTimeout(
+    (signal) =>
+      fetch(`${endpoint}/api/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model,
+          prompt,
+          stream: false,
+          think: false,
+          options: {
+            temperature: opts.temperature ?? 0.2,
+            num_predict: opts.numPredict ?? 512,
+          },
+        }),
+        signal,
+      }),
+    opts.timeoutMs ?? Number(process.env.AIEP_OLLAMA_TIMEOUT_MS || 300000),
+    'Ollama generation timed out'
+  );
+  if (!res.ok) throw new Error(`Ollama returned HTTP ${res.status}`);
+  const data = await res.json();
+  return (data.response || '').trim();
+}
+
 function buildPrompt(reviewerName, spec, ctx) {
   const focus = (spec.focus || []).join(', ');
   const fileList = ctx.delta.files.length
