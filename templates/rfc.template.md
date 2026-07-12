@@ -1,42 +1,42 @@
 # RFC-{{NNNN}} — {{TITLE}}
 
-- **Author:** {{NAME}}
+- **Tác giả:** {{NAME}}
 - **Status:** {{Draft | In Review | Accepted | Rejected | Withdrawn}}
-- **Created:** {{YYYY-MM-DD}}
+- **Ngày tạo:** {{YYYY-MM-DD}}
 - **Target ReviewLevel:** {{L1|L2|L3|L4}}
-- **Related Work Order:** {{WO-ID_IF_ANY}}
+- **Work Order liên quan:** {{WO-ID_IF_ANY}}
 
-## Summary
+## Tóm tắt
 
 {{ONE_PARAGRAPH_PLAIN_LANGUAGE_DESCRIPTION_OF_THE_PROPOSAL}}
 
-## Motivation
+## Động lực
 
-{{WHY_NOW: the problem, who it affects, and what happens if we do nothing. Tie to a
+{{WHY_NOW: vấn đề, ai bị ảnh hưởng, và điều gì xảy ra nếu không làm gì. Gắn với một
 Product Deliverable — Core Repository, Documentation System, AI Engineering Library,
-PMO, or Dashboard.}}
+PMO, hoặc Dashboard.}}
 
-## Design
+## Thiết kế
 
-{{THE_PROPOSED_DESIGN_IN_DETAIL. Cover:
-- affected modules (src/core, src/cli, src/reviewers, dashboard, …)
-- data/config changes (.aiep/config.json, frontmatter fields)
-- CLI surface changes (aiep <command>)
-- adherence to Architecture Freeze v1.0 and the zero-runtime-dependency rule}}
+{{THE_PROPOSED_DESIGN_IN_DETAIL. Bao gồm:
+- các module bị ảnh hưởng (src/core, src/cli, src/reviewers, dashboard, …)
+- thay đổi data/config (.aiep/config.json, các trường frontmatter)
+- thay đổi bề mặt CLI (aiep <command>)
+- tuân thủ Architecture Freeze v1.0 và quy tắc zero-runtime-dependency}}
 
-## Drawbacks
+## Nhược điểm
 
-{{REASONS_NOT_TO_DO_THIS: cost, complexity, maintenance burden, scope pressure.}}
+{{REASONS_NOT_TO_DO_THIS: chi phí, độ phức tạp, gánh nặng bảo trì, áp lực scope.}}
 
-## Alternatives
+## Phương án thay thế
 
 - **{{ALTERNATIVE_1}}** — {{TRADE_OFFS}}.
-- **Do nothing** — {{CONSEQUENCE}}.
+- **Không làm gì** — {{CONSEQUENCE}}.
 
-## Open questions
+## Câu hỏi mở
 
 - [ ] {{UNRESOLVED_QUESTION_1}}
 - [ ] {{UNRESOLVED_QUESTION_2}}
 
-<!-- On acceptance, capture the durable decision as an ADR and open the implementing
-     Work Order(s) with the appropriate ReviewLevel. -->
+<!-- Khi được Accepted, ghi lại quyết định lâu dài dưới dạng một ADR và mở (các)
+     Work Order triển khai với ReviewLevel phù hợp. -->

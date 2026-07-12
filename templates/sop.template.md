@@ -1,40 +1,40 @@
 # SOP-{{NNN}} — {{PROCEDURE_TITLE}}
 
-- **Version:** {{X.Y}}
+- **Phiên bản:** {{X.Y}}
 - **Owner:** {{ROLE}}
-- **Last updated:** {{YYYY-MM-DD}}
+- **Cập nhật lần cuối:** {{YYYY-MM-DD}}
 
-## Purpose
+## Mục đích
 
 {{WHAT_THIS_SOP_ENSURES_AND_WHY_IT_EXISTS}}
 
-## Scope
+## Phạm vi
 
-Applies to {{WHO/WHAT}} within AIEP v1.0. Does not cover {{EXPLICIT_EXCLUSIONS}}.
-Anything under Scope Lock v1.0 (v2.0 features) is out of scope.
+Áp dụng cho {{WHO/WHAT}} trong AIEP v1.0. Không bao gồm {{EXPLICIT_EXCLUSIONS}}.
+Bất kỳ nội dung nào thuộc Scope Lock v1.0 (tính năng v2.0) đều nằm ngoài phạm vi.
 
-## Roles
+## Vai trò
 
 - **{{ROLE_1}}** — {{RESPONSIBILITY}}.
 - **{{ROLE_2}}** — {{RESPONSIBILITY}}.
 
-## Procedure
+## Quy trình
 
 1. {{STEP_1}}
 2. {{STEP_2}}
 3. {{STEP_3}}
 4. {{STEP_4}}
 
-<!-- Keep steps imperative and verifiable. Reference exact commands, e.g.
-     `aiep validate`, `aiep review <WO-ID>`, and exact paths. -->
+<!-- Giữ các bước ở dạng mệnh lệnh và có thể kiểm chứng. Tham chiếu lệnh chính xác, ví dụ
+     `aiep validate`, `aiep review <WO-ID>`, và các đường dẫn chính xác. -->
 
-## Checklist
+## Danh sách kiểm tra
 
 - [ ] {{CHECK_1}}
 - [ ] {{CHECK_2}}
 - [ ] {{CHECK_3}}
 
-## References
+## Tham chiếu
 
 - {{LINK_1}}
 - {{LINK_2}}

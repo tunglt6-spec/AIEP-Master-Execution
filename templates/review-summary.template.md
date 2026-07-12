@@ -1,28 +1,28 @@
 # Review Summary — {{WO-ID}}
 
 <!--
-This mirrors the structure AIEP generates at
-.aiep/artifacts/<WO-ID>/review-summary.md (written for L2+ Work Orders).
-Do not hand-edit generated summaries; regenerate with `aiep review <WO-ID>`.
-Use this template only when documenting a manual disposition alongside them.
+Phần này phản chiếu cấu trúc mà AIEP sinh ra tại
+.aiep/artifacts/<WO-ID>/review-summary.md (được ghi cho Work Order L2+).
+Không chỉnh sửa tay các summary được sinh ra; hãy tạo lại bằng `aiep review <WO-ID>`.
+Chỉ dùng template này khi lập tài liệu cho một disposition thủ công đi kèm.
 -->
 
 - **Title:** {{SHORT_TITLE}}
 - **ReviewLevel:** {{L1|L2|L3|L4}}
 - **Reviewers:** {{claude → deepseek → qwen → gemini → codex (per level)}}
-- **Changed files:** {{N}}
-- **Verdict:** {{PASS | CHANGES_REQUESTED}}
+- **Số file thay đổi:** {{N}}
+- **Kết luận:** {{PASS | CHANGES_REQUESTED}}
 
-## Reviewer status
+## Trạng thái reviewer
 
-<!-- One line per reviewer. status ∈ completed | degraded | error -->
+<!-- Mỗi reviewer một dòng. status ∈ completed | degraded | error -->
 - claude: **{{completed}}**
 - deepseek: **{{completed|degraded|error}}** ({{model}})
 - qwen: **{{completed|degraded|error}}** ({{model}})
 - gemini: **{{completed|degraded|error}}**
-- codex: **{{completed|degraded|error}}**  <!-- L4 only -->
+- codex: **{{completed|degraded|error}}**  <!-- chỉ L4 -->
 
-## Findings by severity
+## Findings theo severity
 
 - CRITICAL: {{N}}
 - HIGH: {{N}}
@@ -30,19 +30,19 @@ Use this template only when documenting a manual disposition alongside them.
 - LOW: {{N}}
 - INFO: {{N}}
 
-## All findings
+## Toàn bộ findings
 
-<!-- Format: - **<SEVERITY>** [<reviewer>] — <message> -->
+<!-- Định dạng: - **<SEVERITY>** [<reviewer>] — <message> -->
 - **{{SEVERITY}}** [{{reviewer}}] — {{message}}
-- (none)
+- (không có)
 
 ## Disposition
 
-{{If no unresolved CRITICAL/HIGH: "No unresolved CRITICAL/HIGH findings. Work Order
-may proceed to Definition of Done." Otherwise list each blocking finding and its
-resolution or documented disposition (fix, accept-with-rationale, or defer to a new
-Work Order). A degraded reviewer backend must be recorded as a documented disposition,
-not silently ignored.}}
+{{Nếu không còn CRITICAL/HIGH chưa giải quyết: "Không còn CRITICAL/HIGH finding chưa
+giải quyết. Work Order có thể tiến tới Definition of Done." Ngược lại, liệt kê từng
+blocking finding cùng cách giải quyết hoặc disposition đã lập tài liệu (fix,
+accept-with-rationale, hoặc defer sang một Work Order mới). Một reviewer backend bị
+degraded phải được ghi nhận như một disposition đã lập tài liệu, không được âm thầm bỏ qua.}}
 
-> Note: If Codex was requested but blocked by the token-preservation guard (not L4),
-> record that here.
+> Lưu ý: Nếu Codex được yêu cầu nhưng bị chặn bởi guard bảo toàn token (không phải L4),
+> hãy ghi nhận điều đó ở đây.

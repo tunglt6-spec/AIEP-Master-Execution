@@ -1,42 +1,42 @@
 # Claude Self Review — {{WO-ID}}
 
 <!--
-Mirrors the artifact AIEP writes at
-.aiep/artifacts/<WO-ID>/claude-self-review.md. Claude Code is the Engineering Team
-& Execution Lead; the self review is the mandatory first stage of EVERY ReviewLevel
-(L1–L4) before any downstream reviewer runs.
+Phản chiếu artifact mà AIEP ghi tại
+.aiep/artifacts/<WO-ID>/claude-self-review.md. Claude Code là Engineering Team
+& Execution Lead; self review là giai đoạn đầu tiên bắt buộc của MỌI ReviewLevel
+(L1–L4) trước khi bất kỳ reviewer downstream nào chạy.
 -->
 
 - **Work Order:** {{WO-ID}} — {{SHORT_TITLE}}
 - **ReviewLevel:** {{L1|L2|L3|L4}}
-- **Role:** Engineering Team & Execution Lead (self review)
-- **Changed files:** {{N}}
+- **Vai trò:** Engineering Team & Execution Lead (self review)
+- **Số file thay đổi:** {{N}}
 
-## Automated checks
+## Kiểm tra tự động
 
-- [ ] Work Order has ReviewLevel
-- [ ] Definition of Done documented
-- [ ] All changed files resolve on disk
-- [ ] No secrets in delta
-- [ ] Change delta is non-empty
+- [ ] Work Order có ReviewLevel
+- [ ] Definition of Done đã được lập tài liệu
+- [ ] Tất cả file thay đổi đều tồn tại trên đĩa
+- [ ] Không có secret trong delta
+- [ ] Change delta khác rỗng
 
-## Manual checks
+## Kiểm tra thủ công
 
-- [ ] Change satisfies the Work Order Objective and Deliverables.
-- [ ] Every Definition of Done item is addressed.
-- [ ] Scope respected — no Scope Lock v1.0 (v2.0) surface introduced.
-- [ ] No new runtime dependency (Node built-ins only).
-- [ ] Cross-platform safe (no OS-specific path/command assumptions).
-- [ ] Logic, edge cases and error handling self-checked before downstream review.
-- [ ] ReviewLevel is correct for the risk (Codex/L4 not inflated).
+- [ ] Thay đổi đáp ứng Objective và Deliverables của Work Order.
+- [ ] Mọi mục Definition of Done đều được xử lý.
+- [ ] Tôn trọng scope — không đưa vào bề mặt thuộc Scope Lock v1.0 (v2.0).
+- [ ] Không thêm runtime dependency mới (chỉ dùng Node built-ins).
+- [ ] An toàn cross-platform (không giả định path/command đặc thù theo OS).
+- [ ] Logic, edge case và xử lý lỗi đã được tự kiểm tra trước review downstream.
+- [ ] ReviewLevel đúng với mức rủi ro (Codex/L4 không bị thổi phồng).
 
 ## Findings
 
-<!-- Format: - **<SEVERITY>** — <message>  (SEVERITY ∈ CRITICAL/HIGH/MEDIUM/LOW/INFO) -->
+<!-- Định dạng: - **<SEVERITY>** — <message>  (SEVERITY ∈ CRITICAL/HIGH/MEDIUM/LOW/INFO) -->
 - **{{SEVERITY}}** — {{message}}
-- **INFO** — Self review passed all automated checks.
+- **INFO** — Self review đã pass tất cả kiểm tra tự động.
 
-## Reviewer notes
+## Ghi chú reviewer
 
-{{The change was authored to satisfy the referenced Work Order and its Definition of
-Done. Note anything downstream reviewers should focus on, plus any assumptions.}}
+{{Thay đổi được viết ra để đáp ứng Work Order được tham chiếu và Definition of Done
+của nó. Ghi chú bất cứ điều gì các reviewer downstream nên tập trung vào, cùng mọi giả định.}}

@@ -1,30 +1,30 @@
-# AIEP Documentation System
+# Documentation System của AIEP
 
-The documentation system is one of the five product deliverables. It is
-organized as:
+Documentation System là một trong năm product deliverable. Nó được
+tổ chức như sau:
 
-| Area | Path | Contents |
+| Khu vực | Đường dẫn | Nội dung |
 |------|------|----------|
-| Constitution | `constitution/` | Enduring principles |
+| Constitution | `constitution/` | Các nguyên tắc bền vững |
 | Governance | `governance/` | Governance, Review Level Policy, Scope Lock, Architecture Freeze |
-| Design | `design/` | Design specification, data model |
+| Design | `design/` | Đặc tả thiết kế, mô hình dữ liệu |
 | ADR | `adr/` | Architecture Decision Records |
 | RFC | `rfc/` | Requests for Comments |
 | SOP | `sop/` | Standard Operating Procedures |
-| Release | `release/` | Release checklist, quality gates, release notes, final package |
+| Release | `release/` | Release checklist, quality gates, release notes, gói phát hành cuối |
 
-## Reading order for newcomers
+## Thứ tự đọc cho người mới
 
-1. [PROJECT.md](../PROJECT.md) — what AIEP is and how to run it.
-1. [User Guide](USER-GUIDE.md) — detailed install & usage for every command.
-2. [Constitution](constitution/CONSTITUTION.md) — the principles.
-3. [Governance](governance/GOVERNANCE.md) — how work flows.
-4. [Review Level Policy](governance/REVIEW-LEVEL-POLICY.md) — L1–L4 and the Codex guard.
-5. [Design Specification](design/DESIGN-SPECIFICATION-v1.0.md) — the architecture.
+1. [PROJECT.md](../PROJECT.md) — AIEP là gì và cách chạy.
+1. [User Guide](USER-GUIDE.md) — hướng dẫn cài đặt & sử dụng chi tiết cho từng lệnh.
+2. [Constitution](constitution/CONSTITUTION.md) — các nguyên tắc.
+3. [Governance](governance/GOVERNANCE.md) — cách công việc luân chuyển.
+4. [Review Level Policy](governance/REVIEW-LEVEL-POLICY.md) — L1–L4 và Codex guard.
+5. [Design Specification](design/DESIGN-SPECIFICATION-v1.0.md) — kiến trúc.
 
-## Conventions
+## Quy ước
 
-- Documents are Markdown. Governance and design docs are versioned in their title
-  where they are frozen (e.g. `SCOPE-LOCK-v1.0.md`).
-- Decisions are recorded as ADRs; proposals as RFCs; procedures as SOPs.
-- Every subdirectory has an `INDEX.md` where multiple documents exist.
+- Tài liệu ở dạng Markdown. Tài liệu governance và design được gắn phiên bản trong
+  tiêu đề của chúng nơi chúng bị freeze (ví dụ `SCOPE-LOCK-v1.0.md`).
+- Quyết định được ghi nhận dưới dạng ADR; đề xuất dưới dạng RFC; quy trình dưới dạng SOP.
+- Mỗi thư mục con đều có một `INDEX.md` khi có nhiều tài liệu tồn tại.
