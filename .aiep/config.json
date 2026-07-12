@@ -1,0 +1,78 @@
+{
+  "$schema": "./config.schema.json",
+  "platform": {
+    "name": "AIEP",
+    "displayName": "AI Engineering Platform",
+    "version": "1.0.0",
+    "scopeLock": "v1.0",
+    "architectureFreeze": "v1.0"
+  },
+  "paths": {
+    "workOrders": "pmo/work-orders",
+    "artifacts": ".aiep/artifacts",
+    "cache": ".aiep/cache",
+    "docs": "docs",
+    "library": "library",
+    "pmo": "pmo",
+    "dashboard": "dashboard",
+    "dashboardData": "dashboard/data"
+  },
+  "reviewLevels": {
+    "L1": ["claude"],
+    "L2": ["claude", "deepseek", "qwen"],
+    "L3": ["claude", "deepseek", "qwen", "gemini"],
+    "L4": ["claude", "deepseek", "qwen", "gemini", "codex"]
+  },
+  "reviewers": {
+    "claude": {
+      "role": "Engineering Team & Execution Lead — Self Review",
+      "type": "self",
+      "focus": ["work-order-compliance", "definition-of-done", "self-consistency"]
+    },
+    "deepseek": {
+      "role": "Local Code Reviewer",
+      "type": "ollama",
+      "model": "deepseek-coder:1.3b",
+      "endpoint": "http://127.0.0.1:11434",
+      "focus": ["logic-bug", "runtime-error", "edge-case", "basic-security", "error-handling", "correctness"]
+    },
+    "qwen": {
+      "role": "Local Technical Reviewer",
+      "type": "ollama",
+      "model": "qwen3:8b",
+      "endpoint": "http://127.0.0.1:11434",
+      "focus": ["maintainability", "dead-code", "duplication", "performance", "architecture-consistency", "code-structure"]
+    },
+    "gemini": {
+      "role": "Design Reviewer",
+      "type": "cli",
+      "command": "gemini",
+      "focus": ["design-consistency", "architecture-alignment", "ds-compliance", "scope-compliance", "integration-risk"]
+    },
+    "codex": {
+      "role": "External Independent Auditor",
+      "type": "cli",
+      "command": "codex",
+      "restrictedToLevel": "L4",
+      "focus": ["critical-correctness", "security", "architecture-risk", "release-risk", "high-impact-defects"]
+    }
+  },
+  "codexGuard": {
+    "enabled": true,
+    "allowedLevels": ["L4"],
+    "description": "Codex must NEVER be invoked for L1/L2/L3. Enforced by review router and validated by quality gates."
+  },
+  "findingSeverities": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+  "blockingSeverities": ["CRITICAL", "HIGH"],
+  "secretPatterns": [
+    "(?i)api[_-]?key\\s*[:=]\\s*['\"]?[A-Za-z0-9_\\-]{16,}",
+    "(?i)secret[_-]?key\\s*[:=]\\s*['\"]?[A-Za-z0-9_\\-]{16,}",
+    "(?i)password\\s*[:=]\\s*['\"][^'\"]{6,}['\"]",
+    "(?i)authorization:\\s*bearer\\s+[A-Za-z0-9._\\-]{20,}",
+    "AKIA[0-9A-Z]{16}",
+    "gh[pousr]_[A-Za-z0-9]{20,}",
+    "sk-[A-Za-z0-9]{20,}",
+    "AIza[0-9A-Za-z_\\-]{30,}",
+    "-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"
+  ]
+}

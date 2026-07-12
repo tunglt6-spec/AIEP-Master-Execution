@@ -1,0 +1,71 @@
+{
+  "workOrder": "WO-0204",
+  "title": "Review Workflow",
+  "reviewLevel": "L3",
+  "reviewers": [
+    "claude",
+    "deepseek",
+    "qwen",
+    "gemini"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 2,
+    "files": [
+      "src/cli/index.js",
+      "src/cli/review.js"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 1,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 2
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    },
+    {
+      "severity": "CRITICAL",
+      "message": "The `loadConfig` function is not imported from '../core/config'. This could lead to runtime errors if it's missing or incorrectly referenced in your codebase, which can cause unexpected behavior during execution of a program that relies on this configuration.",
+      "reviewer": "deepseek"
+    },
+    {
+      "severity": "INFO",
+      "message": "No blocking issues found.",
+      "reviewer": "qwen"
+    }
+  ],
+  "unresolvedBlockingCount": 1,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    },
+    {
+      "reviewer": "deepseek",
+      "status": "completed",
+      "model": "deepseek-coder:1.3b"
+    },
+    {
+      "reviewer": "qwen",
+      "status": "completed",
+      "model": "qwen3:8b"
+    },
+    {
+      "reviewer": "gemini",
+      "status": "degraded",
+      "model": null
+    }
+  ],
+  "verdict": "CHANGES_REQUESTED"
+}

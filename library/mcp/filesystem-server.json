@@ -1,0 +1,43 @@
+{
+  "name": "aiep-filesystem",
+  "description": "Read-scoped filesystem access to AIEP Work Order files, reviewer artifacts under .aiep/artifacts/, and AI Engineering Library assets (prompts, skills, knowledge). Lets reviewers and knowledge tasks read exactly the files they need without broad disk access.",
+  "transport": {
+    "type": "stdio",
+    "command": "node",
+    "args": ["./mcp/servers/filesystem/index.js"]
+  },
+  "capabilities": {
+    "resources": [
+      {
+        "uri": "file:///workspace/.aiep/artifacts/{woId}",
+        "name": "wo-artifacts",
+        "description": "Reviewer artifacts for a Work Order (claude-self-review.md, deepseek-review.md, qwen-review.md, gemini-review.md, codex-audit.md, review-summary.md, decision.json).",
+        "mimeType": "text/markdown"
+      },
+      {
+        "uri": "file:///workspace/library/{section}",
+        "name": "library-assets",
+        "description": "Read-only access to the AI Engineering Library sections: prompts, skills, mcp, knowledge.",
+        "mimeType": "text/markdown"
+      }
+    ],
+    "tools": [
+      {
+        "name": "read_file",
+        "description": "Read the contents of a permitted file by path.",
+        "readOnly": true
+      },
+      {
+        "name": "list_dir",
+        "description": "List entries within a permitted directory.",
+        "readOnly": true
+      }
+    ]
+  },
+  "accessPolicy": {
+    "mode": "read-only",
+    "allow": ["library/**", ".aiep/artifacts/**", "docs/**"],
+    "deny": ["**/.env", "**/*secret*", "**/*.key", ".aiep/config.json"]
+  },
+  "notes": "REFERENCE DESCRIPTOR ONLY. Illustrative shape for integrating an MCP filesystem server with AIEP reviewers/knowledge. Not a shipped v1.0 runtime component. Access is least-privilege and read-only; credential-bearing paths are denied per the secret-hygiene skill."
+}
