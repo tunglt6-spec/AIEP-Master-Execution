@@ -10,6 +10,24 @@ import { loadConfig } from '../core/config.js';
 import { runValidation } from './validate.js';
 import { c, log } from '../core/logger.js';
 
+const isWin = process.platform === 'win32';
+
+/**
+ * Run `npm <args>` cross-platform. On Windows npm is a `.cmd` shim which modern
+ * Node refuses to spawn without a shell, so we route through the shell there.
+ * @param {string[]} args
+ * @param {string} cwd
+ */
+function runNpm(args, cwd) {
+  const cmd = isWin ? 'cmd' : 'npm';
+  const cmdArgs = isWin ? ['/c', 'npm', ...args] : args;
+  return execFileSync(cmd, cmdArgs, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+}
+
 export async function cmdPackage(args) {
   const dryRun = args.includes('--dry-run');
   const force = args.includes('--force');
@@ -35,7 +53,7 @@ export async function cmdPackage(args) {
   if (dryRun) {
     log.step('Dry run — computing package contents …');
     try {
-      const out = execFileSync('npm', ['pack', '--dry-run'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+      const out = runNpm(['pack', '--dry-run'], root);
       log.info(out.trim());
     } catch (err) {
       log.warn(`npm pack --dry-run reported: ${(err.message || '').split('\n')[0]}`);
@@ -46,7 +64,7 @@ export async function cmdPackage(args) {
 
   log.step('Creating package tarball …');
   try {
-    execFileSync('npm', ['pack', '--pack-destination', 'dist'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    runNpm(['pack', '--pack-destination', 'dist'], root);
   } catch (err) {
     log.err(`npm pack failed: ${(err.message || '').split('\n')[0]}`);
     process.exitCode = 1;

@@ -1,9 +1,10 @@
 // src/cli/artifacts.js
 // `aiep artifacts <WO-ID>` — list and summarise review artifacts for a WO.
 
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
+import { loadResolvedDecision } from '../core/dispositions.js';
 import { c, log } from '../core/logger.js';
 
 export async function cmdArtifacts(args) {
@@ -23,15 +24,7 @@ export async function cmdArtifacts(args) {
   }
 
   const files = readdirSync(dir).sort();
-  let decision = null;
-  const decisionPath = join(dir, 'decision.json');
-  if (existsSync(decisionPath)) {
-    try {
-      decision = JSON.parse(readFileSync(decisionPath, 'utf8'));
-    } catch {
-      /* ignore */
-    }
-  }
+  const decision = loadResolvedDecision(dir);
 
   if (json) {
     log.info(JSON.stringify({ workOrder: id, exists: true, artifacts: files, decision }, null, 2));
@@ -44,8 +37,10 @@ export async function cmdArtifacts(args) {
   if (decision) {
     log.header('Decision');
     log.info(`  ReviewLevel: ${c.bold(decision.reviewLevel)}   Reviewers: ${decision.reviewers.join(' → ')}`);
-    log.info(`  Verdict: ${decision.verdict === 'PASS' ? c.green(decision.verdict) : c.yellow(decision.verdict)}`);
-    log.info(`  Severity: ${Object.entries(decision.severityCounts).map(([k, v]) => `${k}=${v}`).join('  ')}`);
+    log.info(`  Verdict: ${decision.verdict === 'PASS' ? c.green(decision.verdict) : c.yellow(decision.verdict)}${decision.dispositions?.length ? c.dim(' (post-disposition)') : ''}`);
+    log.info(`  Severity found: ${Object.entries(decision.severityCounts).map(([k, v]) => `${k}=${v}`).join('  ')}`);
+    log.info(`  Unresolved blocking: CRITICAL=${decision.unresolvedCritical ?? '?'} HIGH=${decision.unresolvedHigh ?? '?'}`);
+    if (decision.dispositions?.length) log.info(`  Dispositions: ${decision.dispositions.length} recorded`);
     if (decision.reviewerStatuses) {
       log.info(`  Reviewer status: ${decision.reviewerStatuses.map((r) => `${r.reviewer}=${r.status}`).join('  ')}`);
     }
