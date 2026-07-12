@@ -1,95 +1,98 @@
-# SOP-005 — AI Coding with AIEP (implement → independent audit)
+# SOP-005 — Lập trình với AI kết hợp AIEP (triển khai → audit độc lập)
 
-## Purpose
+## Mục đích
 
-Define how to pair an **AI coding agent** (e.g. Claude Code) with AIEP so that
-code produced by AI is **independently audited** and **human-gated** before it is
-accepted or deployed. This is the manual, in-scope version of the RFC-0002 loop.
+Quy định cách phối hợp một **AI coding agent** (ví dụ Claude Code) với AIEP để
+code do AI sinh ra được **audit độc lập** và **có con người phê duyệt** trước khi
+chấp nhận hoặc deploy. Đây là phiên bản thủ công, nằm trong scope, của vòng lặp
+mô tả trong RFC-0002.
 
-## Scope
+## Phạm vi
 
-Applies to any project initialized with `aiep init`. Covers the flow: idea →
-Claude Code implements → AIEP audits (`aiep review`, `aiep validate`) → human
-reviews findings → deploy. It does **not** cover autonomous deployment (see
-RFC-0002 for the v2.0 agent loop, which remains Proposed).
+Áp dụng cho mọi dự án đã khởi tạo bằng `aiep init`. Bao trùm luồng: ý tưởng →
+Claude Code triển khai → AIEP audit (`aiep review`, `aiep validate`) → con người
+duyệt findings → deploy. **Không** bao gồm deploy tự động (xem RFC-0002 cho vòng
+lặp agent v2.0, hiện đang ở trạng thái Proposed).
 
-## Roles
+## Vai trò
 
-| Role | Who | Responsibility |
-|------|-----|----------------|
-| Author | AI coding agent (Claude Code) | Implements the change; runs the AIEP audit commands |
-| Independent reviewers | DeepSeek, Qwen, (Gemini L3, Codex L4) | Audit the diff — **different models from the author** |
-| Approver | You (human) | Review findings, approve/reject dispositions, gate deploy |
+| Vai trò | Ai đảm nhiệm | Trách nhiệm |
+|---------|--------------|-------------|
+| Tác giả (Author) | AI coding agent (Claude Code) | Viết code; chạy các lệnh audit của AIEP |
+| Reviewer độc lập | DeepSeek, Qwen, (Gemini ở L3, Codex ở L4) | Audit diff — **là model KHÁC với tác giả** |
+| Người phê duyệt (Approver) | Anh (con người) | Duyệt findings, chấp nhận/từ chối disposition, gác cổng deploy |
 
-## Prerequisites
+## Điều kiện tiên quyết
 
-- Project initialized: `aiep init` (has `.aiep/config.json`, `pmo/work-orders/`).
-- AIEP CLI available (`npm install -g @tunglt6/aiep`) or run via `node bin/aiep.js`.
-- For real local audit: Ollama running with the configured models (`aiep doctor`).
-- A Work Order for the change (create with `aiep plan "<idea>"` if needed).
+- Dự án đã khởi tạo: `aiep init` (có `.aiep/config.json`, `pmo/work-orders/`).
+- Có AIEP CLI (`npm install -g @tunglt6/aiep`) hoặc chạy qua `node bin/aiep.js`.
+- Để audit local thật: Ollama đang chạy với model đã cấu hình (kiểm tra bằng
+  `aiep doctor`).
+- Có một Work Order cho thay đổi (tạo nhanh bằng `aiep plan "<ý tưởng>"` nếu chưa có).
 
-## Key principle
+## Nguyên tắc cốt lõi
 
-> The agent that WRITES the code must not be the sole judge of it.
+> Bên VIẾT code không được là bên DUY NHẤT phán xử code đó.
 
-The AIEP audit uses **independent models** (minimum L2). The human approves
-dispositions and gates deploy. Never let the coding agent silently dismiss its
-own CRITICAL/HIGH findings, and never auto-deploy.
+AIEP audit dùng **model độc lập** (tối thiểu L2). Con người phê duyệt các
+disposition và gác cổng deploy. Tuyệt đối không để coding agent tự ý dismiss
+finding CRITICAL/HIGH do chính nó tạo ra, và không tự động deploy.
 
-## Procedure
+## Quy trình
 
-1. **Frame the work.** Create/point to a Work Order and confirm its `reviewLevel`
-   (`aiep plan "<idea>"` proposes one; refine it).
-2. **Implement.** The AI coding agent writes the change.
-3. **Commit the delta.** `git add …` then `git commit` (so the audit has a clean,
-   focused diff to review).
-4. **Audit.** Run `aiep review <WO-ID> --last` — routes to the reviewers for the
-   Work Order's ReviewLevel and writes artifacts under `.aiep/artifacts/<WO-ID>/`.
-5. **Gate.** Run `aiep validate` (quality gates).
-6. **Human review.** Inspect `aiep artifacts <WO-ID>` / `review-summary.md`.
-   - Real finding → fix the code, re-run step 4.
-   - False positive → record a documented disposition
-     (`.aiep/artifacts/<WO-ID>/dispositions.json`) — **you** approve it.
-7. **Deploy (human-gated).** Only after gates pass and you approve:
+1. **Xác định công việc.** Tạo hoặc trỏ tới một Work Order và xác nhận
+   `reviewLevel` của nó (`aiep plan "<ý tưởng>"` sẽ đề xuất một mức; anh tinh chỉnh lại).
+2. **Triển khai.** AI coding agent viết thay đổi.
+3. **Commit delta.** `git add …` rồi `git commit` (để bước audit có một diff sạch,
+   tập trung).
+4. **Audit.** Chạy `aiep review <WO-ID> --last` — định tuyến tới các reviewer theo
+   ReviewLevel của Work Order và ghi artifact vào `.aiep/artifacts/<WO-ID>/`.
+5. **Gác cổng.** Chạy `aiep validate` (quality gates).
+6. **Con người duyệt.** Xem `aiep artifacts <WO-ID>` / `review-summary.md`.
+   - Finding thật → sửa code, chạy lại bước 4.
+   - False positive → ghi disposition có tài liệu
+     (`.aiep/artifacts/<WO-ID>/dispositions.json`) — **anh** là người duyệt.
+7. **Deploy (có con người gác cổng).** Chỉ sau khi gates pass và anh đồng ý:
    merge / `npm publish` / `gh release create`.
 
-## Prompt template (paste to the AI coding agent)
+## Mẫu prompt (dán cho AI coding agent)
 
 ```
-Task: <your idea>.
+Nhiệm vụ: <ý tưởng của tôi>.
 
-After implementing, audit with AIEP and report — do NOT skip:
-1. Ensure a Work Order exists (use `aiep plan "<summary>"` if not); tell me the WO-ID and ReviewLevel.
-2. git add + commit the change.
-3. Run: aiep review <WO-ID> --last
-4. Run: aiep validate
-5. Show me the findings (aiep artifacts <WO-ID>) and STOP for my review.
-   - Do NOT dismiss any CRITICAL/HIGH finding on your own code.
-   - Do NOT deploy / merge / publish without my explicit approval.
+Sau khi triển khai xong, hãy audit bằng AIEP và báo cáo — KHÔNG được bỏ qua:
+1. Đảm bảo có Work Order cho việc này (dùng `aiep plan "<tóm tắt>"` nếu chưa có); cho tôi biết WO-ID và ReviewLevel.
+2. git add + commit thay đổi.
+3. Chạy: aiep review <WO-ID> --last
+4. Chạy: aiep validate
+5. Hiển thị findings (aiep artifacts <WO-ID>) và DỪNG LẠI chờ tôi duyệt.
+   - KHÔNG tự dismiss bất kỳ finding CRITICAL/HIGH nào của chính code bạn viết.
+   - KHÔNG deploy / merge / publish khi chưa có tôi đồng ý.
 ```
 
-## Checklist
+## Danh sách kiểm tra (Checklist)
 
-- [ ] Work Order exists with a correct ReviewLevel (≥ L2 for real code).
-- [ ] Change committed before audit (focused diff).
-- [ ] `aiep review <WO-ID> --last` run; artifacts present.
-- [ ] `aiep validate` passes (or failures understood).
-- [ ] CRITICAL/HIGH findings fixed, or dispositioned **with human approval**.
-- [ ] Deploy performed only after explicit human approval.
+- [ ] Có Work Order với ReviewLevel đúng (tối thiểu L2 cho code thật).
+- [ ] Đã commit thay đổi trước khi audit (diff tập trung).
+- [ ] Đã chạy `aiep review <WO-ID> --last`; artifact hiện diện.
+- [ ] `aiep validate` pass (hoặc đã hiểu rõ lỗi).
+- [ ] Finding CRITICAL/HIGH đã sửa, hoặc dispositioned **có con người duyệt**.
+- [ ] Chỉ deploy sau khi con người phê duyệt rõ ràng.
 
-## Notes & pitfalls
+## Lưu ý & cạm bẫy
 
-- Small local models produce false positives — verify against source before
-  dismissing (see SOP-002).
-- Qwen on CPU may time out on large diffs → degraded/documented disposition; keep
-  diffs focused or tune `AIEP_OLLAMA_NUM_PREDICT` / `AIEP_OLLAMA_TIMEOUT_MS`.
-- Auditing an uncommitted, empty, or whole-repo delta reduces review quality —
-  always commit the specific change and use `--last`.
+- Model local nhỏ hay sinh false positive — xác minh với source trước khi dismiss
+  (xem SOP-002).
+- Qwen chạy trên CPU có thể timeout với diff lớn → degraded/documented disposition;
+  hãy giữ diff tập trung hoặc tinh chỉnh `AIEP_OLLAMA_NUM_PREDICT` /
+  `AIEP_OLLAMA_TIMEOUT_MS`.
+- Audit trên một delta chưa commit, rỗng, hoặc toàn bộ repo sẽ làm giảm chất lượng
+  review — luôn commit đúng thay đổi cụ thể và dùng `--last`.
 
-## References
+## Tham chiếu
 
-- [SOP-001 Work Order Lifecycle](./SOP-001-work-order-lifecycle.md)
-- [SOP-002 Review Execution](./SOP-002-review-execution.md)
+- [SOP-001 — Vòng đời Work Order](./SOP-001-work-order-lifecycle.md)
+- [SOP-002 — Thực thi Review](./SOP-002-review-execution.md)
 - [Review Level Policy](../governance/REVIEW-LEVEL-POLICY.md)
-- [RFC-0002 AI Coding Agent](../rfc/RFC-0002-ai-coding-agent.md)
+- [RFC-0002 — AI Coding Agent](../rfc/RFC-0002-ai-coding-agent.md)
 - [User Guide](../USER-GUIDE.md)
