@@ -50,6 +50,21 @@ tiếng Anh.
 
 ## 2. Cài đặt
 
+### Dùng AIEP cho một dự án MỚI bất kỳ (`aiep init`)
+
+Cài CLI global rồi khởi tạo workspace AIEP ngay trong thư mục dự án của anh:
+
+```bash
+npm install -g @tunglt6/aiep
+cd /đường-dẫn/dự-án-của-bạn
+aiep init                 # scaffold .aiep/config.json, docs/, pmo/, dashboard/, 1 sample WO
+aiep validate             # 9/9 gates PASS ngay
+aiep status
+```
+
+`aiep init` **idempotent** — không ghi đè file đã có (dùng `--force` nếu muốn ghi
+đè starter). Có thể chỉ định thư mục: `aiep init ./my-app`.
+
 ### Cách 1 — Chạy trực tiếp từ source (không cài global)
 
 ```bash
@@ -147,6 +162,7 @@ aiep <command> [options]
 
 | Command | Chức năng |
 |---------|-----------|
+| `init [dir]` | Khởi tạo workspace AIEP cho một dự án bất kỳ |
 | `status` | Trạng thái platform, work order, review, release readiness |
 | `validate` | Chạy quality gates |
 | `review [WO-ID...]` | Chạy review pipeline theo ReviewLevel |

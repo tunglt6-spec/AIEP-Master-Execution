@@ -2,6 +2,7 @@
 // AIEP CLI dispatcher. Routes subcommands to their implementations.
 
 import { c, log } from '../core/logger.js';
+import { cmdInit } from './init.js';
 import { cmdStatus } from './status.js';
 import { cmdValidate } from './validate.js';
 import { cmdReview } from './review.js';
@@ -13,6 +14,7 @@ import { cmdPackage } from './package.js';
 const VERSION = '1.0.0';
 
 const COMMANDS = {
+  init: { fn: cmdInit, help: 'Initialize an AIEP workspace in the current (or given) project' },
   status: { fn: cmdStatus, help: 'Show platform, work-order, review and release status' },
   validate: { fn: cmdValidate, help: 'Run repository & governance validation (quality gates)' },
   review: { fn: cmdReview, help: 'Run the review pipeline for a Work Order per its ReviewLevel' },
@@ -33,6 +35,8 @@ function printHelp() {
   }
   log.info('');
   log.info(c.bold('Examples:'));
+  log.info('  aiep init              ' + c.dim('# scaffold AIEP into the current project'));
+  log.info('  aiep init ./my-app');
   log.info('  aiep status');
   log.info('  aiep validate');
   log.info('  aiep review WO-0105');
