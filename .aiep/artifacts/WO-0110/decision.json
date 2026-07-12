@@ -1,0 +1,47 @@
+{
+  "workOrder": "WO-0110",
+  "title": "SOP-005 — AI Coding with AIEP",
+  "reviewLevel": "L1",
+  "reviewers": [
+    "claude"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 3,
+    "files": [
+      "docs/sop/INDEX.md",
+      "docs/sop/SOP-005-ai-coding-with-aiep.md",
+      "pmo/work-orders/WO-0110/work-order.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 0,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 0,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    }
+  ],
+  "verdict": "PASS"
+}
