@@ -1,0 +1,14 @@
+{
+  "workOrder": "WO-0204",
+  "dispositions": [
+    {
+      "reviewer": "deepseek",
+      "severity": "CRITICAL",
+      "matches": "loadConfig",
+      "status": "dismissed",
+      "rationale": "False positive. `loadConfig` IS imported in src/cli/review.js (line 5: `import { loadConfig } from '../core/config.js';`) and used at line 27. The DeepSeek (deepseek-coder:1.3b) reviewer inferred a missing import from a partial diff hunk that did not include the pre-existing import line. Verified by the Execution Lead against the full file. Qwen (technical reviewer) independently found no blocking issues.",
+      "by": "claude-execution-lead",
+      "date": "2026-07-12"
+    }
+  ]
+}
