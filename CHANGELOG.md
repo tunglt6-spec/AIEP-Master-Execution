@@ -4,6 +4,26 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.2.0] — 2026-07-12
+
+### Added
+
+- **`aiep plan "<idea>"`** — draft a Work Order from an idea (WO-0109, RFC-0002
+  PoC). Uses a local model to propose title, objective, deliverables and a
+  suggested ReviewLevel, with an offline template fallback. Writes only a
+  planning document (`status: backlog`) for human review — **no code generation,
+  no build, no deploy** (stays within the v1.0 Scope Lock).
+- **RFC-0002** — design for AIEP × AI coding agent ("idea → code → audit →
+  deploy") with reviewer-independence and human-deploy-gate guarantees. Status
+  Proposed (the `implement`/`loop`/`ship` agent loop is v2.0, pending approval).
+- `ollamaGenerate` helper for single-shot local-model generation.
+
+### Notes
+
+- Reviewed at L2 (Claude + DeepSeek; Qwen degraded on CPU timeout, dispositioned).
+  A DeepSeek false-positive CRITICAL was verified against source and dismissed.
+  31 tests passing.
+
 ## [1.1.0] — 2026-07-12
 
 ### Added
