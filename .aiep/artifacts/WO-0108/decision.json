@@ -1,0 +1,66 @@
+{
+  "workOrder": "WO-0108",
+  "title": "Project Initialization (aiep init)",
+  "reviewLevel": "L2",
+  "reviewers": [
+    "claude",
+    "deepseek",
+    "qwen"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 5,
+    "files": [
+      "docs/USER-GUIDE.md",
+      "pmo/work-orders/WO-0108/work-order.md",
+      "src/cli/index.js",
+      "src/cli/init.js",
+      "test/init.test.js"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 1,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    },
+    {
+      "severity": "CRITICAL",
+      "message": "The `initProject` function does not handle file creation in subdirectories correctly, leading to errors when trying to create files within directories that do not exist yet (e.g., creating a directory named 'pmo' before it exists).",
+      "reviewer": "deepseek"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 1,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 1,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    },
+    {
+      "reviewer": "deepseek",
+      "status": "completed",
+      "model": "deepseek-coder:1.3b"
+    },
+    {
+      "reviewer": "qwen",
+      "status": "degraded",
+      "model": null
+    }
+  ],
+  "verdict": "CHANGES_REQUESTED"
+}

@@ -1,0 +1,17 @@
+{
+  "workOrder": "WO-0108",
+  "dispositions": [
+    {
+      "reviewer": "deepseek",
+      "severity": "CRITICAL",
+      "matches": "subdirectories",
+      "status": "dismissed",
+      "rationale": "False positive. initProject DOES create parent directories: every write path calls mkdirSync(dirname(dest), { recursive: true }) before writing (src/cli/init.js lines 98 in writeFile, 111 in copyFrom, 134 for the config). Proven by test/init.test.js ('init scaffolds a valid workspace' creates nested pmo/work-orders/WO-0001/work-order.md and passes) and by the live demo which created 24 files across nested dirs (docs/constitution/, pmo/work-orders/WO-0001/). The DeepSeek (deepseek-coder:1.3b) reviewer inferred the defect without seeing the mkdirSync calls. Verified by the Execution Lead.",
+      "by": "claude-execution-lead",
+      "date": "2026-07-12"
+    }
+  ],
+  "notes": [
+    "qwen (qwen3:8b) degraded on this review: Ollama generation timed out on CPU for the larger 5-file delta. Recorded as a documented disposition per the Review Execution policy (backend latency is an environment concern, not a defect). DeepSeek completed; the change is additionally covered by 3 passing unit tests. To obtain a full qwen review, lower AIEP_OLLAMA_NUM_PREDICT and re-run `aiep review WO-0108 --last`."
+  ]
+}
