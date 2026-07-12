@@ -1,26 +1,26 @@
 ---
-title: "AIEP v1.0 — Design Documentation Index"
+title: "AIEP v1.0 — Mục lục Tài liệu Thiết kế"
 ---
 
-# AIEP v1.0 — Design Documentation
+# AIEP v1.0 — Tài liệu Thiết kế
 
-Design specifications for the AI Engineering Platform (AIEP) v1.0. These documents are
-frozen under **Architecture Freeze v1.0** and scoped by **Scope Lock v1.0**.
+Các đặc tả thiết kế cho AI Engineering Platform (AIEP) v1.0. Những tài liệu này được
+đóng băng theo **Architecture Freeze v1.0** và giới hạn phạm vi theo **Scope Lock v1.0**.
 
-## Documents
+## Tài liệu
 
-| Document | Description |
+| Tài liệu | Mô tả |
 | --- | --- |
-| [DESIGN-SPECIFICATION-v1.0.md](./DESIGN-SPECIFICATION-v1.0.md) | Main design spec: goals & non-goals, the five product deliverables, high-level architecture, module responsibilities, review pipeline data flow, the Codex guard, error handling & graceful degradation, and security considerations. |
-| [DATA-MODEL.md](./DATA-MODEL.md) | Data contracts: the Work Order frontmatter schema, the `decision.json` review-outcome schema, and the `dashboard.json` aggregated-state shape. |
+| [DESIGN-SPECIFICATION-v1.0.md](./DESIGN-SPECIFICATION-v1.0.md) | Đặc tả thiết kế chính: mục tiêu & phi mục tiêu, năm deliverable sản phẩm, kiến trúc tổng quan, trách nhiệm các module, luồng dữ liệu pipeline review, Codex guard, xử lý lỗi & suy giảm mượt (graceful degradation), và các cân nhắc bảo mật. |
+| [DATA-MODEL.md](./DATA-MODEL.md) | Các hợp đồng dữ liệu: schema frontmatter của Work Order, schema kết quả review `decision.json`, và cấu trúc trạng thái tổng hợp `dashboard.json`. |
 
-## Related
+## Liên quan
 
-- Review Level Policy RFC: [../rfc/RFC-0001-review-level-policy.md](../rfc/RFC-0001-review-level-policy.md)
-- Governance (referenced by quality gates): `docs/governance/` — Constitution, Governance,
+- RFC Review Level Policy: [../rfc/RFC-0001-review-level-policy.md](../rfc/RFC-0001-review-level-policy.md)
+- Governance (được quality gates tham chiếu): `docs/governance/` — Constitution, Governance,
   Review Level Policy, Scope Lock v1.0, Architecture Freeze v1.0.
 
-## Source map (for readers cross-referencing code)
+## Bản đồ nguồn (dành cho người đọc đối chiếu chéo với code)
 
 - CLI dispatcher: `bin/aiep.js` → `src/cli/index.js`
 - Commands: `src/cli/{status,validate,review,artifacts,doctor,dashboard,package}.js`

@@ -1,44 +1,45 @@
 ---
-title: "AIEP v1.0 — Data Model"
+title: "AIEP v1.0 — Mô hình Dữ liệu"
 status: Frozen (Architecture Freeze v1.0)
 ---
 
-# AIEP v1.0 — Data Model
+# AIEP v1.0 — Mô hình Dữ liệu
 
-This document specifies the three core data contracts of the platform:
+Tài liệu này đặc tả ba hợp đồng dữ liệu cốt lõi của nền tảng:
 
-1. the **Work Order** frontmatter schema (author-facing source of truth),
-2. the **`decision.json`** schema (review outcome), and
-3. the **`dashboard.json`** shape (aggregated platform state).
+1. schema frontmatter của **Work Order** (nguồn chân lý mà tác giả đối diện),
+2. schema **`decision.json`** (kết quả review), và
+3. cấu trúc **`dashboard.json`** (trạng thái tổng hợp của nền tảng).
 
-All Markdown documents use a controlled, flat YAML frontmatter subset parsed by
-`src/core/frontmatter.js` (scalars, quoted strings, inline `[a, b]` lists, and block
-`- item` lists). Nested mappings are intentionally unsupported.
+Mọi tài liệu Markdown sử dụng một tập con YAML frontmatter phẳng, được kiểm soát, được phân
+tích bởi `src/core/frontmatter.js` (scalar, chuỗi trong dấu nháy, danh sách nội dòng
+`[a, b]`, và danh sách khối `- item`). Các ánh xạ lồng nhau (nested mapping) cố ý không
+được hỗ trợ.
 
 ---
 
-## 1. Work Order Frontmatter
+## 1. Frontmatter của Work Order
 
-A Work Order lives at `pmo/work-orders/<WO-ID>/work-order.md`. Its frontmatter block is
-the machine-readable source of truth; the body carries objective, scope, deliverables and
-Definition of Done.
+Một Work Order nằm tại `pmo/work-orders/<WO-ID>/work-order.md`. Khối frontmatter của nó là
+nguồn chân lý máy đọc được; phần thân mang mục tiêu, phạm vi, deliverable và Definition of
+Done.
 
-### 1.1 Fields
+### 1.1 Các trường
 
-| Field | Type | Required | Notes |
+| Trường | Kiểu | Bắt buộc | Ghi chú |
 | --- | --- | --- | --- |
-| `id` | string | yes | Work Order identifier, e.g. `WO-0105`. Also the artifact directory name. |
-| `title` | string | yes | Human-readable title (quote if it contains special characters). |
-| `reviewLevel` | enum | yes | One of `L1`, `L2`, `L3`, `L4`. Determines the reviewer pipeline. |
-| `status` | enum | yes | One of `backlog`, `planned`, `in-progress`, `in-review`, `done`, `blocked`. |
-| `phase` | string | yes | Delivery phase label, e.g. `P1-Core`. |
-| `owner` | string | no | Owning role, e.g. `claude-execution-lead`. |
+| `id` | string | có | Định danh Work Order, ví dụ `WO-0105`. Cũng là tên thư mục artifact. |
+| `title` | string | có | Tiêu đề con người đọc được (dùng dấu nháy nếu chứa ký tự đặc biệt). |
+| `reviewLevel` | enum | có | Một trong `L1`, `L2`, `L3`, `L4`. Xác định pipeline reviewer. |
+| `status` | enum | có | Một trong `backlog`, `planned`, `in-progress`, `in-review`, `done`, `blocked`. |
+| `phase` | string | có | Nhãn phase giao hàng, ví dụ `P1-Core`. |
+| `owner` | string | không | Vai trò sở hữu, ví dụ `claude-execution-lead`. |
 
-Validation (`src/core/workorders.js`): the required set is `id, title, reviewLevel,
-status, phase`. An invalid `reviewLevel` or `status` is reported as a load error and
-fails the `validate` "All Work Orders valid & have ReviewLevel" gate.
+Validation (`src/core/workorders.js`): tập bắt buộc là `id, title, reviewLevel,
+status, phase`. Một `reviewLevel` hoặc `status` không hợp lệ được báo cáo là một lỗi tải
+(load error) và làm thất bại gate `validate` "All Work Orders valid & have ReviewLevel".
 
-### 1.2 Example
+### 1.2 Ví dụ
 
 ```yaml
 ---
@@ -51,44 +52,44 @@ owner: claude-execution-lead
 ---
 ```
 
-### 1.3 Body conventions
+### 1.3 Quy ước phần thân
 
-The body should contain an **Objective**, **Scope** (referencing Scope Lock v1.0),
-**Deliverables**, and a **Definition of Done** section. The Claude self-review checks for
-a Definition of Done heading (`definition of done` / `dod`) and emits a MEDIUM finding if
-it is absent.
+Phần thân nên chứa một mục **Objective**, **Scope** (tham chiếu Scope Lock v1.0),
+**Deliverables**, và một mục **Definition of Done**. Claude self-review kiểm tra sự hiện
+diện của một heading Definition of Done (`definition of done` / `dod`) và phát ra một
+finding MEDIUM nếu nó vắng mặt.
 
 ---
 
 ## 2. `decision.json`
 
-Written by the review router to `.aiep/artifacts/<WO-ID>/decision.json`. It is the
-canonical, machine-readable review outcome consumed by `status`, `artifacts`, `validate`
-and the dashboard build.
+Được review router ghi ra `.aiep/artifacts/<WO-ID>/decision.json`. Đây là kết quả review
+chuẩn tắc, máy đọc được, được tiêu thụ bởi `status`, `artifacts`, `validate` và dashboard
+build.
 
-### 2.1 Fields
+### 2.1 Các trường
 
-| Field | Type | Description |
+| Trường | Kiểu | Mô tả |
 | --- | --- | --- |
-| `workOrder` | string | The WO id (`wo.meta.id`). |
-| `title` | string | The WO title. |
-| `reviewLevel` | enum | `L1`–`L4` — the level under which the review ran. |
-| `reviewers` | string[] | The **effective** ordered pipeline actually run (Codex removed unless L4). |
-| `codexGuard` | object | `{ requiresCodex, codexAllowed, guardBlockedCodex }` (all boolean). `guardBlockedCodex` is true when the level's pipeline included Codex but the guard blocked it. |
-| `delta` | object | `{ changedFiles: number, files: string[] }` — the reviewed change surface. |
-| `severityCounts` | object | Integer counts keyed by `CRITICAL, HIGH, MEDIUM, LOW, INFO`. |
-| `findings` | object[] | Flattened findings; each `{ severity, message, reviewer }`. |
-| `unresolvedBlockingCount` | number | Count of findings whose severity is in the blocking set (`CRITICAL`, `HIGH`). |
-| `reviewerStatuses` | object[] | Per-reviewer `{ reviewer, status, model }`. `status` ∈ `completed` \| `degraded` \| `error`; `model` is the Ollama model used or `null`. |
-| `verdict` | enum | `PASS` when `unresolvedBlockingCount === 0`, else `CHANGES_REQUESTED`. |
+| `workOrder` | string | Id của WO (`wo.meta.id`). |
+| `title` | string | Tiêu đề của WO. |
+| `reviewLevel` | enum | `L1`–`L4` — level mà review đã chạy dưới đó. |
+| `reviewers` | string[] | Pipeline có thứ tự **hiệu lực** thực sự đã chạy (Codex bị loại bỏ trừ khi L4). |
+| `codexGuard` | object | `{ requiresCodex, codexAllowed, guardBlockedCodex }` (tất cả boolean). `guardBlockedCodex` là true khi pipeline của level bao gồm Codex nhưng guard đã chặn nó. |
+| `delta` | object | `{ changedFiles: number, files: string[] }` — bề mặt thay đổi được review. |
+| `severityCounts` | object | Các số nguyên đếm theo khóa `CRITICAL, HIGH, MEDIUM, LOW, INFO`. |
+| `findings` | object[] | Các finding đã làm phẳng; mỗi cái `{ severity, message, reviewer }`. |
+| `unresolvedBlockingCount` | number | Số finding có severity nằm trong tập blocking (`CRITICAL`, `HIGH`). |
+| `reviewerStatuses` | object[] | Từng reviewer `{ reviewer, status, model }`. `status` ∈ `completed` \| `degraded` \| `error`; `model` là mô hình Ollama được dùng hoặc `null`. |
+| `verdict` | enum | `PASS` khi `unresolvedBlockingCount === 0`, ngược lại `CHANGES_REQUESTED`. |
 
-### 2.2 Severity model
+### 2.2 Mô hình severity
 
-Severities: `CRITICAL, HIGH, MEDIUM, LOW, INFO`. **Blocking** severities are `CRITICAL`
-and `HIGH`. Findings are parsed from reviewer output lines of the exact form
+Các severity: `CRITICAL, HIGH, MEDIUM, LOW, INFO`. Các severity **blocking** là `CRITICAL`
+và `HIGH`. Các finding được phân tích từ các dòng đầu ra của reviewer theo đúng dạng
 `FINDING: <SEVERITY> - <description>`.
 
-### 2.3 Example
+### 2.3 Ví dụ
 
 ```json
 {
@@ -120,36 +121,36 @@ and `HIGH`. Findings are parsed from reviewer output lines of the exact form
 
 ## 3. `dashboard.json`
 
-Written by `src/dashboard/build.js` to `dashboard/data/dashboard.json`. Every value is
-derived from live repository state — Work Orders, per-WO `decision.json`, the `validate`
-gates, `doctor` probes and git. No demo data is fabricated.
+Được `src/dashboard/build.js` ghi ra `dashboard/data/dashboard.json`. Mọi giá trị đều được
+suy ra từ trạng thái repository thực (live) — các Work Order, `decision.json` của từng WO,
+các `validate` gate, các probe của `doctor` và git. Không có dữ liệu demo nào được bịa ra.
 
-### 3.1 Top-level shape
+### 3.1 Cấu trúc cấp cao nhất
 
-| Field | Type | Description |
+| Trường | Kiểu | Mô tả |
 | --- | --- | --- |
-| `generatedAt` | string | ISO timestamp of the build. |
-| `platform` | object | Echo of `config.platform` (`name`, `displayName`, `version`, `scopeLock`, `architectureFreeze`). |
+| `generatedAt` | string | Dấu thời gian ISO của bản build. |
+| `platform` | object | Phản chiếu `config.platform` (`name`, `displayName`, `version`, `scopeLock`, `architectureFreeze`). |
 | `git` | object | `{ isRepo, branch, commit }`. |
-| `architecture` | object | `{ freeze, scopeLock, deliverables: [{ name, present }] }` for the five deliverables. |
-| `sprints` | object[] | `{ id, name, status, goal }` from `pmo/sprints/*.md` (empty if none). |
-| `workOrders` | object | `{ summary, rows }` — see below. |
-| `reviewLevelDistribution` | object | Counts `{ L1, L2, L3, L4 }`. |
-| `reviewers` | object[] | Reviewer/backend health filtered from `doctor` (`{ name, ok, detail }`). |
+| `architecture` | object | `{ freeze, scopeLock, deliverables: [{ name, present }] }` cho năm deliverable. |
+| `sprints` | object[] | `{ id, name, status, goal }` từ `pmo/sprints/*.md` (rỗng nếu không có). |
+| `workOrders` | object | `{ summary, rows }` — xem bên dưới. |
+| `reviewLevelDistribution` | object | Đếm `{ L1, L2, L3, L4 }`. |
+| `reviewers` | object[] | Sức khỏe reviewer/backend được lọc từ `doctor` (`{ name, ok, detail }`). |
 | `findings` | object | `{ counts: {CRITICAL,HIGH,MEDIUM,LOW,INFO}, items: [{ wo, severity, message, reviewer }] }`. |
-| `knowledgeAssets` | object | File counts: `prompts, skills, mcp, knowledge, adrs, sops, templates`. |
-| `releaseReadiness` | object | `{ gatesPassed, gatesFailed, gatesWarned, ok, checks }` from `validate`. |
-| `systemHealth` | object[] | Full `doctor` items (`{ name, ok, detail }`). |
+| `knowledgeAssets` | object | Số lượng file: `prompts, skills, mcp, knowledge, adrs, sops, templates`. |
+| `releaseReadiness` | object | `{ gatesPassed, gatesFailed, gatesWarned, ok, checks }` từ `validate`. |
+| `systemHealth` | object[] | Toàn bộ các item của `doctor` (`{ name, ok, detail }`). |
 
 ### 3.2 `workOrders`
 
 - `summary` — `{ total, byLevel: {L1..L4}, byStatus: {…}, byPhase: {…} }`.
-- `rows` — one entry per WO: `{ id, title, phase, reviewLevel, status, verdict, reviewers }`,
-  where `verdict` is taken from that WO's `decision.json` or `"not-reviewed"` if absent,
-  and `reviewers` falls back to the configured pipeline for the level when unreviewed.
+- `rows` — một mục cho mỗi WO: `{ id, title, phase, reviewLevel, status, verdict, reviewers }`,
+  trong đó `verdict` được lấy từ `decision.json` của WO đó hoặc `"not-reviewed"` nếu vắng
+  mặt, và `reviewers` quay lui về pipeline được cấu hình cho level khi chưa được review.
 
-### 3.3 Consumption
+### 3.3 Tiêu thụ
 
-The static dashboard (`dashboard/index.html` + assets) fetches `data/dashboard.json` and
-renders it client-side. It is served by the built-in `node:http` static server
-(`aiep dashboard`) bound to `127.0.0.1:4173`, or by any static file server.
+Dashboard tĩnh (`dashboard/index.html` + assets) nạp `data/dashboard.json` và render nó ở
+phía client. Nó được phục vụ bởi static server `node:http` tích hợp sẵn (`aiep dashboard`)
+gắn vào `127.0.0.1:4173`, hoặc bởi bất kỳ static file server nào.

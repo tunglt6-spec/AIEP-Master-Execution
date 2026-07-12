@@ -1,46 +1,45 @@
 # RFC-0002 — AIEP × AI Coding Agent ("Idea → Code → Audit → Deploy")
 
-- **Status:** Proposed (v2.0 candidate — does NOT open v2.0 scope by itself)
-- **Date:** 2026-07-12
-- **Author:** Execution Lead
-- **Related:** ADR-0002 (Review Levels), ADR-0003 (Codex guard), WO-0109
+- **Trạng thái:** Proposed (ứng viên v2.0 — bản thân nó KHÔNG mở phạm vi v2.0)
+- **Ngày:** 2026-07-12
+- **Tác giả:** Execution Lead
+- **Liên quan:** ADR-0002 (Review Levels), ADR-0003 (Codex guard), WO-0109
 
-## Summary
+## Tóm tắt
 
-Integrate an external **AI coding agent** (the "hands" that writes code) with
-AIEP (the governance + audit + release layer) so that a single loop can go from
-an idea to a reviewed, gated, human-approved deployment. AIEP does not itself
-generate code today; this RFC defines how an agent plugs in without weakening
-AIEP's independence and human-gating guarantees.
+Tích hợp một **AI coding agent** bên ngoài (đôi "bàn tay" viết code) với AIEP (lớp
+governance + audit + release) để một vòng lặp duy nhất có thể đi từ một ý tưởng đến một
+bản triển khai (deployment) đã được review, đã qua gate, được con người phê duyệt. Ngày
+nay bản thân AIEP không sinh code; RFC này định nghĩa cách một agent cắm vào mà không làm
+suy yếu tính độc lập và các bảo đảm human-gating của AIEP.
 
-## Motivation
+## Động lực
 
-AIEP v1.x audits and governs changes but relies on a human (or a separate tool)
-to author code. Teams increasingly use AI coding agents. Pairing them yields a
-tight "idea → code → audit → deploy" loop **while keeping the reviewer
-independent from the author** — the core safety property that makes AI-written
-code trustworthy.
+AIEP v1.x audit và quản trị các thay đổi nhưng dựa vào con người (hoặc một công cụ riêng)
+để viết code. Các đội ngày càng dùng nhiều AI coding agent. Ghép cặp chúng lại tạo ra một
+vòng lặp "idea → code → audit → deploy" chặt chẽ **trong khi vẫn giữ reviewer độc lập với
+tác giả** — thuộc tính an toàn cốt lõi khiến code do AI viết trở nên đáng tin cậy.
 
-## Core principle (non-negotiable)
+## Nguyên tắc cốt lõi (không thể thương lượng)
 
-> The agent that WRITES code must never be the sole judge of that code.
+> AI VIẾT code không bao giờ được là người phán xét duy nhất về chính code đó.
 
-AI writes; **different** AIs audit (DeepSeek/Qwen/Gemini/Codex); **humans gate
-deploy**. This preserves ADR-0002/0003 and the platform's audit guarantees.
+AI viết; các AI **khác nhau** audit (DeepSeek/Qwen/Gemini/Codex); **con người gate deploy**.
+Điều này bảo toàn ADR-0002/0003 và các bảo đảm audit của nền tảng.
 
-## Detailed design
+## Thiết kế chi tiết
 
-### Roles
+### Vai trò
 
-| Component | Role | Provider |
+| Thành phần | Vai trò | Nhà cung cấp |
 |-----------|------|----------|
-| Coding Agent | Generate code from a Work Order | Claude Code / Cursor / Aider (via adapter) |
-| AIEP Review | Independent multi-model audit (L1–L4) | DeepSeek, Qwen, Gemini, Codex |
+| Coding Agent | Sinh code từ một Work Order | Claude Code / Cursor / Aider (qua adapter) |
+| AIEP Review | Audit đa mô hình độc lập (L1–L4) | DeepSeek, Qwen, Gemini, Codex |
 | AIEP Gates | Quality gates, secret scan, scope lock | `aiep validate` |
-| Orchestrator | code → review → fix loop | new `aiep` verbs |
-| Human | Approve WO; gate deploy | two mandatory gates |
+| Orchestrator | vòng lặp code → review → fix | các verb `aiep` mới |
+| Con người | Phê duyệt WO; gate deploy | hai gate bắt buộc |
 
-### Flow
+### Luồng
 
 ```
 idea → aiep plan → [HUMAN GATE #1: approve WO] → aiep implement (agent, isolated worktree)
@@ -48,18 +47,18 @@ idea → aiep plan → [HUMAN GATE #1: approve WO] → aiep implement (agent, is
      → aiep validate → [HUMAN GATE #2: approve deploy] → aiep ship
 ```
 
-### New surface (v2.0)
+### Bề mặt mới (v2.0)
 
-| Verb | Purpose |
+| Verb | Mục đích |
 |------|---------|
-| `aiep plan "<idea>"` | Agent drafts a Work Order (suggests ReviewLevel). *Shipped as a PoC in WO-0109 — see below.* |
-| `aiep implement <WO>` | Agent writes code in an **isolated git worktree/branch**. |
-| `aiep loop <WO>` | Orchestrate implement → review → fix → validate (capped iterations, token budget). |
-| `aiep ship <WO>` | After gates + human approval: merge / publish / release. |
+| `aiep plan "<idea>"` | Agent soạn thảo một Work Order (gợi ý ReviewLevel). *Được giao dưới dạng PoC trong WO-0109 — xem bên dưới.* |
+| `aiep implement <WO>` | Agent viết code trong một **git worktree/branch biệt lập**. |
+| `aiep loop <WO>` | Điều phối implement → review → fix → validate (số vòng lặp giới hạn, ngân sách token). |
+| `aiep ship <WO>` | Sau khi qua gate + con người phê duyệt: merge / publish / release. |
 
-### Agent adapter contract
+### Hợp đồng adapter cho agent
 
-AIEP must not hard-code one agent. Config (`.aiep/config.json`):
+AIEP không được hard-code một agent duy nhất. Config (`.aiep/config.json`):
 
 ```json
 "codingAgent": {
@@ -72,56 +71,59 @@ AIEP must not hard-code one agent. Config (`.aiep/config.json`):
 }
 ```
 
-Interface every adapter implements:
-- **Input:** Work Order spec + repo context + (on fix) findings from `decision.json`.
-- **Output:** a commit/diff + a self-report (JSON).
+Giao diện mà mọi adapter phải hiện thực:
+- **Đầu vào:** đặc tả Work Order + ngữ cảnh repo + (khi fix) các finding từ `decision.json`.
+- **Đầu ra:** một commit/diff + một self-report (JSON).
 
 ### Guardrails
 
-1. **Isolation** — agent works in a dedicated worktree/branch; never writes `main`.
-2. **Reviewer independence** — reviewers differ from the coding agent; AI-written
-   code is never L1 self-review-only (minimum L2).
-3. **Human deploy gate** — publish/merge/prod always require human approval; never
-   autonomous.
-4. **Codex L4 guard** unchanged — only genuinely high-risk changes reach Codex.
-5. **Caps & budget** — bounded loop iterations and token budget.
-6. **Provenance** — every step recorded as artifacts (git + `.aiep/artifacts/`).
+1. **Isolation** — agent làm việc trong một worktree/branch chuyên dụng; không bao giờ ghi
+   vào `main`.
+2. **Tính độc lập của reviewer** — các reviewer khác với coding agent; code do AI viết
+   không bao giờ chỉ có L1 self-review (tối thiểu L2).
+3. **Human deploy gate** — publish/merge/prod luôn yêu cầu con người phê duyệt; không bao
+   giờ tự chủ (autonomous).
+4. **Codex L4 guard** không đổi — chỉ những thay đổi thực sự rủi ro cao mới chạm tới Codex.
+5. **Giới hạn & ngân sách** — số vòng lặp giới hạn và ngân sách token có giới hạn.
+6. **Provenance** — mọi bước được ghi lại dưới dạng artifact (git + `.aiep/artifacts/`).
 
-## PoC delivered in this RFC (in-scope, v1.x)
+## PoC đã giao trong RFC này (trong phạm vi, v1.x)
 
-`aiep plan "<idea>"` (see `src/cli/plan.js`) drafts a **Work Order only**:
-- Uses a local model (Ollama, reusing the reviewer backend) to propose title,
-  objective, deliverables and a suggested ReviewLevel + rationale.
-- Falls back to a template (offline) when the model is unavailable.
-- Writes `pmo/work-orders/<WO-ID>/work-order.md` with `status: backlog` for human
-  review. **It does not generate source code, build, or deploy.**
+`aiep plan "<idea>"` (xem `src/cli/plan.js`) soạn thảo **chỉ một Work Order**:
+- Dùng một mô hình local (Ollama, tái sử dụng reviewer backend) để đề xuất tiêu đề, mục
+  tiêu, deliverable và một ReviewLevel được gợi ý + lý do.
+- Quay lui về một template (offline) khi mô hình không khả dụng.
+- Ghi `pmo/work-orders/<WO-ID>/work-order.md` với `status: backlog` để con người review.
+  **Nó không sinh mã nguồn, không build, và không deploy.**
 
-This proves the "idea → structured Work Order" front of the loop without crossing
-the v1.0 Scope Lock.
+Điều này chứng minh phần đầu "idea → Work Order có cấu trúc" của vòng lặp mà không vượt qua
+Scope Lock v1.0.
 
-## Drawbacks
+## Nhược điểm
 
-- Small local models produce false positives/low-quality drafts → human review
-  stays mandatory (drafts are `backlog`, not auto-approved).
-- Added latency/cost per loop iteration.
-- Full agent loop (`implement`/`loop`/`ship`) is genuine v2.0 scope.
+- Các mô hình local nhỏ tạo ra các bản nháp dương tính giả/chất lượng thấp → review của con
+  người vẫn bắt buộc (các bản nháp là `backlog`, không được tự động phê duyệt).
+- Tăng độ trễ/chi phí cho mỗi vòng lặp.
+- Vòng lặp agent đầy đủ (`implement`/`loop`/`ship`) là phạm vi v2.0 thực sự.
 
-## Alternatives considered
+## Các phương án đã cân nhắc
 
-- **Let the coding agent self-review** — rejected; violates the core principle.
-- **Single vendor lock-in** — rejected; the adapter contract keeps agents pluggable.
-- **Autonomous deploy** — rejected; conflicts with the human-gate safety model.
+- **Để coding agent tự review** — bị bác bỏ; vi phạm nguyên tắc cốt lõi.
+- **Khóa vào một nhà cung cấp duy nhất (single vendor lock-in)** — bị bác bỏ; hợp đồng
+  adapter giữ cho các agent có thể cắm thay được (pluggable).
+- **Deploy tự chủ (autonomous deploy)** — bị bác bỏ; xung đột với mô hình an toàn
+  human-gate.
 
-## Adoption / rollout
+## Áp dụng / triển khai
 
-1. (Now, v1.x) `aiep plan` PoC — WO-0109.
-2. (v2.0) `aiep implement` + adapter contract behind a feature flag.
-3. (v2.0) `aiep loop` orchestrator with caps.
-4. (v2.0) `aiep ship` with mandatory human gate.
+1. (Hiện tại, v1.x) PoC `aiep plan` — WO-0109.
+2. (v2.0) `aiep implement` + hợp đồng adapter đằng sau một feature flag.
+3. (v2.0) Orchestrator `aiep loop` với các giới hạn.
+4. (v2.0) `aiep ship` với human gate bắt buộc.
 
-## Open questions
+## Câu hỏi mở
 
-- Worktree lifecycle and cleanup policy.
-- How findings are best serialized back to arbitrary agents.
-- Budget accounting across agent + reviewers.
-- Whether `implement` should target a PR rather than a local branch by default.
+- Vòng đời worktree và chính sách dọn dẹp.
+- Cách serialize các finding trở lại cho các agent tùy ý một cách tốt nhất.
+- Hạch toán ngân sách xuyên suốt agent + các reviewer.
+- Liệu `implement` có nên nhắm tới một PR thay vì một branch local theo mặc định hay không.

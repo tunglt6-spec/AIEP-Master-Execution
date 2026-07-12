@@ -1,49 +1,49 @@
-# ADR-0001 — Technology Stack
+# ADR-0001 — Ngăn xếp Công nghệ
 
-- **Status:** Accepted
-- **Date:** 2026-07-12
-- **Deciders:** Execution Lead (ratified under Architecture Freeze v1.0)
+- **Trạng thái:** Accepted
+- **Ngày:** 2026-07-12
+- **Người quyết định:** Execution Lead (phê chuẩn theo Architecture Freeze v1.0)
 
-## Context
+## Bối cảnh
 
-AIEP must ship a CLI, a review engine, validation, a dashboard and a packaging
-path. It should install and run offline, be cross-platform (the primary
-environment is Windows), start fast, and present a minimal supply-chain surface
-for a governance/security-adjacent tool.
+AIEP phải cung cấp một CLI, một engine review, phần validation, một dashboard và một
+đường đóng gói (packaging). Nó cần cài đặt và chạy được offline, đa nền tảng (môi trường
+chính là Windows), khởi động nhanh, và trình diện một bề mặt chuỗi cung ứng
+(supply-chain) tối thiểu cho một công cụ gần với lĩnh vực governance/bảo mật.
 
-## Decision
+## Quyết định
 
-Use **Node.js (>= 18) with ESM and zero runtime dependencies** — Node built-ins
-only (`node:fs`, `node:path`, `node:child_process`, `node:http`, global
-`fetch`, `node:test`).
+Sử dụng **Node.js (>= 18) với ESM và zero runtime dependencies** — chỉ dùng các built-in
+của Node (`node:fs`, `node:path`, `node:child_process`, `node:http`, `fetch` toàn cục,
+`node:test`).
 
-- CLI parsing, HTTP (dashboard server + Ollama client), git access and file I/O
-  are all covered by built-ins.
-- Data is **Markdown + a controlled YAML frontmatter subset**; config and machine
-  artifacts are **JSON**. A small in-house frontmatter parser avoids a YAML
-  dependency.
-- Tests use the built-in `node:test` runner.
+- Phân tích cú pháp CLI, HTTP (dashboard server + Ollama client), truy cập git và file I/O
+  đều được bao phủ bởi các built-in.
+- Dữ liệu là **Markdown + một tập con YAML frontmatter được kiểm soát**; config và các
+  artifact máy đọc là **JSON**. Một trình phân tích frontmatter tự xây dựng nội bộ giúp
+  tránh một dependency YAML.
+- Kiểm thử dùng bộ chạy `node:test` tích hợp sẵn.
 
-## Consequences
+## Hệ quả
 
-**Positive**
+**Tích cực**
 
-- Offline install; `npm install` requires no network (no dependencies).
-- Small attack surface and no dependency drift.
-- One runtime for CLI, dashboard and packaging.
-- Fast startup, trivial packaging via `npm pack`.
+- Cài đặt offline; `npm install` không yêu cầu mạng (không có dependency).
+- Bề mặt tấn công nhỏ và không bị trôi dạt dependency (dependency drift).
+- Một runtime duy nhất cho CLI, dashboard và packaging.
+- Khởi động nhanh, đóng gói dễ dàng qua `npm pack`.
 
-**Negative / trade-offs**
+**Tiêu cực / đánh đổi**
 
-- The in-house frontmatter parser supports only a controlled subset (mitigated by
-  unit tests and template-controlled input).
-- No third-party CLI/UX libraries; formatting is hand-rolled (acceptable for the
-  scope).
+- Trình phân tích frontmatter tự xây dựng chỉ hỗ trợ một tập con được kiểm soát (được giảm
+  thiểu rủi ro bằng unit test và đầu vào do template kiểm soát).
+- Không có thư viện CLI/UX bên thứ ba; việc định dạng được viết thủ công (chấp nhận được
+  với phạm vi này).
 
-## Alternatives considered
+## Các phương án đã cân nhắc
 
-- **Python + Click + Rich:** excellent CLI ergonomics, but a second runtime for
-  the dashboard and a heavier dependency story.
-- **Node + heavy deps (commander, chalk, yaml, express):** faster to write, but
-  larger supply-chain surface and offline-install friction — rejected for a
-  governance tool.
+- **Python + Click + Rich:** trải nghiệm CLI xuất sắc, nhưng cần một runtime thứ hai cho
+  dashboard và một câu chuyện dependency nặng nề hơn.
+- **Node + dependency nặng (commander, chalk, yaml, express):** viết nhanh hơn, nhưng
+  bề mặt chuỗi cung ứng lớn hơn và gây trở ngại cho việc cài đặt offline — bị bác bỏ đối
+  với một công cụ governance.

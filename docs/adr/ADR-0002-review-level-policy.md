@@ -1,18 +1,18 @@
 # ADR-0002 — Review Level Policy (L1–L4)
 
-- **Status:** Accepted
-- **Date:** 2026-07-12
-- **Deciders:** Execution Lead (ratified under Architecture Freeze v1.0)
+- **Trạng thái:** Accepted
+- **Ngày:** 2026-07-12
+- **Người quyết định:** Execution Lead (phê chuẩn theo Architecture Freeze v1.0)
 
-## Context
+## Bối cảnh
 
-AIEP must apply review effort proportional to risk. Too little review lets
-defects through; too much wastes reviewer capacity (especially scarce external
-audit capacity). Multiple AI reviewers with distinct strengths are available.
+AIEP phải áp dụng nỗ lực review tương xứng với rủi ro. Review quá ít thì để lọt lỗi;
+review quá nhiều thì lãng phí năng lực của reviewer (đặc biệt là năng lực audit bên ngoài
+vốn khan hiếm). Có sẵn nhiều AI reviewer với những thế mạnh riêng biệt.
 
-## Decision
+## Quyết định
 
-Adopt four review levels, each mapping to an ordered reviewer pipeline:
+Áp dụng bốn review level, mỗi level ánh xạ tới một pipeline reviewer có thứ tự:
 
 | Level | Pipeline |
 |-------|----------|
@@ -21,19 +21,19 @@ Adopt four review levels, each mapping to an ordered reviewer pipeline:
 | L3 | claude → deepseek → qwen → gemini |
 | L4 | claude → deepseek → qwen → gemini → codex |
 
-The mapping lives in `.aiep/config.json` (`reviewLevels`) and is resolved by
-`src/core/reviewMatrix.js`. Reviewers run in order and each writes an artifact.
-Findings use CRITICAL/HIGH/MEDIUM/LOW/INFO; CRITICAL/HIGH are blocking.
+Ánh xạ này nằm trong `.aiep/config.json` (`reviewLevels`) và được phân giải bởi
+`src/core/reviewMatrix.js`. Các reviewer chạy theo thứ tự và mỗi reviewer ghi một artifact.
+Các finding sử dụng CRITICAL/HIGH/MEDIUM/LOW/INFO; CRITICAL/HIGH là các mức blocking.
 
-## Consequences
+## Hệ quả
 
-- A single, machine-readable routing table drives `aiep review`, validation and
-  the dashboard.
-- Adding or reordering reviewers is a config change, not a code change.
-- Levels are assigned by risk, not by desire for thoroughness; inflation is
-  discouraged by policy and not rewarded by the process.
+- Một bảng định tuyến duy nhất, máy đọc được, điều khiển `aiep review`, phần validation và
+  dashboard.
+- Việc thêm hoặc sắp xếp lại reviewer là một thay đổi config, không phải thay đổi code.
+- Các level được gán theo rủi ro, không theo mong muốn về mức độ kỹ lưỡng; việc thổi phồng
+  mức (inflation) bị chính sách ngăn cản và không được quy trình tưởng thưởng.
 
-## Alternatives considered
+## Các phương án đã cân nhắc
 
-- **Single mandatory pipeline for all changes:** simple but wasteful and slow.
-- **Free-form reviewer choice per WO:** flexible but unauditable and inconsistent.
+- **Một pipeline bắt buộc duy nhất cho mọi thay đổi:** đơn giản nhưng lãng phí và chậm.
+- **Chọn reviewer tự do cho từng WO:** linh hoạt nhưng không thể audit và thiếu nhất quán.
