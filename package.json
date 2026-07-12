@@ -1,0 +1,46 @@
+{
+  "name": "aiep",
+  "version": "1.0.0",
+  "description": "AI Engineering Platform (AIEP) — governance-driven engineering platform with AI-assisted multi-level code review, PMO, knowledge library and dashboard.",
+  "type": "module",
+  "bin": {
+    "aiep": "bin/aiep.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "aiep": "node bin/aiep.js",
+    "test": "node --test \"test/**/*.test.js\"",
+    "validate": "node bin/aiep.js validate",
+    "doctor": "node bin/aiep.js doctor",
+    "dashboard": "node bin/aiep.js dashboard --build"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "dashboard/",
+    "templates/",
+    "docs/",
+    "pmo/",
+    "library/",
+    "scripts/",
+    ".aiep/config.json",
+    "PROJECT.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai",
+    "engineering",
+    "platform",
+    "code-review",
+    "governance",
+    "pmo",
+    "cli"
+  ],
+  "author": "AIEP Engineering Team",
+  "license": "MIT",
+  "dependencies": {}
+}

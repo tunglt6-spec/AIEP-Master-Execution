@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+.deepseek-pull.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# AIEP runtime caches (artifacts are tracked; caches and generated dashboard data are not)
+.aiep/cache/
+dashboard/data/
+*.aiep.tmp
+
+# Secrets — never commit
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+credentials.json
+
+# Packaging output
+dist/
+*.tgz
