@@ -1,0 +1,47 @@
+{
+  "name": "aiep-git",
+  "description": "Read-scoped git access that exposes repository history and the change delta for a Work Order. Supports the git-delta-review skill by giving reviewers the diff and minimal surrounding context instead of the whole tree.",
+  "transport": {
+    "type": "stdio",
+    "command": "node",
+    "args": ["./mcp/servers/git/index.js"]
+  },
+  "capabilities": {
+    "resources": [
+      {
+        "uri": "git:///workspace?diff={base}..{head}",
+        "name": "change-delta",
+        "description": "The diff for a Work Order between its base and head, used as the primary review context.",
+        "mimeType": "text/x-diff"
+      },
+      {
+        "uri": "git:///workspace/log/{ref}",
+        "name": "commit-history",
+        "description": "Read-only commit metadata and messages for a ref.",
+        "mimeType": "application/json"
+      }
+    ],
+    "tools": [
+      {
+        "name": "get_diff",
+        "description": "Return the diff between two refs (default: branch vs. merge base).",
+        "readOnly": true
+      },
+      {
+        "name": "get_changed_files",
+        "description": "List files changed for a Work Order's branch relative to its base.",
+        "readOnly": true
+      },
+      {
+        "name": "get_blame_context",
+        "description": "Return minimal surrounding context (enclosing function/region) for a changed hunk.",
+        "readOnly": true
+      }
+    ]
+  },
+  "accessPolicy": {
+    "mode": "read-only",
+    "notes": "No write, commit, push, or history-rewrite capabilities are exposed."
+  },
+  "notes": "REFERENCE DESCRIPTOR ONLY. Illustrative shape for integrating an MCP git server with AIEP reviewers. Not a shipped v1.0 runtime component. Read-only by design so reviewers can scope to the delta without mutating the repository."
+}
