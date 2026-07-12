@@ -1,43 +1,43 @@
 # Skill: Git Delta Review
 
-**Type:** Repeatable engineering procedure (SOP)
-**Goal:** Focus every reviewer on the *change delta* for a Work Order, not the whole
-repository, so reviews are precise, fast, and free of noise from unrelated code.
+**Type:** Quy trình kỹ thuật lặp lại được (SOP)
+**Goal:** Tập trung mọi reviewer vào *change delta* của một Work Order, không phải toàn bộ
+repository, để review chính xác, nhanh, và không nhiễu bởi code không liên quan.
 
-## Why
+## Vì sao
 
-Reviewing an entire tree per Work Order buries real findings under commentary on code
-that did not change, wastes reviewer capacity, and produces summaries that are hard to
-act on. AIEP reviews are scoped to what the WO actually changed.
+Review toàn bộ cây cho mỗi Work Order chôn vùi các finding thực sự dưới các bình luận về code
+không thay đổi, lãng phí năng lực reviewer, và tạo ra các summary khó
+hành động. Review của AIEP được giới hạn vào những gì WO thực sự thay đổi.
 
 ## Inputs
 
-- The Work Order and its associated branch or staged changes.
-- A merge base / comparison point for the change.
+- Work Order và branch liên quan hoặc các thay đổi đã staged.
+- Một merge base / điểm so sánh cho thay đổi.
 
-## Procedure
+## Quy trình
 
-1. **Establish the delta.** Determine the set of changed files and hunks for the WO
-   relative to its base. Prefer the smallest correct comparison (staged changes, or the
-   branch against its base).
-2. **Bound the review context.** Provide reviewers the diff plus only the minimal
-   surrounding context needed to understand each hunk (function/module the hunk lives
-   in). Do not paste unrelated files.
-3. **Instruct scope explicitly.** Every reviewer prompt states "Review ONLY the change
-   delta" (the DeepSeek/Qwen/Gemini prompts already do this).
-4. **Allow deliberate widening.** If a change in the delta implies a defect in adjacent
-   unchanged code (e.g. a caller now passing a wrong argument), a reviewer may reference
-   that code — but must tie the finding back to the delta.
-5. **Attribute findings to delta locations.** Each finding cites a file and line/region
-   inside (or directly implicated by) the delta.
+1. **Thiết lập delta.** Xác định tập các file và hunk đã thay đổi cho WO
+   so với base của nó. Ưu tiên phép so sánh đúng nhỏ nhất (các thay đổi đã staged, hoặc
+   branch so với base của nó).
+2. **Giới hạn context review.** Cung cấp cho reviewer diff cùng chỉ context xung quanh tối thiểu
+   cần để hiểu mỗi hunk (function/module mà hunk nằm trong đó).
+   Không dán các file không liên quan.
+3. **Chỉ dẫn scope tường minh.** Mỗi prompt reviewer nêu "Review ONLY the change
+   delta" (các prompt DeepSeek/Qwen/Gemini đã làm việc này).
+4. **Cho phép mở rộng có chủ đích.** Nếu một thay đổi trong delta ngụ ý một defect trong code
+   liền kề không thay đổi (ví dụ một caller giờ truyền sai đối số), reviewer có thể tham chiếu
+   code đó — nhưng phải buộc finding trở lại delta.
+5. **Quy finding về các vị trí trong delta.** Mỗi finding trích dẫn một file và line/region
+   bên trong (hoặc bị liên đới trực tiếp bởi) delta.
 
-## Anti-patterns to avoid
+## Các anti-pattern cần tránh
 
-- Reviewing pre-existing code unrelated to the WO ("while we're here" scope creep).
-- Re-flagging long-standing issues the WO did not touch (open a separate WO instead).
-- Feeding reviewers the whole repository as context.
+- Review code có sẵn không liên quan tới WO (scope creep kiểu "nhân tiện đang ở đây").
+- Nêu lại các vấn đề tồn tại lâu mà WO không đụng tới (mở một WO riêng thay vào đó).
+- Đưa cho reviewer toàn bộ repository làm context.
 
 ## Definition of done
 
-Reviewer artifacts reference only delta locations (or delta-implicated code), and the
-review summary is legible because it is bounded to what the WO changed.
+Các artifact của reviewer chỉ tham chiếu các vị trí trong delta (hoặc code bị delta liên đới), và
+review summary dễ đọc vì nó được giới hạn vào những gì WO đã thay đổi.

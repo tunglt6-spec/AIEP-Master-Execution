@@ -1,46 +1,46 @@
-# Codex Token Preservation
+# Bảo tồn Token của Codex
 
-Codex is AIEP's **External Independent Auditor** — a scarce, high-value reviewer that is
-deliberately kept out of the default pipeline. This article explains why we preserve
-Codex capacity and how the policy enforces it.
+Codex là **External Independent Auditor** của AIEP — một reviewer khan hiếm, giá trị cao được
+cố ý giữ ngoài pipeline mặc định. Bài viết này giải thích vì sao chúng ta bảo tồn
+năng lực Codex và cách policy thực thi điều đó.
 
-## Why preserve it
+## Vì sao bảo tồn nó
 
-- Codex is an *external* auditor, not a local model. Its independence is what makes an
-  L4 audit meaningful: it has not participated in the earlier review stages.
-- Running Codex on routine work erodes that signal. If everything is "audited," an audit
-  stops meaning "this is high-risk and got independent scrutiny."
-- External invocations cost budget and time. Reserving them for genuine L4 work keeps the
-  auditor available when it truly matters.
+- Codex là một auditor *bên ngoài*, không phải một model cục bộ. Tính độc lập của nó là thứ làm cho một
+  audit L4 có ý nghĩa: nó chưa tham gia vào các giai đoạn review trước đó.
+- Chạy Codex trên công việc thường lệ làm xói mòn tín hiệu đó. Nếu mọi thứ đều được "audited," một audit
+  thôi không còn nghĩa là "đây là rủi ro cao và đã được soi xét độc lập."
+- Các lần gọi bên ngoài tốn ngân sách và thời gian. Dành chúng cho công việc L4 thực sự giữ cho
+  auditor sẵn sàng khi nó thực sự quan trọng.
 
-## The rule that preserves it
+## Quy tắc bảo tồn nó
 
-The **CODEX GUARD**: Codex runs **only at L4**, never at L1/L2/L3, and Work Orders must
-not be inflated to L4 to obtain extra review. L4 is limited to genuinely high-risk
-changes (auth, authz, critical security, payment, critical data migration, core runtime
-with system-wide impact, major production release, or an unresolvable reviewer conflict).
+**CODEX GUARD**: Codex chỉ chạy **ở L4**, không bao giờ ở L1/L2/L3, và Work Order không được
+thổi phồng lên L4 để có thêm review. L4 giới hạn ở các thay đổi thực sự rủi ro cao
+(auth, authz, bảo mật trọng yếu, thanh toán, migration dữ liệu trọng yếu, core runtime
+có tác động toàn hệ thống, một bản phát hành production lớn, hoặc một xung đột reviewer không thể giải quyết).
 
-Because Codex is the *last* reviewer in the L4 pipeline
-(claude → deepseek → qwen → gemini → codex), the earlier reviewers act as filters: most
-defects are caught and fixed before the audit, so the audit itself stays focused and
-short.
+Vì Codex là reviewer *cuối cùng* trong pipeline L4
+(claude → deepseek → qwen → gemini → codex), các reviewer trước đó đóng vai trò bộ lọc: hầu hết
+các defect được bắt và sửa trước audit, nên bản thân audit giữ được tập trung và
+ngắn gọn.
 
-## Practices that keep Codex invocations lean
+## Các thực hành giữ các lần gọi Codex gọn nhẹ
 
-1. **Right-level first.** Author Work Orders at the lowest correct level using the
-   review-routing skill; only true high-risk work reaches L4.
-2. **Resolve blocking findings before the audit.** Clear CRITICAL/HIGH findings from
-   DeepSeek, Qwen, and Gemini first, so Codex reviews a clean, converged change rather
-   than a work-in-progress.
-3. **Scope to the delta.** Apply the git-delta-review skill so the audit context is the
-   change, not the whole repository.
-4. **Redact secrets.** Never send credentials to an external reviewer (see
-   secret-hygiene); this protects both security and clean audit input.
-5. **Batch nothing artificially.** Do not bundle unrelated changes into one L4 WO to
-   "save" an audit; that defeats delta-scoped review.
+1. **Đúng mức trước tiên.** Soạn Work Order ở mức đúng thấp nhất bằng skill
+   review-routing; chỉ công việc rủi ro cao thực sự mới tới L4.
+2. **Giải quyết các finding chặn trước audit.** Dọn các finding CRITICAL/HIGH từ
+   DeepSeek, Qwen, và Gemini trước, để Codex review một thay đổi sạch, đã hội tụ thay vì
+   một work-in-progress.
+3. **Giới hạn vào delta.** Áp dụng skill git-delta-review để context của audit là
+   thay đổi, không phải toàn bộ repository.
+4. **Redact secret.** Không bao giờ gửi credential tới một reviewer bên ngoài (xem
+   secret-hygiene); điều này bảo vệ cả bảo mật lẫn đầu vào audit sạch.
+5. **Không gộp một cách nhân tạo.** Không gói các thay đổi không liên quan vào một WO L4 để
+   "tiết kiệm" một audit; điều đó phá hỏng review giới hạn theo delta.
 
 ## Anti-pattern
 
-Escalating to L4 "to be safe" on a change that is not high-risk. This spends the auditor,
-delays the WO, and — over time — trains the team to treat L4 as routine. When in doubt
-between L3 and L4, default to L3 unless a listed high-risk criterion clearly applies.
+Leo lên L4 "cho chắc" trên một thay đổi không rủi ro cao. Điều này tiêu tốn auditor,
+làm chậm WO, và — theo thời gian — huấn luyện team coi L4 là thường lệ. Khi phân vân
+giữa L3 và L4, mặc định chọn L3 trừ khi một tiêu chí rủi ro cao được liệt kê rõ ràng áp dụng.

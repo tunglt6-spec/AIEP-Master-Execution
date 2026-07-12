@@ -1,41 +1,41 @@
 # AIEP Release Checklist (v1.0)
 
-Use this checklist to promote a release candidate. Tick every item.
+Dùng checklist này để đề bạt (promote) một release candidate. Tích chọn từng mục.
 
 ## Build & test
 
-- [ ] `npm test` — all suites pass.
-- [ ] `node bin/aiep.js doctor` — environment reviewed (degraded backends noted).
-- [ ] `node bin/aiep.js validate` — all FAIL gates pass; WARN dispositioned.
+- [ ] `npm test` — tất cả suite đều pass.
+- [ ] `node bin/aiep.js doctor` — môi trường đã được rà soát (ghi nhận các backend suy giảm).
+- [ ] `node bin/aiep.js validate` — tất cả gate FAIL đều pass; WARN đã được dispositioned.
 
-## Review evidence
+## Bằng chứng review
 
-- [ ] Every non-trivial Work Order has a ReviewLevel.
-- [ ] Reviewed Work Orders have their required artifacts under `.aiep/artifacts/`.
-- [ ] No unresolved CRITICAL findings.
-- [ ] HIGH findings resolved or dispositioned in the Decision Log / Work Order.
-- [ ] Codex guard verified (no Codex below L4; unit tests green).
+- [ ] Mọi Work Order không tầm thường đều có một ReviewLevel.
+- [ ] Các Work Order đã review có những artifact bắt buộc dưới `.aiep/artifacts/`.
+- [ ] Không còn finding CRITICAL chưa xử lý.
+- [ ] Các finding HIGH đã được giải quyết hoặc dispositioned trong Decision Log / Work Order.
+- [ ] Đã xác minh Codex guard (không có Codex dưới L4; unit test xanh).
 
-## Documentation
+## Tài liệu
 
-- [ ] PROJECT.md, README.md, CHANGELOG.md current.
-- [ ] Governance suite present and consistent (Constitution, Governance, Review
+- [ ] PROJECT.md, README.md, CHANGELOG.md cập nhật.
+- [ ] Bộ governance đầy đủ và nhất quán (Constitution, Governance, Review
       Level Policy, Scope Lock, Architecture Freeze).
-- [ ] Design specification and data model current.
-- [ ] Release notes written.
+- [ ] Đặc tả thiết kế và mô hình dữ liệu cập nhật.
+- [ ] Release notes đã viết.
 
 ## PMO
 
-- [ ] Backlog, sprints, milestones and risks reflect actual state.
-- [ ] Decision Log updated with release decisions.
+- [ ] Backlog, sprint, milestone và risk phản ánh đúng trạng thái thực tế.
+- [ ] Decision Log được cập nhật với các quyết định phát hành.
 
-## Packaging
+## Đóng gói (Packaging)
 
-- [ ] `node bin/aiep.js package --dry-run` reviewed.
-- [ ] `node bin/aiep.js package` produces a tarball in `dist/`.
-- [ ] Local install verified: `npm install -g ./dist/tunglt6-aiep-1.0.0.tgz`.
+- [ ] `node bin/aiep.js package --dry-run` đã được rà soát.
+- [ ] `node bin/aiep.js package` tạo ra một tarball trong `dist/`.
+- [ ] Đã xác minh cài đặt cục bộ: `npm install -g ./dist/tunglt6-aiep-1.0.0.tgz`.
 
-## Sign-off
+## Ký duyệt (Sign-off)
 
-- [ ] Final Release Review Package assembled (`FINAL-RELEASE-REVIEW-PACKAGE.md`).
-- [ ] Submitted to Product Owner & ARB for final review.
+- [ ] Đã tập hợp Final Release Review Package (`FINAL-RELEASE-REVIEW-PACKAGE.md`).
+- [ ] Đã trình lên Product Owner & ARB để rà soát cuối.

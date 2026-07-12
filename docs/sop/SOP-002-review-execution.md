@@ -1,83 +1,83 @@
-# SOP-002 — Review Execution
+# SOP-002 — Thực thi Review
 
 - **Version:** 1.0
 - **Owner:** Execution Lead
 - **Last updated:** 2026-07-12
 
-## Purpose
+## Mục đích
 
-Standardize how `aiep review` is run, how reviewers are routed per ReviewLevel, how
-degraded reviewer backends are handled, and how CRITICAL/HIGH findings are resolved.
+Chuẩn hóa cách chạy `aiep review`, cách route reviewer theo ReviewLevel, cách
+xử lý các reviewer backend bị suy giảm (degraded), và cách giải quyết finding CRITICAL/HIGH.
 
-## Scope
+## Phạm vi
 
-Applies to every Work Order review. Codex engagement is covered by SOP-003.
+Áp dụng cho mọi lần review Work Order. Việc huy động Codex được đề cập trong SOP-003.
 
-## Roles
+## Vai trò
 
-- **Execution Lead** — runs the review, triages findings, records dispositions.
-- **Reviewers** — deepseek & qwen (DeepSeek/Qwen via Ollama), gemini (CLI), codex (CLI, L4 only).
+- **Execution Lead** — chạy review, phân loại findings, ghi lại disposition.
+- **Reviewers** — deepseek & qwen (DeepSeek/Qwen qua Ollama), gemini (CLI), codex (CLI, chỉ L4).
 
-## Reviewer pipeline per level
+## Pipeline reviewer theo từng mức
 
 - **L1** — claude
 - **L2** — claude → deepseek → qwen
 - **L3** — claude → deepseek → qwen → gemini
 - **L4** — claude → deepseek → qwen → gemini → codex
 
-Reviewers run in order. Claude self review always runs first. Each reviewer writes an
-artifact into `.aiep/artifacts/<WO-ID>/`:
+Reviewer chạy theo thứ tự. Claude self review luôn chạy trước tiên. Mỗi reviewer ghi một
+artifact vào `.aiep/artifacts/<WO-ID>/`:
 `claude-self-review.md`, `deepseek-review.md`, `qwen-review.md`, `gemini-review.md`
-(L3+), `codex-audit.md` (L4), plus `review-summary.md` (L2+) and `decision.json`.
+(L3+), `codex-audit.md` (L4), cùng với `review-summary.md` (L2+) và `decision.json`.
 
-## Procedure
+## Quy trình
 
-1. Ensure prerequisites for the target level: Ollama running at the configured
-   endpoint for deepseek/qwen; `gemini` CLI on PATH for L3+; `codex` CLI on PATH for L4.
-   Run `aiep doctor` to check backends.
-2. Run the review:
-   - Single WO: `aiep review <WO-ID>`
-   - All non-done WOs: `aiep review`
-   - Scope the diff against a base ref when needed: `aiep review <WO-ID> --base <ref>`
-   - Machine-readable output: append `--json`.
-3. Read the console verdict (`PASS` or `CHANGES_REQUESTED`) and the CRITICAL/HIGH counts.
-4. Open `.aiep/artifacts/<WO-ID>/review-summary.md` (or `aiep artifacts <WO-ID>`) and
-   review findings by severity and per-reviewer status.
-5. Handle any degraded/error reviewer (see below) with a documented disposition.
-6. Resolve every CRITICAL and HIGH finding (see below).
-7. Re-run `aiep review <WO-ID>` until the verdict is `PASS`.
+1. Đảm bảo các điều kiện tiên quyết cho mức mục tiêu: Ollama đang chạy tại endpoint đã cấu hình
+   cho deepseek/qwen; `gemini` CLI có trên PATH cho L3+; `codex` CLI có trên PATH cho L4.
+   Chạy `aiep doctor` để kiểm tra các backend.
+2. Chạy review:
+   - Một WO đơn: `aiep review <WO-ID>`
+   - Tất cả WO chưa done: `aiep review`
+   - Giới hạn diff theo một base ref khi cần: `aiep review <WO-ID> --base <ref>`
+   - Đầu ra máy đọc được: thêm `--json`.
+3. Đọc verdict trên console (`PASS` hoặc `CHANGES_REQUESTED`) và số lượng CRITICAL/HIGH.
+4. Mở `.aiep/artifacts/<WO-ID>/review-summary.md` (hoặc `aiep artifacts <WO-ID>`) và
+   review findings theo severity và theo trạng thái của từng reviewer.
+5. Xử lý mọi reviewer bị degraded/error (xem bên dưới) kèm một disposition được ghi lại.
+6. Giải quyết mọi finding CRITICAL và HIGH (xem bên dưới).
+7. Chạy lại `aiep review <WO-ID>` cho tới khi verdict là `PASS`.
 
-## Handling degraded backends
+## Xử lý backend bị suy giảm
 
-A reviewer reports `degraded` when its backend is unavailable (e.g. Ollama down, or
-`gemini`/`codex` not on PATH), or `error` when its invocation fails. In these cases:
+Một reviewer báo `degraded` khi backend của nó không khả dụng (ví dụ Ollama tắt, hoặc
+`gemini`/`codex` không có trên PATH), hoặc báo `error` khi lời gọi của nó thất bại. Trong các trường hợp này:
 
-- The reviewer writes an integration-decision artifact; the pipeline does not silently skip it.
-- Preferred: provision the tool (start Ollama / install the CLI) and re-run the review.
-- If the tool genuinely cannot be provisioned, record a **documented disposition** in
-  `review-summary.md` (Disposition section) explaining why, and the residual risk accepted.
-- A degraded reviewer never converts a CRITICAL/HIGH into a pass — blocking findings
-  from other reviewers still block.
+- Reviewer ghi một artifact integration-decision; pipeline không âm thầm bỏ qua nó.
+- Ưu tiên: cung cấp công cụ (khởi động Ollama / cài CLI) và chạy lại review.
+- Nếu công cụ thực sự không thể cung cấp được, ghi một **disposition được ghi lại** trong
+  `review-summary.md` (phần Disposition) giải thích lý do, và rủi ro tồn dư được chấp nhận.
+- Một reviewer bị degraded không bao giờ biến một CRITICAL/HIGH thành pass — các finding chặn
+  từ reviewer khác vẫn chặn.
 
-## Resolving CRITICAL / HIGH findings
+## Giải quyết finding CRITICAL / HIGH
 
-CRITICAL and HIGH are blocking (`verdict: CHANGES_REQUESTED`). For each:
+CRITICAL và HIGH là chặn (`verdict: CHANGES_REQUESTED`). Với mỗi finding:
 
-1. Reproduce/understand the finding from the reviewer artifact.
-2. Fix the code, OR record an explicit disposition: accept-with-rationale, or defer to
-   a new Work Order (link it) — only where justified and risk-owned.
-3. Re-run `aiep review <WO-ID>`; confirm the count drops and the verdict becomes `PASS`.
-4. CRITICAL findings must reach zero. HIGH findings must be resolved or dispositioned
-   (they surface as a `aiep validate` warning until addressed).
+1. Tái hiện/hiểu finding từ artifact của reviewer.
+2. Sửa code, HOẶC ghi một disposition rõ ràng: accept-with-rationale, hoặc hoãn sang
+   một Work Order mới (liên kết tới nó) — chỉ khi có lý do chính đáng và có người chịu trách nhiệm rủi ro.
+3. Chạy lại `aiep review <WO-ID>`; xác nhận số lượng giảm và verdict trở thành `PASS`.
+4. Các finding CRITICAL phải về không. Các finding HIGH phải được giải quyết hoặc disposition
+   (chúng nổi lên như một cảnh báo `aiep validate` cho tới khi được xử lý).
 
 ## Checklist
 
-- [ ] `aiep doctor` shows the backends needed for this ReviewLevel.
-- [ ] `aiep review <WO-ID>` executed; correct pipeline ran for the level.
-- [ ] Every reviewer status reviewed; degraded/error backends dispositioned.
-- [ ] Zero unresolved CRITICAL; all HIGH resolved or dispositioned.
-- [ ] Verdict `PASS` on final run.
-- [ ] Artifacts and `decision.json` present under `.aiep/artifacts/<WO-ID>/`.
+- [ ] `aiep doctor` cho thấy các backend cần thiết cho ReviewLevel này.
+- [ ] `aiep review <WO-ID>` đã chạy; pipeline đúng đã chạy cho mức đó.
+- [ ] Đã review trạng thái mọi reviewer; các backend degraded/error đã được disposition.
+- [ ] Không còn CRITICAL chưa giải quyết; mọi HIGH đã giải quyết hoặc disposition.
+- [ ] Verdict `PASS` ở lần chạy cuối.
+- [ ] Artifact và `decision.json` hiện diện dưới `.aiep/artifacts/<WO-ID>/`.
 
 ## References
 

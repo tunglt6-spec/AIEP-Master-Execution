@@ -1,14 +1,14 @@
 # AIEP Risk Register
 
-Severity × likelihood scale: Low / Medium / High.
+Thang độ nghiêm trọng × khả năng xảy ra: Low / Medium / High.
 
-| ID | Risk | Likelihood | Impact | Mitigation | Status |
+| ID | Risk | Khả năng | Tác động | Biện pháp giảm thiểu | Trạng thái |
 |----|------|-----------|--------|------------|--------|
-| R-01 | Reviewer backend (Gemini/Codex CLI) unavailable in an environment | High | Medium | Graceful degradation with documented integration decision; doctor reports availability; not a hard block for L1–L3 | Mitigated |
-| R-02 | DeepSeek/Qwen model not installed in Ollama | Medium | Medium | Availability probe + model fallback with recorded substitution; `ollama pull` documented in doctor output | Mitigated |
-| R-03 | Frontmatter parser too permissive/strict for edge inputs | Medium | Medium | Controlled subset + unit tests; templates constrain input | Mitigated |
-| R-04 | Codex accidentally invoked below L4 (token waste) | Low | High | Defence-in-depth guard (matrix + reviewer + router + validation) with tests | Mitigated |
-| R-05 | Secret accidentally committed | Low | High | Secret scanner in self-review and `aiep validate`; `.gitignore` for env/keys | Mitigated |
-| R-06 | Scope creep toward v2.0 features | Medium | Medium | Scope Lock v1.0 with directory tripwires enforced by validation | Mitigated |
-| R-07 | Local model output not machine-parseable | Medium | Low | Structured `FINDING:` protocol with raw output preserved; parser is best-effort with fallback | Accepted |
-| R-08 | Cross-platform path/shell differences | Medium | Medium | Node built-ins, path joins, `where`/`which` probing; tested on Windows | Mitigated |
+| R-01 | Backend reviewer (Gemini/Codex CLI) không khả dụng trong một môi trường | High | Medium | Suy giảm nhẹ nhàng với quyết định tích hợp có tài liệu; doctor báo cáo tính khả dụng; không phải block cứng cho L1–L3 | Mitigated |
+| R-02 | Model DeepSeek/Qwen chưa được cài trong Ollama | Medium | Medium | Probe tính khả dụng + fallback model với việc thay thế được ghi lại; `ollama pull` được ghi tài liệu trong output của doctor | Mitigated |
+| R-03 | Frontmatter parser quá dễ dãi/quá nghiêm với input biên | Medium | Medium | Tập con có kiểm soát + unit test; template ràng buộc input | Mitigated |
+| R-04 | Codex bị gọi nhầm dưới L4 (lãng phí token) | Low | High | Guard phòng thủ theo chiều sâu (matrix + reviewer + router + validation) với test | Mitigated |
+| R-05 | Secret bị commit nhầm | Low | High | Trình quét secret trong self-review và `aiep validate`; `.gitignore` cho env/key | Mitigated |
+| R-06 | Scope creep hướng tới các tính năng v2.0 | Medium | Medium | Scope Lock v1.0 với tripwire theo thư mục được thực thi bởi validation | Mitigated |
+| R-07 | Output model cục bộ không parse được bằng máy | Medium | Low | Giao thức có cấu trúc `FINDING:` với output thô được lưu giữ; parser best-effort có fallback | Accepted |
+| R-08 | Khác biệt path/shell giữa các nền tảng | Medium | Medium | Node built-in, path join, probe `where`/`which`; đã test trên Windows | Mitigated |

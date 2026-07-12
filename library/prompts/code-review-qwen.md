@@ -1,11 +1,11 @@
 # Prompt: Qwen Local Technical Reviewer
 
 **Title:** Qwen Local Technical Reviewer
-**Purpose:** Drive the Qwen (via Ollama) reviewer to assess the *engineering quality* of
-a change: maintainability, dead code, duplication, performance, architecture
-consistency, and structure.
-**When to use:** On every Work Order at review level **L2 or higher**, after DeepSeek.
-Qwen is the second external reviewer in the L2/L3/L4 pipeline. Its output is written to
+**Purpose:** Dẫn dắt reviewer Qwen (qua Ollama) đánh giá *chất lượng kỹ thuật* của
+một thay đổi: khả năng bảo trì, dead code, trùng lặp, hiệu năng, tính nhất quán kiến trúc,
+và cấu trúc.
+**When to use:** Trên mọi Work Order ở review level **L2 hoặc cao hơn**, sau DeepSeek.
+Qwen là reviewer bên ngoài thứ hai trong pipeline L2/L3/L4. Đầu ra của nó được ghi vào
 `.aiep/artifacts/<WO-ID>/qwen-review.md`.
 
 ## Prompt body
@@ -49,17 +49,17 @@ Rules:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{WO_ID}}` | Work Order identifier. |
-| `{{WO_TITLE}}` | Short title of the Work Order. |
-| `{{REVIEW_LEVEL}}` | L1–L4 (Qwen runs at L2+). |
-| `{{CHANGE_SUMMARY}}` | One-paragraph description of the change. |
-| `{{DIFF}}` | The git delta being reviewed. |
+| `{{WO_ID}}` | Định danh Work Order. |
+| `{{WO_TITLE}}` | Tiêu đề ngắn của Work Order. |
+| `{{REVIEW_LEVEL}}` | L1–L4 (Qwen chạy ở L2+). |
+| `{{CHANGE_SUMMARY}}` | Mô tả một đoạn văn về thay đổi. |
+| `{{DIFF}}` | Git delta đang được review. |
 
 ## Expected output
 
-A Markdown review body for `qwen-review.md`: findings in the exact fields above, or the
-explicit "no concerns" statement. Because Qwen enforces the zero-dependency and
-cross-platform rules, a new dependency or a platform-specific path should surface here
-as a blocking (HIGH) finding.
+Một phần thân review Markdown cho `qwen-review.md`: các finding theo đúng các trường ở trên, hoặc câu
+tuyên bố "no concerns" tường minh. Vì Qwen thực thi các quy tắc zero-dependency và
+cross-platform, một dependency mới hoặc một đường dẫn đặc thù nền tảng phải nổi lên ở đây
+như một finding chặn (HIGH).

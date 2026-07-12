@@ -1,59 +1,59 @@
-# Local AI Review with Ollama
+# Review AI cục bộ với Ollama
 
-AIEP runs two of its reviewers **locally** through **Ollama**: DeepSeek (Code Reviewer)
-and Qwen (Technical Reviewer). Local review keeps the correctness and quality lenses fast,
-private, and offline-capable — the change delta never leaves the machine for these stages.
+AIEP chạy hai trong số các reviewer của nó **cục bộ** thông qua **Ollama**: DeepSeek (Code Reviewer)
+và Qwen (Technical Reviewer). Review cục bộ giữ cho các lăng kính tính đúng đắn và chất lượng nhanh,
+riêng tư, và có khả năng offline — change delta không bao giờ rời khỏi máy ở các giai đoạn này.
 
-## Which reviewers are local
+## Reviewer nào là cục bộ
 
-| Reviewer | Role | Runs via |
+| Reviewer | Vai trò | Chạy qua |
 |----------|------|----------|
-| DeepSeek | Local Code Reviewer — correctness, runtime, edge cases, basic security, error handling | Ollama (local) |
-| Qwen | Local Technical Reviewer — maintainability, dead code, duplication, performance, architecture, structure | Ollama (local) |
+| DeepSeek | Local Code Reviewer — tính đúng đắn, runtime, edge case, bảo mật cơ bản, error handling | Ollama (cục bộ) |
+| Qwen | Local Technical Reviewer — khả năng bảo trì, dead code, trùng lặp, hiệu năng, kiến trúc, cấu trúc | Ollama (cục bộ) |
 
-Gemini and Codex are **not** local — they are external reviewers used at L3 and L4
-respectively.
+Gemini và Codex **không** cục bộ — chúng là các reviewer bên ngoài được dùng ở L3 và L4
+tương ứng.
 
-## Why local
+## Vì sao cục bộ
 
-- **Privacy** — the delta for L2 correctness/quality review stays on the machine.
-- **Cost** — no per-call external spend for the two most frequently run reviewers.
-- **Availability** — reviews can run offline once the models are pulled.
+- **Riêng tư** — delta cho review tính đúng đắn/chất lượng L2 ở lại trên máy.
+- **Chi phí** — không có chi tiêu bên ngoài theo lời gọi cho hai reviewer chạy thường xuyên nhất.
+- **Khả dụng** — review có thể chạy offline một khi các model đã được pull.
 
-## Prerequisites
+## Điều kiện tiên quyết
 
-1. Ollama installed and its service running.
-2. The DeepSeek and Qwen models pulled locally.
-3. AIEP configured to reach the local Ollama endpoint (configuration lives in
-   `.aiep/config.json`; no secrets belong there — see the secret-hygiene skill).
+1. Ollama đã cài và service của nó đang chạy.
+2. Các model DeepSeek và Qwen đã được pull cục bộ.
+3. AIEP được cấu hình để tới endpoint Ollama cục bộ (cấu hình nằm trong
+   `.aiep/config.json`; không secret nào thuộc về đó — xem skill secret-hygiene).
 
-## Verifying the environment
+## Xác minh môi trường
 
-Use the platform's health check before relying on local review:
+Dùng health check của nền tảng trước khi dựa vào review cục bộ:
 
 ```text
 aiep doctor
 ```
 
-`aiep doctor` surfaces environment health so you can confirm the local backends are
-reachable before running `aiep review`.
+`aiep doctor` làm nổi tình trạng môi trường để bạn có thể xác nhận các backend cục bộ
+tới được trước khi chạy `aiep review`.
 
-## When a local backend is unavailable
+## Khi một backend cục bộ không khả dụng
 
-If Ollama is not running or a model is not pulled, do **not** silently skip the reviewer.
-Apply the **graceful-degradation** skill: assign a documented disposition
-(`SKIPPED_UNAVAILABLE`, `DEFERRED`, or `SUBSTITUTED`), record it in the reviewer artifact
-and `decision.json`, and remember that a `DEFERRED` reviewer means the WO cannot pass.
+Nếu Ollama không chạy hoặc một model chưa được pull, **không** âm thầm bỏ qua reviewer.
+Áp dụng skill **graceful-degradation**: gán một disposition được ghi lại
+(`SKIPPED_UNAVAILABLE`, `DEFERRED`, hoặc `SUBSTITUTED`), ghi nó trong artifact của reviewer
+và `decision.json`, và nhớ rằng một reviewer `DEFERRED` nghĩa là WO không thể pass.
 
-## How local review fits the pipeline
+## Cách review cục bộ khớp vào pipeline
 
-At L2+ the order is claude → **deepseek** → **qwen** (→ gemini at L3 → codex at L4).
-DeepSeek and Qwen therefore act as the first line of external-to-Claude scrutiny and, at
-higher levels, as filters that clean up the change before the more expensive Gemini and
-Codex stages. Each writes its own artifact: `deepseek-review.md` and `qwen-review.md`.
+Ở L2+ thứ tự là claude → **deepseek** → **qwen** (→ gemini ở L3 → codex ở L4).
+DeepSeek và Qwen do đó đóng vai trò tuyến soi xét đầu tiên bên-ngoài-Claude và, ở
+các mức cao hơn, như các bộ lọc dọn sạch thay đổi trước các giai đoạn Gemini và
+Codex tốn kém hơn. Mỗi cái ghi artifact riêng: `deepseek-review.md` và `qwen-review.md`.
 
-## Keeping the lenses non-overlapping
+## Giữ các lăng kính không chồng lấn
 
-DeepSeek owns *correctness*; Qwen owns *quality/structure*. Keeping the prompts scoped
-(see `prompts/code-review-deepseek.md` and `prompts/code-review-qwen.md`) avoids duplicate
-findings and makes the review summary cleaner.
+DeepSeek sở hữu *tính đúng đắn*; Qwen sở hữu *chất lượng/cấu trúc*. Giữ các prompt được giới hạn
+(xem `prompts/code-review-deepseek.md` và `prompts/code-review-qwen.md`) tránh các finding
+trùng lặp và làm cho review summary sạch hơn.

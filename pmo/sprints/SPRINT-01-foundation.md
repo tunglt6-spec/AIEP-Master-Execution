@@ -1,22 +1,22 @@
 ---
 id: SPRINT-01
-name: "Foundation"
+name: "Nền tảng"
 status: done
-goal: "Repository, governance, documentation, PMO, templates, bootstrap, validation."
+goal: "Repository, governance, tài liệu, PMO, template, bootstrap, validation."
 phase: P0-Foundation
 ---
 
 # Sprint 01 — Foundation
 
-**Goal:** Stand up the repository foundation and governance so all later work is
-governed and auditable.
+**Mục tiêu:** Dựng nền tảng repository và governance để mọi công việc về sau đều
+được quản trị và có thể audit.
 
 ## Work Orders
 
-WO-0001 … WO-0008 (see Product Backlog).
+WO-0001 … WO-0008 (xem Product Backlog).
 
-## Outcome
+## Kết quả
 
-Repository skeleton, governance suite (Constitution, Governance, Review Level
-Policy, Scope Lock, Architecture Freeze), PMO structure, templates, bootstrap
-scripts, PROJECT.md and the `aiep validate` quality gates.
+Repository skeleton, bộ governance (Constitution, Governance, Review Level
+Policy, Scope Lock, Architecture Freeze), cấu trúc PMO, template, bootstrap
+script, PROJECT.md và các quality gate `aiep validate`.

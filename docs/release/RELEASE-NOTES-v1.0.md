@@ -1,47 +1,45 @@
-# AIEP v1.0.0 — Release Notes
+# AIEP v1.0.0 — Ghi chú Phát hành
 
-**Release type:** Release Candidate (pending Product Owner & ARB final review)
-**Date:** 2026-07-12
+**Loại phát hành:** Release Candidate (đang chờ Product Owner & ARB rà soát cuối)
+**Ngày:** 2026-07-12
 
-## Summary
+## Tóm tắt
 
-AIEP v1.0 delivers a governance-driven AI engineering platform: a zero-dependency
-Node.js CLI that runs AI-assisted multi-level code review (L1–L4), manages work
-through a PMO, curates a reusable AI engineering library, and renders a live
-dashboard.
+AIEP v1.0 cung cấp một nền tảng kỹ thuật AI vận hành theo governance: một CLI
+Node.js không phụ thuộc gói (zero-dependency) chạy quy trình review mã do AI hỗ trợ
+theo nhiều cấp (L1–L4), quản lý công việc thông qua PMO, tuyển chọn một thư viện
+kỹ thuật AI tái sử dụng, và hiển thị một dashboard trực tiếp.
 
-## What's included (five product deliverables)
+## Bao gồm những gì (năm deliverable sản phẩm)
 
 1. **Core Repository & CLI** — `aiep status | validate | review | artifacts |
    doctor | dashboard | package`.
-2. **Documentation System** — constitution, governance, design spec + data model,
-   ADRs, RFC, SOPs, release docs.
-3. **AI Engineering Library** — prompts, skills, MCP descriptors, knowledge.
-4. **PMO** — backlog, 3 sprints, milestones, 24 Work Orders, issues, risks,
-   decisions.
-5. **Dashboard** — ten live-data panels.
+2. **Hệ thống Tài liệu** — hiến pháp (constitution), governance, đặc tả thiết kế +
+   mô hình dữ liệu, các ADR, RFC, SOP, tài liệu release.
+3. **Thư viện Kỹ thuật AI** — prompt, skill, MCP descriptor, tri thức.
+4. **PMO** — backlog, 3 sprint, milestone, 24 Work Order, issue, risk, quyết định.
+5. **Dashboard** — mười panel dữ liệu trực tiếp.
 
-## Review model
+## Mô hình review
 
-- Review Levels L1–L4 with per-level reviewer pipelines.
-- DeepSeek + Qwen local review via Ollama (real, dual local review).
-- Gemini design review and Codex L4 audit via CLI, with graceful degradation.
-- **Codex guard:** external audit only at L4; zero Codex usage in v1.0 by design.
+- Các Review Level L1–L4 với pipeline reviewer cho từng cấp.
+- Review cục bộ DeepSeek + Qwen qua Ollama (review cục bộ kép, thực sự).
+- Review thiết kế Gemini và audit L4 Codex qua CLI, có suy giảm nhẹ nhàng (graceful degradation).
+- **Codex guard:** chỉ audit bên ngoài ở L4; không dùng Codex trong v1.0 theo thiết kế.
 
-## Quality
+## Chất lượng
 
-- 23 automated tests (`node:test`) — all passing.
-- 8 quality gates via `aiep validate`.
-- No unresolved CRITICAL/HIGH findings; no secrets committed; Scope Lock respected.
+- 23 test tự động (`node:test`) — tất cả đều pass.
+- 8 quality gate qua `aiep validate`.
+- Không còn finding CRITICAL/HIGH chưa xử lý; không commit secret; Scope Lock được tôn trọng.
 
-## Known limitations
+## Giới hạn đã biết
 
-- Local-model finding extraction is best-effort (structured `FINDING:` protocol);
-  raw output is preserved.
-- Gemini/Codex require their CLIs on PATH; otherwise their steps are documented
-  dispositions.
+- Việc trích xuất finding từ model cục bộ là best-effort (theo giao thức có cấu trúc `FINDING:`);
+  output thô được lưu giữ.
+- Gemini/Codex cần có CLI trên PATH; nếu không, các bước của chúng là disposition được ghi lại thành tài liệu.
 
-## Upgrade / install
+## Nâng cấp / cài đặt
 
 ```bash
 npm install -g .        # zero dependencies; offline-capable

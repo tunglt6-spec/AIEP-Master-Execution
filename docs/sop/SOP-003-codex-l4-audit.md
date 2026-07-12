@@ -4,69 +4,69 @@
 - **Owner:** Execution Lead / ARB
 - **Last updated:** 2026-07-12
 
-## Purpose
+## Mục đích
 
-Define exactly when and how Codex — the External Independent Auditor — is engaged, and
-how the Codex Guard preserves tokens by restricting Codex to ReviewLevel L4 only.
+Định nghĩa chính xác khi nào và bằng cách nào Codex — External Independent Auditor — được huy động, và
+cách Codex Guard bảo tồn token bằng cách giới hạn Codex chỉ ở ReviewLevel L4.
 
-## Scope
+## Phạm vi
 
-Codex is NOT a default reviewer. It is invoked only within the L4 pipeline
-(claude → deepseek → qwen → gemini → codex) and never at L1/L2/L3. This SOP governs
-that engagement and the guard that enforces it.
+Codex KHÔNG phải là reviewer mặc định. Nó chỉ được gọi trong pipeline L4
+(claude → deepseek → qwen → gemini → codex) và không bao giờ ở L1/L2/L3. SOP này chi phối
+việc huy động đó và guard thực thi nó.
 
-## Roles
+## Vai trò
 
-- **Execution Lead** — justifies L4, runs the review, resolves the audit findings.
-- **ARB / Chief Architect** — confirms the change genuinely warrants L4.
-- **Codex** — external independent audit of critical correctness, security, architecture
-  and release risk; writes `codex-audit.md`.
+- **Execution Lead** — biện minh cho L4, chạy review, giải quyết các finding của audit.
+- **ARB / Chief Architect** — xác nhận thay đổi thực sự xứng đáng với L4.
+- **Codex** — audit độc lập từ bên ngoài về tính đúng đắn trọng yếu, bảo mật, kiến trúc
+  và rủi ro phát hành; ghi `codex-audit.md`.
 
-## When to engage Codex (L4 only)
+## Khi nào huy động Codex (chỉ L4)
 
-Assign L4 (and therefore Codex) ONLY for genuinely high-risk change:
+Gán L4 (và do đó là Codex) CHỈ cho thay đổi thực sự rủi ro cao:
 
-- Authentication or authorization.
-- Critical security surface.
-- Payment handling.
-- Critical data migration.
-- Core runtime with system-wide impact.
-- Major production release.
-- An unresolvable reviewer conflict at a lower level.
+- Authentication hoặc authorization.
+- Bề mặt bảo mật trọng yếu.
+- Xử lý thanh toán.
+- Migration dữ liệu trọng yếu.
+- Core runtime có tác động toàn hệ thống.
+- Một bản phát hành production lớn.
+- Một xung đột reviewer không thể giải quyết ở mức thấp hơn.
 
-Do NOT inflate a Work Order to L4 merely to obtain more review depth. If none of the
-above apply, the correct level is L1–L3 and Codex must not run.
+KHÔNG thổi phồng một Work Order lên L4 chỉ để có thêm độ sâu review. Nếu không có điều nào
+ở trên áp dụng, mức đúng là L1–L3 và Codex không được chạy.
 
-## The Codex Guard (token preservation)
+## Codex Guard (bảo tồn token)
 
-- Configured in `.aiep/config.json` under `codexGuard` (`enabled: true`, `allowedLevels: ["L4"]`).
-- Enforced in depth: the review router filters Codex out of any non-L4 pipeline, and
-  the Codex reviewer itself hard-refuses (throws a guard-violation) below L4.
-- `aiep validate` fails if a `codex-audit.md` artifact is found under a non-L4 Work Order.
-- Rationale: Codex is expensive; the guard prevents wasted external-audit tokens and
-  keeps Codex reserved for high-risk work.
+- Cấu hình trong `.aiep/config.json` dưới `codexGuard` (`enabled: true`, `allowedLevels: ["L4"]`).
+- Thực thi theo chiều sâu: review router lọc Codex ra khỏi mọi pipeline không phải L4, và
+  bản thân Codex reviewer từ chối cứng (throw một guard-violation) dưới L4.
+- `aiep validate` thất bại nếu tìm thấy một artifact `codex-audit.md` dưới một Work Order không phải L4.
+- Lý do: Codex đắt đỏ; guard ngăn lãng phí token external-audit và
+  giữ Codex dành riêng cho công việc rủi ro cao.
 
-## Procedure
+## Quy trình
 
-1. Confirm the Work Order meets an L4 trigger above; record the justification in the WO
-   ReviewLevel rationale. Have ARB confirm for production-release or security changes.
-2. Set `reviewLevel: L4` in the Work Order frontmatter.
-3. Ensure the `codex` CLI is installed and on PATH (`aiep doctor`).
-4. Run `aiep review <WO-ID>`. The full L4 pipeline runs; Codex runs last.
-5. If `codex` is unavailable, the auditor degrades and writes an integration-decision
-   artifact; record it as a documented disposition (per SOP-002) — do not downgrade the
-   level to bypass the audit.
-6. Read `.aiep/artifacts/<WO-ID>/codex-audit.md`; resolve all CRITICAL/HIGH findings and
-   re-run until the verdict is `PASS`.
+1. Xác nhận Work Order đáp ứng một trigger L4 ở trên; ghi lại lý do biện minh trong phần
+   ReviewLevel rationale của WO. Có ARB xác nhận cho các thay đổi phát hành production hoặc bảo mật.
+2. Đặt `reviewLevel: L4` trong frontmatter của Work Order.
+3. Đảm bảo `codex` CLI đã được cài và có trên PATH (`aiep doctor`).
+4. Chạy `aiep review <WO-ID>`. Toàn bộ pipeline L4 chạy; Codex chạy sau cùng.
+5. Nếu `codex` không khả dụng, auditor bị degrade và ghi một artifact integration-decision;
+   ghi lại nó như một disposition được ghi lại (theo SOP-002) — không hạ mức để
+   né audit.
+6. Đọc `.aiep/artifacts/<WO-ID>/codex-audit.md`; giải quyết mọi finding CRITICAL/HIGH và
+   chạy lại cho tới khi verdict là `PASS`.
 
 ## Checklist
 
-- [ ] L4 justified against a documented trigger; rationale recorded in the WO.
-- [ ] `reviewLevel: L4` set (not inflated from a lower-risk change).
-- [ ] `codex` CLI available, or degraded run recorded as a documented disposition.
-- [ ] `codex-audit.md` produced and reviewed.
-- [ ] No Codex artifact exists under any non-L4 Work Order (guard respected).
-- [ ] All CRITICAL/HIGH from the audit resolved; verdict `PASS`.
+- [ ] L4 được biện minh dựa trên một trigger được ghi lại; lý do được ghi trong WO.
+- [ ] `reviewLevel: L4` đã được đặt (không thổi phồng từ một thay đổi rủi ro thấp hơn).
+- [ ] `codex` CLI khả dụng, hoặc lần chạy degraded được ghi lại như một disposition được ghi lại.
+- [ ] `codex-audit.md` đã được tạo và review.
+- [ ] Không tồn tại artifact Codex nào dưới bất kỳ Work Order không phải L4 nào (guard được tôn trọng).
+- [ ] Mọi CRITICAL/HIGH từ audit đã được giải quyết; verdict `PASS`.
 
 ## References
 

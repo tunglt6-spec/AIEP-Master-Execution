@@ -1,65 +1,65 @@
-# SOP-004 — Release Preparation
+# SOP-004 — Chuẩn bị Phát hành
 
 - **Version:** 1.0
 - **Owner:** Execution Lead / PMO
 - **Last updated:** 2026-07-12
 
-## Purpose
+## Mục đích
 
-Define the quality gates and steps to prepare an AIEP v1.0 release, using
-`aiep validate` and `aiep package`, so only a fully-governed, gate-passing state is packaged.
+Định nghĩa các quality gates và các bước để chuẩn bị một bản phát hành AIEP v1.0, sử dụng
+`aiep validate` và `aiep package`, để chỉ một trạng thái đã được quản trị đầy đủ và pass gate mới được đóng gói.
 
-## Scope
+## Phạm vi
 
-Applies to preparing a distributable AIEP package (npm tarball) for v1.0. Feature scope
-is frozen by Scope Lock v1.0 and Architecture Freeze v1.0; releases add no v2.0 surface.
+Áp dụng cho việc chuẩn bị một package AIEP phân phối được (npm tarball) cho v1.0. Phạm vi tính năng
+bị đóng băng bởi Scope Lock v1.0 và Architecture Freeze v1.0; các bản phát hành không thêm bề mặt v2.0.
 
-## Roles
+## Vai trò
 
-- **Execution Lead** — runs validation and packaging, fixes gate failures.
-- **PMO** — confirms Work Order and documentation completeness.
+- **Execution Lead** — chạy validation và packaging, sửa các gate thất bại.
+- **PMO** — xác nhận tính đầy đủ của Work Order và tài liệu.
 
 ## Quality gates (`aiep validate`)
 
-`aiep validate` runs these gates; any FAIL makes the command exit non-zero:
+`aiep validate` chạy các gate này; bất kỳ FAIL nào làm lệnh thoát với mã khác không:
 
-1. Required governance/documentation artifacts present (PROJECT.md, README.md,
+1. Các artifact governance/tài liệu bắt buộc hiện diện (PROJECT.md, README.md,
    CHANGELOG.md, Constitution, Governance, Review Level Policy, Scope Lock v1.0,
    Architecture Freeze v1.0, Product Backlog, Decision Log, Risk Register).
-2. All Work Orders well-formed and each carries a ReviewLevel.
-3. Codex guard — no L1/L2/L3 Work Order carries a `codex-audit.md`.
-4. Reviewed Work Orders have their required artifacts for their level.
-5. No unresolved CRITICAL findings (FAIL); HIGH findings raise a WARN until dispositioned.
-6. No secrets committed (secret scan over tracked files).
-7. Scope Lock v1.0 respected — no out-of-scope v2.0 directories present.
+2. Mọi Work Order đúng định dạng và mỗi cái mang một ReviewLevel.
+3. Codex guard — không Work Order L1/L2/L3 nào mang một `codex-audit.md`.
+4. Các Work Order đã review có đủ artifact bắt buộc cho mức của chúng.
+5. Không còn finding CRITICAL chưa giải quyết (FAIL); các finding HIGH nâng lên một WARN cho tới khi được disposition.
+6. Không có secret nào bị commit (secret scan trên các file được track).
+7. Scope Lock v1.0 được tôn trọng — không có thư mục v2.0 ngoài phạm vi nào hiện diện.
 
-Warnings do not fail the build; FAILs do.
+Cảnh báo không làm hỏng build; các FAIL thì có.
 
-## Procedure
+## Quy trình
 
-1. Confirm all in-scope Work Orders are `done` (or explicitly deferred) — `aiep status`.
-2. Rebuild the dashboard data: `aiep dashboard --build`.
-3. Run `aiep validate`; resolve every FAIL. Address or disposition WARNs (e.g. HIGH findings).
-4. Update `CHANGELOG.md` for the release; confirm `package.json` version.
-5. Dry-run the package to inspect contents: `aiep package --dry-run`.
-6. Produce the release tarball: `aiep package` (writes to `dist/`). It re-runs the gates
-   and refuses to package if any gate FAILs unless `--force` is given — do not use
-   `--force` for a real release.
-7. Verify the tarball in `dist/` and the printed local install command; capture release
-   readiness (`READY`).
-8. Commit release artifacts and tag the release per project convention.
+1. Xác nhận mọi Work Order trong phạm vi đã `done` (hoặc được hoãn tường minh) — `aiep status`.
+2. Build lại dữ liệu dashboard: `aiep dashboard --build`.
+3. Chạy `aiep validate`; giải quyết mọi FAIL. Xử lý hoặc disposition các WARN (ví dụ finding HIGH).
+4. Cập nhật `CHANGELOG.md` cho bản phát hành; xác nhận version `package.json`.
+5. Dry-run package để kiểm tra nội dung: `aiep package --dry-run`.
+6. Tạo tarball phát hành: `aiep package` (ghi vào `dist/`). Nó chạy lại các gate
+   và từ chối đóng gói nếu bất kỳ gate nào FAIL trừ khi có `--force` — không dùng
+   `--force` cho một bản phát hành thật.
+7. Kiểm tra tarball trong `dist/` và lệnh cài đặt cục bộ được in ra; ghi nhận mức sẵn sàng
+   phát hành (`READY`).
+8. Commit các artifact phát hành và tag bản phát hành theo quy ước dự án.
 
 ## Checklist
 
-- [ ] `aiep status` shows in-scope Work Orders `done` or explicitly deferred.
-- [ ] `aiep dashboard --build` run; dashboard data current.
-- [ ] `aiep validate` — all gates PASS (WARNs dispositioned).
-- [ ] Zero unresolved CRITICAL; HIGH resolved or dispositioned.
-- [ ] Secret scan clean; Scope Lock v1.0 respected.
-- [ ] `CHANGELOG.md` and `package.json` version updated.
-- [ ] `aiep package --dry-run` contents reviewed.
-- [ ] `aiep package` produced a tarball in `dist/` without `--force`.
-- [ ] Release committed and tagged.
+- [ ] `aiep status` cho thấy các Work Order trong phạm vi đã `done` hoặc được hoãn tường minh.
+- [ ] Đã chạy `aiep dashboard --build`; dữ liệu dashboard cập nhật.
+- [ ] `aiep validate` — mọi gate PASS (các WARN đã được disposition).
+- [ ] Không còn CRITICAL chưa giải quyết; HIGH đã giải quyết hoặc disposition.
+- [ ] Secret scan sạch; Scope Lock v1.0 được tôn trọng.
+- [ ] Đã cập nhật version `CHANGELOG.md` và `package.json`.
+- [ ] Đã review nội dung của `aiep package --dry-run`.
+- [ ] `aiep package` đã tạo một tarball trong `dist/` mà không cần `--force`.
+- [ ] Bản phát hành đã được commit và tag.
 
 ## References
 

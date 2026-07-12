@@ -1,72 +1,72 @@
-# SOP-001 — Work Order Lifecycle
+# SOP-001 — Vòng đời Work Order
 
 - **Version:** 1.0
 - **Owner:** PMO / Execution Lead
 - **Last updated:** 2026-07-12
 
-## Purpose
+## Mục đích
 
-Define how a Work Order (WO) moves from `backlog` to `done` in AIEP v1.0, including
-how its ReviewLevel is assigned, so every unit of change is tracked, reviewed at the
-correct depth, and traceable.
+Định nghĩa cách một Work Order (WO) di chuyển từ `backlog` đến `done` trong AIEP v1.0, bao gồm
+cách gán ReviewLevel cho nó, để mọi đơn vị thay đổi đều được theo dõi, được review ở đúng
+độ sâu, và có thể truy vết.
 
-## Scope
+## Phạm vi
 
-All Work Orders under `pmo/work-orders/<WO-ID>/work-order.md`. Each WO carries exactly
-one ReviewLevel. Out-of-scope (Scope Lock v1.0) v2.0 features must never be turned
-into Work Orders.
+Tất cả Work Order nằm dưới `pmo/work-orders/<WO-ID>/work-order.md`. Mỗi WO mang đúng
+một ReviewLevel. Các tính năng ngoài phạm vi (Scope Lock v1.0) thuộc v2.0 không bao giờ được biến
+thành Work Order.
 
-## Roles
+## Vai trò
 
-- **Execution Lead (Claude Code)** — authors the WO, implements, runs self review.
-- **PMO** — owns backlog, status accuracy, and traceability.
-- **Reviewers** — deepseek, qwen, gemini, codex, engaged per ReviewLevel.
+- **Execution Lead (Claude Code)** — soạn WO, triển khai, chạy self review.
+- **PMO** — sở hữu backlog, độ chính xác của status, và khả năng truy vết.
+- **Reviewers** — deepseek, qwen, gemini, codex, được huy động theo ReviewLevel.
 
-## Status model
+## Mô hình trạng thái
 
-`backlog → planned → in-progress → in-review → done`, with `blocked` reachable from
-any active state. These are the only valid `status` values.
+`backlog → planned → in-progress → in-review → done`, với `blocked` có thể đạt tới từ
+bất kỳ trạng thái đang hoạt động nào. Đây là các giá trị `status` hợp lệ duy nhất.
 
-## ReviewLevel assignment
+## Gán ReviewLevel
 
-Assign the lowest level that honestly covers the risk:
+Gán mức thấp nhất mà vẫn bao phủ rủi ro một cách trung thực:
 
-- **L1** — structural/scaffolding, docs, no runtime or security surface.
-- **L2** — normal code change with logic; local reviewers add correctness/quality.
-- **L3** — cross-cutting design or architecture-touching change; adds Gemini design review.
-- **L4** — genuinely high-risk only: auth/authz, critical security, payment, critical
-  data migration, core runtime with system-wide impact, major production release, or
-  an unresolvable reviewer conflict. L4 is the ONLY level that invokes Codex.
+- **L1** — thay đổi cấu trúc/scaffolding, tài liệu, không có bề mặt runtime hay bảo mật.
+- **L2** — thay đổi code thông thường có logic; reviewer nội bộ bổ sung kiểm tra tính đúng đắn/chất lượng.
+- **L3** — thay đổi cắt ngang (cross-cutting) về thiết kế hoặc chạm tới kiến trúc; bổ sung Gemini design review.
+- **L4** — chỉ dành cho thay đổi thực sự rủi ro cao: auth/authz, bảo mật trọng yếu, thanh toán,
+  migration dữ liệu trọng yếu, core runtime có tác động toàn hệ thống, một bản phát hành production lớn, hoặc
+  một xung đột reviewer không thể giải quyết. L4 là mức DUY NHẤT huy động Codex.
 
-Do not inflate a WO to L4 to "get more review". See SOP-003 for the Codex guard.
+Không thổi phồng một WO lên L4 để "được review nhiều hơn". Xem SOP-003 về Codex guard.
 
-## Procedure
+## Quy trình
 
-1. **Create** the WO from `templates/work-order.template.md`; fill frontmatter
-   (`id, title, phase, reviewLevel, status, owner`) and body sections. Set `status: backlog`.
-2. **Plan** — refine Objective, Scope, Deliverables and Definition of Done; set
-   `status: planned`. Record the ReviewLevel rationale in the body.
-3. **Implement** — set `status: in-progress`; author the change as a logical unit.
-   Apply the Rule of Three where the deliverable is reusable (Code + Knowledge + Standard asset).
-4. **Self review** — run `aiep review <WO-ID>`; Claude self review runs first at every level.
-5. **Route reviewers** — the pipeline runs automatically per ReviewLevel (see SOP-002).
-   Set `status: in-review`.
-6. **Resolve findings** — fix or document a disposition for every CRITICAL/HIGH finding
-   (SOP-002). Re-run `aiep review <WO-ID>` until the verdict is `PASS`.
-7. **Validate** — run `aiep validate`; all quality gates must pass.
-8. **Commit** the change as one logical delivery unit; set `status: done`.
-9. **Block/unblock** — if progress is not possible, set `status: blocked` and record why
-   in the WO body; return to the prior active state once cleared.
+1. **Create** — tạo WO từ `templates/work-order.template.md`; điền frontmatter
+   (`id, title, phase, reviewLevel, status, owner`) và các phần thân. Đặt `status: backlog`.
+2. **Plan** — tinh chỉnh Objective, Scope, Deliverables và Definition of Done; đặt
+   `status: planned`. Ghi lại lý do gán ReviewLevel trong phần thân.
+3. **Implement** — đặt `status: in-progress`; soạn thay đổi thành một đơn vị logic.
+   Áp dụng Rule of Three khi deliverable có thể tái sử dụng (Code + Knowledge + Standard asset).
+4. **Self review** — chạy `aiep review <WO-ID>`; Claude self review luôn chạy trước ở mọi mức.
+5. **Route reviewers** — pipeline chạy tự động theo ReviewLevel (xem SOP-002).
+   Đặt `status: in-review`.
+6. **Resolve findings** — sửa hoặc ghi lại disposition cho mọi finding CRITICAL/HIGH
+   (SOP-002). Chạy lại `aiep review <WO-ID>` cho tới khi verdict là `PASS`.
+7. **Validate** — chạy `aiep validate`; tất cả quality gates phải pass.
+8. **Commit** thay đổi như một đơn vị bàn giao logic; đặt `status: done`.
+9. **Block/unblock** — nếu không thể tiến triển, đặt `status: blocked` và ghi lý do
+   trong phần thân WO; quay lại trạng thái đang hoạt động trước đó khi đã gỡ vướng.
 
 ## Checklist
 
-- [ ] Frontmatter complete and valid (`aiep validate` gate passes).
-- [ ] Exactly one ReviewLevel, with rationale in the body.
-- [ ] Definition of Done fully addressed.
-- [ ] `aiep review <WO-ID>` verdict is `PASS` (no unresolved CRITICAL/HIGH).
-- [ ] Artifacts present under `.aiep/artifacts/<WO-ID>/`.
-- [ ] `aiep validate` gates pass.
-- [ ] Change committed; `status: done`.
+- [ ] Frontmatter đầy đủ và hợp lệ (gate `aiep validate` pass).
+- [ ] Đúng một ReviewLevel, kèm lý do trong phần thân.
+- [ ] Definition of Done được đáp ứng đầy đủ.
+- [ ] Verdict của `aiep review <WO-ID>` là `PASS` (không còn CRITICAL/HIGH chưa giải quyết).
+- [ ] Artifact hiện diện dưới `.aiep/artifacts/<WO-ID>/`.
+- [ ] Các gate `aiep validate` pass.
+- [ ] Thay đổi đã commit; `status: done`.
 
 ## References
 

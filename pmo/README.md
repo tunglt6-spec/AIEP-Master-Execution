@@ -1,17 +1,17 @@
 # AIEP PMO
 
-The Project Management Office is one of the five product deliverables. It records
-what is planned, in progress and done, and the risks/decisions behind it.
+Project Management Office là một trong năm deliverable sản phẩm. Nó ghi lại
+những gì được lập kế hoạch, đang tiến hành và đã hoàn thành, cùng các risk/quyết định phía sau.
 
-| Area | Path |
+| Khu vực | Đường dẫn |
 |------|------|
 | Product Backlog | `backlog/PRODUCT-BACKLOG.md` |
-| Sprints | `sprints/*.md` |
-| Milestones | `milestones/MILESTONES.md` |
-| Work Orders | `work-orders/<WO-ID>/work-order.md` |
-| Issues | `issues/ISSUES.md` |
-| Risks | `risks/RISK-REGISTER.md` |
-| Decisions | `decisions/DECISION-LOG.md` |
+| Sprint | `sprints/*.md` |
+| Milestone | `milestones/MILESTONES.md` |
+| Work Order | `work-orders/<WO-ID>/work-order.md` |
+| Issue | `issues/ISSUES.md` |
+| Risk | `risks/RISK-REGISTER.md` |
+| Quyết định | `decisions/DECISION-LOG.md` |
 
-Work Orders are the executable unit of delivery. `aiep status` and the dashboard
-summarize PMO state from these files and from review artifacts.
+Work Order là đơn vị bàn giao có thể thực thi. `aiep status` và dashboard
+tổng hợp trạng thái PMO từ các tệp này và từ các artifact review.

@@ -1,13 +1,13 @@
-# Frontmatter Conventions
+# Quy ước Frontmatter
 
-AIEP stores its data as **Markdown with a small, controlled YAML frontmatter subset**.
-Frontmatter is not free-form: only a known set of keys is used, so that `aiep validate`,
-the PMO, and the dashboard can read documents reliably. This article defines the
-conventions.
+AIEP lưu dữ liệu của nó dưới dạng **Markdown với một tập con YAML frontmatter nhỏ, có kiểm soát**.
+Frontmatter không tự do: chỉ một tập key đã biết được dùng, để `aiep validate`,
+PMO, và dashboard có thể đọc tài liệu một cách đáng tin cậy. Bài viết này định nghĩa các
+quy ước.
 
-## What frontmatter is
+## Frontmatter là gì
 
-A YAML block delimited by `---` at the very top of a Markdown file:
+Một khối YAML được phân định bởi `---` ở ngay đầu một file Markdown:
 
 ```yaml
 ---
@@ -20,43 +20,43 @@ deliverable: Core Repository
 ---
 ```
 
-The body of the document follows the closing `---`.
+Phần thân của tài liệu theo sau `---` đóng.
 
-## Controlled key set
+## Tập key có kiểm soát
 
-Keep to a small, predictable vocabulary. Common keys:
+Giữ ở một vốn từ nhỏ, dễ đoán. Các key thường gặp:
 
-| Key | Applies to | Values / notes |
+| Key | Áp dụng cho | Giá trị / ghi chú |
 |-----|-----------|----------------|
-| `id` | all | Stable identifier (e.g. `WO-0142`, `ADR-0007`). |
-| `title` | all | Short, concise title. |
-| `status` | WO, ADR | e.g. `draft`, `in-review`, `blocked`, `done` (WO); `proposed`, `accepted`, `superseded` (ADR). |
-| `reviewLevel` | WO | Exactly one of `L1`, `L2`, `L3`, `L4`. |
-| `owner` | WO | Responsible engineer. |
-| `deliverable` | WO | One of the five: Core Repository, Documentation System, AI Engineering Library, PMO, Dashboard. |
-| `date` | ADR, articles | ISO date. |
-| `relatedWO` | ADR | The Work Order that drove the decision. |
+| `id` | tất cả | Định danh ổn định (ví dụ `WO-0142`, `ADR-0007`). |
+| `title` | tất cả | Tiêu đề ngắn, súc tích. |
+| `status` | WO, ADR | ví dụ `draft`, `in-review`, `blocked`, `done` (WO); `proposed`, `accepted`, `superseded` (ADR). |
+| `reviewLevel` | WO | Đúng một trong `L1`, `L2`, `L3`, `L4`. |
+| `owner` | WO | Kỹ sư chịu trách nhiệm. |
+| `deliverable` | WO | Một trong năm: Core Repository, Documentation System, AI Engineering Library, PMO, Dashboard. |
+| `date` | ADR, bài viết | Ngày ISO. |
+| `relatedWO` | ADR | Work Order đã dẫn dắt quyết định. |
 
-## Rules
+## Quy tắc
 
-1. **Frontmatter first.** The block must be the first content in the file, opened and
-   closed with `---`.
-2. **Controlled keys only.** Do not introduce ad-hoc keys; unknown keys defeat validation
-   and dashboard aggregation. If a new key is genuinely needed, record the decision in an
-   ADR first.
-3. **Single-valued `reviewLevel`.** Exactly one level per Work Order — never a list or a
-   range.
-4. **Stable `id`.** Never reuse or renumber an `id`; other documents and artifacts
-   reference it.
-5. **JSON stays JSON.** Configuration (`.aiep/config.json`) and machine outputs
-   (`decision.json`, `dashboard/data/dashboard.json`) are JSON, not frontmatter. Do not
-   mix the two.
-6. **No secrets.** Frontmatter is committed content — never place credentials in it (see
+1. **Frontmatter trước tiên.** Khối phải là nội dung đầu tiên trong file, mở và
+   đóng bằng `---`.
+2. **Chỉ các key có kiểm soát.** Không giới thiệu các key tùy tiện; các key không xác định phá hỏng validation
+   và tổng hợp dashboard. Nếu một key mới thực sự cần, ghi lại quyết định trong một
+   ADR trước.
+3. **`reviewLevel` đơn giá trị.** Đúng một mức cho mỗi Work Order — không bao giờ là một danh sách hay một
+   khoảng.
+4. **`id` ổn định.** Không bao giờ tái sử dụng hay đánh số lại một `id`; các tài liệu và artifact khác
+   tham chiếu tới nó.
+5. **JSON vẫn là JSON.** Cấu hình (`.aiep/config.json`) và các đầu ra máy
+   (`decision.json`, `dashboard/data/dashboard.json`) là JSON, không phải frontmatter. Không
+   trộn lẫn hai loại.
+6. **Không secret.** Frontmatter là nội dung được commit — không bao giờ đặt credential vào đó (xem
    secret-hygiene).
 
-## Why the discipline matters
+## Vì sao kỷ luật này quan trọng
 
-The controlled subset is the contract between human-authored Markdown and the automated
-parts of AIEP (validation, PMO tracking, dashboard). A stray key or a malformed block can
-silently drop a Work Order from a view. Consistency here is what lets zero-dependency Node
-parsing stay simple and reliable across Windows, macOS, and Linux.
+Tập con có kiểm soát là hợp đồng giữa Markdown do con người soạn và các phần tự động
+của AIEP (validation, theo dõi PMO, dashboard). Một key lạc lối hoặc một khối sai định dạng có thể
+âm thầm làm rớt một Work Order khỏi một view. Tính nhất quán ở đây là thứ cho phép việc parse Node
+zero-dependency giữ được đơn giản và đáng tin cậy trên Windows, macOS, và Linux.

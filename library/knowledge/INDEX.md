@@ -1,18 +1,18 @@
 # Knowledge Index
 
-Knowledge-base articles for AIEP v1.0 — the "why" and "how" behind the platform's policy
-and practice. These are the Knowledge Assets of the Rule of Three.
+Các bài viết knowledge-base cho AIEP v1.0 — cái "vì sao" và "như thế nào" đằng sau policy
+và thực hành của nền tảng. Đây là các Knowledge Asset của Rule of Three.
 
-| Article | Answers |
+| Bài viết | Trả lời |
 |---------|---------|
-| [review-level-policy-explained.md](review-level-policy-explained.md) | What L1–L4 mean, which reviewers run at each, and how to pick a level. |
-| [codex-token-preservation.md](codex-token-preservation.md) | Why Codex is L4-only and how to keep external-auditor invocations lean. |
-| [local-ai-review-with-ollama.md](local-ai-review-with-ollama.md) | How DeepSeek and Qwen run locally via Ollama, and what to do when a backend is down. |
-| [frontmatter-conventions.md](frontmatter-conventions.md) | The controlled YAML frontmatter subset and the rules that keep validation reliable. |
-| [lessons-learned-v1.0.md](lessons-learned-v1.0.md) | What worked, what hurt, and what to carry forward from v1.0. |
+| [review-level-policy-explained.md](review-level-policy-explained.md) | L1–L4 nghĩa là gì, reviewer nào chạy ở mỗi mức, và cách chọn một mức. |
+| [codex-token-preservation.md](codex-token-preservation.md) | Vì sao Codex chỉ ở L4 và cách giữ các lần gọi external-auditor gọn nhẹ. |
+| [local-ai-review-with-ollama.md](local-ai-review-with-ollama.md) | Cách DeepSeek và Qwen chạy cục bộ qua Ollama, và làm gì khi một backend tắt. |
+| [frontmatter-conventions.md](frontmatter-conventions.md) | Tập con YAML frontmatter có kiểm soát và các quy tắc giữ cho validation đáng tin cậy. |
+| [lessons-learned-v1.0.md](lessons-learned-v1.0.md) | Điều gì đã hiệu quả, điều gì đã gây đau, và điều gì mang tiếp từ v1.0. |
 
-## Related assets
+## Các asset liên quan
 
-- Policy is operationalized by the `skills/review-routing.md` SOP.
-- Reviewer behavior is driven by the templates in `prompts/`.
-- Environment health is checked with `aiep doctor` before relying on local review.
+- Policy được vận hành hóa bởi SOP `skills/review-routing.md`.
+- Hành vi reviewer được điều khiển bởi các template trong `prompts/`.
+- Tình trạng môi trường được kiểm tra bằng `aiep doctor` trước khi dựa vào review cục bộ.

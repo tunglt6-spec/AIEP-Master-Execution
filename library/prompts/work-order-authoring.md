@@ -1,10 +1,10 @@
-# Prompt: AIEP Work Order Authoring
+# Prompt: Soạn thảo AIEP Work Order
 
 **Title:** AIEP Work Order Authoring
-**Purpose:** Draft a well-formed AIEP Work Order (WO) — the unit the PMO tracks and the
-review pipeline consumes — with a correct, justified review level.
-**When to use:** When starting any new unit of engineering work that will pass through
-AIEP review. Produces a WO document with frontmatter and body ready for `aiep validate`.
+**Purpose:** Soạn một AIEP Work Order (WO) đúng định dạng — đơn vị mà PMO theo dõi và
+review pipeline tiêu thụ — với một review level đúng và được biện minh.
+**When to use:** Khi bắt đầu bất kỳ đơn vị công việc kỹ thuật mới nào sẽ đi qua
+AIEP review. Tạo ra một tài liệu WO với frontmatter và phần thân sẵn sàng cho `aiep validate`.
 
 ## Prompt body
 
@@ -46,15 +46,15 @@ Body sections:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{WO_ID}}` | Assigned Work Order identifier. |
-| `{{TASK_DESCRIPTION}}` | Plain-language description of the task. |
-| `{{SCOPE_OF_CHANGE}}` | Files/modules expected to change. |
-| `{{RISK_NOTES}}` | Any high-risk dimensions that could justify L4. |
+| `{{WO_ID}}` | Định danh Work Order được gán. |
+| `{{TASK_DESCRIPTION}}` | Mô tả bằng ngôn ngữ thông thường về tác vụ. |
+| `{{SCOPE_OF_CHANGE}}` | Các file/module dự kiến thay đổi. |
+| `{{RISK_NOTES}}` | Bất kỳ chiều rủi ro cao nào có thể biện minh cho L4. |
 
 ## Expected output
 
-A complete WO Markdown document: valid frontmatter (controlled keys only), a body with
-the six sections, and an explicit review-level justification. A well-formed WO passes
-`aiep validate` and gives the PMO and dashboard the fields they track.
+Một tài liệu WO Markdown hoàn chỉnh: frontmatter hợp lệ (chỉ các key có kiểm soát), một phần thân với
+sáu phần, và một biện minh review-level tường minh. Một WO đúng định dạng sẽ pass
+`aiep validate` và cung cấp cho PMO và dashboard các trường mà chúng theo dõi.

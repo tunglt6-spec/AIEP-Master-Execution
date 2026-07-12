@@ -1,52 +1,52 @@
 # MCP Library
 
-This section documents how **Model Context Protocol (MCP)** servers can supply context to
-AIEP reviewers and knowledge processes, and provides reference server descriptors.
+Phần này ghi lại cách các server **Model Context Protocol (MCP)** có thể cung cấp context cho
+reviewer và các quy trình knowledge của AIEP, và cung cấp các descriptor server tham chiếu.
 
-> **Reference material.** The descriptors in this folder (`filesystem-server.json`,
-> `git-server.json`) are *reference descriptors* — illustrative shapes you copy and adapt.
-> They are not a shipped runtime integration of AIEP v1.0. AIEP v1.0 core remains
-> Node.js ESM with zero runtime dependencies; MCP usage sits at the tooling edge, not in
-> the frozen core.
+> **Tài liệu tham chiếu.** Các descriptor trong thư mục này (`filesystem-server.json`,
+> `git-server.json`) là *reference descriptor* — các hình mẫu minh họa để bạn sao chép và điều chỉnh.
+> Chúng không phải là một tích hợp runtime được ship của AIEP v1.0. Core AIEP v1.0 vẫn là
+> Node.js ESM với zero runtime dependency; việc dùng MCP nằm ở rìa tooling, không nằm trong
+> core đã đóng băng.
 
-## What MCP is, briefly
+## MCP là gì, ngắn gọn
 
-MCP is a protocol that lets an AI client connect to external **servers** that expose
-context (resources) and actions (tools) over a defined transport (commonly `stdio` or
-HTTP/SSE). A client asks a server what it can do (capabilities) and then reads resources
-or calls tools through a uniform interface.
+MCP là một protocol cho phép một AI client kết nối tới các **server** bên ngoài phơi bày
+context (resources) và hành động (tools) qua một transport được định nghĩa (thường là `stdio` hoặc
+HTTP/SSE). Một client hỏi server nó có thể làm gì (capabilities) rồi đọc resources
+hoặc gọi tools qua một giao diện đồng nhất.
 
-## How MCP fits AIEP
+## MCP khớp vào AIEP ra sao
 
-MCP servers give reviewers and knowledge tasks *scoped, structured* access to context
-instead of ad-hoc file reads:
+Các MCP server cho reviewer và các tác vụ knowledge quyền truy cập *có giới hạn, có cấu trúc* tới context
+thay vì các lần đọc file tùy tiện:
 
-- **Reviewers** — A filesystem or git MCP server can hand a reviewer exactly the change
-  delta and the surrounding file context for a Work Order, reinforcing the
-  `git-delta-review` skill. The reviewer sees the delta through a controlled capability
-  rather than the whole disk.
-- **Knowledge** — An MCP server can expose the AI Engineering Library (prompts, skills,
-  knowledge articles) as read-only resources, so an assistant can pull the right asset
-  by name when authoring a WO or synthesizing a review.
-- **Boundaries** — MCP access should be least-privilege and read-only wherever possible.
-  A server that can write or delete must be scoped narrowly and is subject to the same
-  `secret-hygiene` rules (never expose credentials through a resource).
+- **Reviewers** — Một filesystem hoặc git MCP server có thể trao cho reviewer đúng change
+  delta và context file xung quanh cho một Work Order, củng cố skill
+  `git-delta-review`. Reviewer thấy delta qua một capability có kiểm soát
+  thay vì toàn bộ ổ đĩa.
+- **Knowledge** — Một MCP server có thể phơi bày AI Engineering Library (prompts, skills,
+  bài viết knowledge) như các resource chỉ-đọc, để một trợ lý có thể kéo đúng asset
+  theo tên khi soạn một WO hoặc tổng hợp một review.
+- **Boundaries** — Quyền truy cập MCP nên least-privilege và chỉ-đọc bất cứ nơi nào có thể.
+  Một server có thể ghi hoặc xóa phải được giới hạn hẹp và tuân theo cùng các
+  quy tắc `secret-hygiene` (không bao giờ phơi bày credential qua một resource).
 
-## Descriptor shape
+## Hình mẫu descriptor
 
-Each reference descriptor uses these fields:
+Mỗi reference descriptor dùng các trường này:
 
-| Field | Meaning |
+| Trường | Ý nghĩa |
 |-------|---------|
-| `name` | Stable identifier for the server. |
-| `description` | What context/actions it provides. |
-| `transport` | How the client connects (`stdio`, `http`, `sse`). |
-| `capabilities` | Declared `resources` and `tools` the server exposes. |
-| `notes` | Reference-only caveats and scope. |
+| `name` | Định danh ổn định cho server. |
+| `description` | Context/hành động nó cung cấp. |
+| `transport` | Cách client kết nối (`stdio`, `http`, `sse`). |
+| `capabilities` | Các `resources` và `tools` được khai báo mà server phơi bày. |
+| `notes` | Các lưu ý và phạm vi chỉ-tham-chiếu. |
 
 ## Files
 
-- [filesystem-server.json](filesystem-server.json) — read-scoped access to Work Order
-  files and library assets.
-- [git-server.json](git-server.json) — read-scoped access to repository history and the
-  change delta for a Work Order.
+- [filesystem-server.json](filesystem-server.json) — truy cập giới hạn-đọc tới các file Work Order
+  và các asset library.
+- [git-server.json](git-server.json) — truy cập giới hạn-đọc tới lịch sử repository và
+  change delta cho một Work Order.

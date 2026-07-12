@@ -1,16 +1,15 @@
 # AIEP Issues
 
-Tracked issues for v1.0. Resolved issues are kept for audit.
+Các issue được theo dõi cho v1.0. Các issue đã giải quyết được giữ lại để audit.
 
-| ID | Title | Severity | Status | Resolution |
+| ID | Tiêu đề | Severity | Trạng thái | Cách giải quyết |
 |----|-------|----------|--------|------------|
-| I-01 | Ollama had no DeepSeek model, only qwen3:8b | Medium | Resolved | Pulled `deepseek-coder:1.3b`; doctor now reports both models installed (D-07) |
-| I-02 | Gemini & Codex CLIs not installed in the build environment | Low | Open (by-design disposition) | Graceful degradation records integration decisions; not blocking for L1–L3; provision to enable full L3/L4 |
-| I-03 | Fresh repo has no HEAD, so `aiep status` showed branch UNKNOWN | Low | Resolved | Resolves after the first commit; git helpers handle the unborn-branch case |
+| I-01 | Ollama không có model DeepSeek, chỉ có qwen3:8b | Medium | Resolved | Đã pull `deepseek-coder:1.3b`; doctor nay báo cáo cả hai model đã cài (D-07) |
+| I-02 | CLI Gemini & Codex chưa được cài trong môi trường build | Low | Open (disposition theo thiết kế) | Suy giảm nhẹ nhàng ghi lại các quyết định tích hợp; không block cho L1–L3; dự phòng để bật đầy đủ L3/L4 |
+| I-03 | Repo mới chưa có HEAD, nên `aiep status` hiển thị branch UNKNOWN | Low | Resolved | Được giải quyết sau commit đầu tiên; các git helper xử lý trường hợp branch chưa sinh (unborn) |
 
-## Known limitations (v1.0)
+## Giới hạn đã biết (v1.0)
 
-- Local-model finding extraction is best-effort (structured `FINDING:` lines);
-  raw output is always preserved in the artifact.
-- Gemini/Codex require their CLIs on PATH; absent, their steps are documented
-  dispositions.
+- Việc trích xuất finding từ model cục bộ là best-effort (các dòng có cấu trúc `FINDING:`);
+  output thô luôn được lưu giữ trong artifact.
+- Gemini/Codex cần có CLI trên PATH; nếu vắng, các bước của chúng là disposition được ghi thành tài liệu.

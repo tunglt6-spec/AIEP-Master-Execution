@@ -1,11 +1,11 @@
-# AIEP v1.2.0 — Release Notes
+# AIEP v1.2.0 — Ghi chú Phát hành
 
-**Release type:** Minor feature release
-**Date:** 2026-07-12
+**Loại phát hành:** Phát hành tính năng nhỏ (minor)
+**Ngày:** 2026-07-12
 
-## Highlights
+## Điểm nổi bật
 
-### `aiep plan "<idea>"` — turn an idea into a draft Work Order (WO-0109)
+### `aiep plan "<idea>"` — biến một ý tưởng thành Work Order nháp (WO-0109)
 
 ```bash
 aiep plan "Add JWT-based authentication with refresh tokens to the REST API"
@@ -13,29 +13,29 @@ aiep plan "Add JWT-based authentication with refresh tokens to the REST API"
 #   status: backlog — for human review
 ```
 
-`aiep plan` is the safe, in-scope front of the RFC-0002 loop. It uses a local
-model (Ollama) to propose the Work Order fields and a suggested ReviewLevel, and
-falls back to a template when the model is unavailable (`--no-ai`). Flags:
+`aiep plan` là phần đầu an toàn, trong phạm vi (in-scope) của vòng lặp RFC-0002. Nó dùng một
+model cục bộ (Ollama) để đề xuất các trường của Work Order và một ReviewLevel gợi ý, và
+lùi về (fallback) một template khi model không khả dụng (`--no-ai`). Các cờ:
 `--id WO-XXXX`, `--level L1..L4`, `--force`, `--json`.
 
-**Boundary:** `aiep plan` writes only a planning document. It does **not**
-generate source code, build, or deploy — it stays within the v1.0 Scope Lock.
+**Ranh giới:** `aiep plan` chỉ ghi ra một tài liệu lập kế hoạch. Nó **không**
+sinh mã nguồn, build, hay deploy — nó nằm trong Scope Lock v1.0.
 
-### RFC-0002 — AIEP × AI coding agent (design, Proposed)
+### RFC-0002 — AIEP × AI coding agent (thiết kế, Proposed)
 
-Documents how an AI coding agent plugs into AIEP for an "idea → code → audit →
-deploy" loop, preserving reviewer independence and a mandatory human deploy gate.
-The agent loop (`implement` / `loop` / `ship`) is **v2.0** and pending PO/ARB
-approval — not shipped in this release.
+Ghi lại cách một AI coding agent gắn vào AIEP để tạo vòng lặp "idea → code → audit →
+deploy", giữ tính độc lập của reviewer và một cổng deploy bắt buộc do con người thực hiện.
+Vòng lặp agent (`implement` / `loop` / `ship`) là **v2.0** và đang chờ PO/ARB
+phê duyệt — không được phát hành trong bản này.
 
-## Quality
+## Chất lượng
 
-- 31 automated tests passing (5 new for `plan`).
-- All 9 quality gates pass; no unresolved CRITICAL/HIGH.
-- WO-0109 reviewed at L2 (Qwen degraded/dispositioned; a DeepSeek false positive
-  verified and dismissed).
+- 31 test tự động pass (5 test mới cho `plan`).
+- Cả 9 quality gate đều pass; không còn CRITICAL/HIGH chưa xử lý.
+- WO-0109 được review ở L2 (Qwen suy giảm/được dispositioned; một false positive của
+  DeepSeek đã được đối chiếu và bác bỏ).
 
-## Compatibility
+## Tương thích
 
-- No breaking changes. All v1.0/v1.1 commands and behavior are unchanged.
-- Codex guard, review routing and Scope Lock are unaffected.
+- Không có thay đổi phá vỡ (breaking change). Mọi lệnh và hành vi của v1.0/v1.1 giữ nguyên.
+- Codex guard, định tuyến review và Scope Lock không bị ảnh hưởng.

@@ -1,31 +1,31 @@
 # Skill: Secret Hygiene
 
-**Type:** Repeatable engineering procedure (SOP)
-**Goal:** Never commit secrets (API keys, tokens, passwords, private keys, connection
-strings) to the repository or into artifacts, and catch them before they land.
+**Type:** Quy trình kỹ thuật lặp lại được (SOP)
+**Goal:** Không bao giờ commit secret (API key, token, password, private key, connection
+string) vào repository hay vào artifact, và bắt được chúng trước khi chúng lọt vào.
 
-## Why
+## Vì sao
 
-AIEP curates a reusable library and produces artifacts under `.aiep/artifacts/`. A leaked
-credential in any of these spreads and is expensive to rotate. Secret hygiene is a
-standing precondition of every review, and basic secret detection is part of the
-correctness lens (DeepSeek "basic security").
+AIEP tuyển chọn một library tái sử dụng được và tạo ra artifact dưới `.aiep/artifacts/`. Một
+credential bị rò rỉ trong bất kỳ thứ nào trong số này sẽ lan rộng và tốn kém để rotate. Secret hygiene là một
+điều kiện tiên quyết thường trực của mọi review, và phát hiện secret cơ bản là một phần của
+lăng kính tính đúng đắn (DeepSeek "basic security").
 
-## Rules
+## Quy tắc
 
-1. **No secrets in source, config, docs, or artifacts.** `.aiep/config.json` holds
-   configuration, not credentials. Real secrets belong in the environment or a local,
-   git-ignored file — never committed.
-2. **No secrets in reviewer inputs/outputs.** When constructing a diff for review, do not
-   include real credential values; redact before sending to any external reviewer
+1. **Không secret trong source, config, docs, hay artifact.** `.aiep/config.json` giữ
+   cấu hình, không phải credential. Secret thật thuộc về môi trường hoặc một file cục bộ,
+   được git-ignore — không bao giờ commit.
+2. **Không secret trong input/output của reviewer.** Khi dựng một diff để review, không
+   bao gồm các giá trị credential thật; redact trước khi gửi tới bất kỳ reviewer bên ngoài nào
    (Gemini, Codex).
-3. **Rotate, don't just delete.** If a secret was committed, treat it as compromised:
-   rotate the credential; removing the file is not enough because history retains it.
+3. **Rotate, đừng chỉ xóa.** Nếu một secret đã bị commit, coi nó như bị lộ:
+   rotate credential; xóa file là không đủ vì history vẫn giữ lại nó.
 
-## Scanning patterns
+## Các pattern quét
 
-Scan added/changed lines in the delta for high-signal patterns. Examples (adapt as
-needed; these are detection heuristics, not a guarantee):
+Quét các dòng được thêm/thay đổi trong delta để tìm các pattern tín hiệu cao. Ví dụ (điều chỉnh khi
+cần; đây là các heuristic phát hiện, không phải một đảm bảo):
 
 ```text
 # Generic assignment of a secret-like value
@@ -43,17 +43,17 @@ xox[baprs]-[A-Za-z0-9-]{10,}          # Slack token
 (?i)(key|token|secret)\s*[:=]\s*['"][A-Za-z0-9+/=_-]{32,}['"]
 ```
 
-## Procedure
+## Quy trình
 
-1. Before staging, scan the delta with the patterns above.
-2. If a match is a real secret: remove it, move it to the environment / git-ignored
-   config, and rotate the credential.
-3. If it is a false positive (a sample, a public value): confirm and, where useful,
-   annotate so future scans understand the exception.
-4. A confirmed secret in a change is a **CRITICAL** (blocking) finding — the WO cannot
-   pass until it is remediated and the credential rotated.
+1. Trước khi stage, quét delta với các pattern ở trên.
+2. Nếu một match là một secret thật: xóa nó, chuyển nó sang môi trường / config
+   được git-ignore, và rotate credential.
+3. Nếu là một false positive (một mẫu, một giá trị công khai): xác nhận và, nơi nào hữu ích,
+   chú thích để các lần quét tương lai hiểu ngoại lệ.
+4. Một secret đã xác nhận trong một thay đổi là một finding **CRITICAL** (chặn) — WO không thể
+   pass cho tới khi nó được khắc phục và credential được rotate.
 
 ## Definition of done
 
-The delta contains no live credentials, any prior exposure has been rotated, and the
-scanning step is part of the pre-commit / pre-review routine.
+Delta không chứa credential còn sống, mọi lần lộ trước đó đã được rotate, và
+bước quét là một phần của routine pre-commit / pre-review.

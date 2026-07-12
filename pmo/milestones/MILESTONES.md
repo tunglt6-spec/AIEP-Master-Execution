@@ -1,16 +1,16 @@
 # AIEP Milestones
 
-| Milestone | Description | Status |
+| Milestone | Mô tả | Trạng thái |
 |-----------|-------------|--------|
-| M0 — Foundation ready | Repo, governance, PMO, validation in place | done |
-| M1 — Core platform working | CLI + review engine + routing operational | done |
-| M2 — Operations complete | Reviewer integrations, workflow, dashboard | done |
-| M3 — Release candidate | Packaging, quality gates, docs complete | done |
-| **v1.0 Release** | Final Release Review Package assembled for ARB/PO | candidate |
+| M0 — Foundation ready | Repo, governance, PMO, validation đã sẵn sàng | done |
+| M1 — Core platform working | CLI + engine review + định tuyến vận hành được | done |
+| M2 — Operations complete | Tích hợp reviewer, workflow, dashboard | done |
+| M3 — Release candidate | Đóng gói, quality gate, tài liệu hoàn tất | done |
+| **v1.0 Release** | Final Release Review Package đã tập hợp cho ARB/PO | candidate |
 
 ## Release
 
 - **Release:** AIEP v1.0.0
-- **Type:** Release Candidate pending Product Owner & ARB final review.
-- **Notes:** `docs/release/RELEASE-NOTES-v1.0.md`
+- **Loại:** Release Candidate đang chờ Product Owner & ARB rà soát cuối.
+- **Ghi chú:** `docs/release/RELEASE-NOTES-v1.0.md`
 - **Package:** `docs/release/FINAL-RELEASE-REVIEW-PACKAGE.md`

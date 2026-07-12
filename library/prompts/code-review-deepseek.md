@@ -1,12 +1,12 @@
 # Prompt: DeepSeek Local Code Reviewer
 
 **Title:** DeepSeek Local Code Reviewer
-**Purpose:** Drive the DeepSeek (via Ollama) reviewer to find correctness defects in a
-change: logic bugs, runtime errors, edge cases, basic security issues, and error
-handling gaps.
-**When to use:** On every Work Order at review level **L2 or higher**, after Claude's
-self-review. DeepSeek is the first external reviewer in the L2/L3/L4 pipeline. Its
-output is written to `.aiep/artifacts/<WO-ID>/deepseek-review.md`.
+**Purpose:** Dẫn dắt reviewer DeepSeek (qua Ollama) tìm các khiếm khuyết về tính đúng đắn trong một
+thay đổi: logic bug, runtime error, edge case, các vấn đề bảo mật cơ bản, và các lỗ hổng
+xử lý lỗi (error handling).
+**When to use:** Trên mọi Work Order ở review level **L2 hoặc cao hơn**, sau self-review của Claude.
+DeepSeek là reviewer bên ngoài đầu tiên trong pipeline L2/L3/L4. Đầu ra của nó được
+ghi vào `.aiep/artifacts/<WO-ID>/deepseek-review.md`.
 
 ## Prompt body
 
@@ -44,17 +44,17 @@ Rules:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{WO_ID}}` | Work Order identifier (e.g. `WO-0142`). |
-| `{{WO_TITLE}}` | Short title of the Work Order. |
-| `{{REVIEW_LEVEL}}` | L1–L4 (DeepSeek runs at L2+). |
-| `{{CHANGE_SUMMARY}}` | One-paragraph description of the change. |
-| `{{DIFF}}` | The git delta being reviewed. |
+| `{{WO_ID}}` | Định danh Work Order (ví dụ `WO-0142`). |
+| `{{WO_TITLE}}` | Tiêu đề ngắn của Work Order. |
+| `{{REVIEW_LEVEL}}` | L1–L4 (DeepSeek chạy ở L2+). |
+| `{{CHANGE_SUMMARY}}` | Mô tả một đoạn văn về thay đổi. |
+| `{{DIFF}}` | Git delta đang được review. |
 
 ## Expected output
 
-A Markdown review body suitable for `deepseek-review.md`: an ordered list of findings
-using the exact fields above, or the explicit "no defects" statement. Severities must
-be drawn from the AIEP set (CRITICAL/HIGH/MEDIUM/LOW/INFO) so the review summary can
-aggregate blocking status correctly.
+Một phần thân review Markdown phù hợp cho `deepseek-review.md`: một danh sách có thứ tự các finding
+dùng đúng các trường ở trên, hoặc câu tuyên bố "no defects" tường minh. Các severity phải
+lấy từ tập của AIEP (CRITICAL/HIGH/MEDIUM/LOW/INFO) để review summary có thể
+tổng hợp trạng thái chặn một cách chính xác.

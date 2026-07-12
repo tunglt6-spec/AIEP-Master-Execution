@@ -1,23 +1,23 @@
 ---
 id: SPRINT-02
-name: "Core Platform & Operations"
+name: "Nền tảng Lõi & Vận hành"
 status: done
-goal: "CLI, review engine, reviewer integrations, review workflow and dashboard."
+goal: "CLI, engine review, tích hợp reviewer, review workflow và dashboard."
 phase: P1-Core / P2-Ops
 ---
 
 # Sprint 02 — Core Platform & Operations
 
-**Goal:** Deliver the working AIEP CLI, the review engine and routing, local and
-CLI reviewer integrations, the end-to-end review workflow and the dashboard.
+**Mục tiêu:** Bàn giao CLI AIEP hoạt động được, engine review và định tuyến, tích hợp
+reviewer cục bộ và qua CLI, review workflow end-to-end và dashboard.
 
 ## Work Orders
 
-WO-0101 … WO-0107 (Core Platform) and WO-0201 … WO-0206 (Operations).
+WO-0101 … WO-0107 (Core Platform) và WO-0201 … WO-0206 (Operations).
 
-## Outcome
+## Kết quả
 
 `aiep status | validate | review | artifacts | doctor | dashboard | package`
-operational; DeepSeek + Qwen local review running via Ollama; Gemini/Codex
-integrated with graceful degradation; Codex L4 guard enforced; dashboard reading
-live data.
+vận hành được; review cục bộ DeepSeek + Qwen chạy qua Ollama; Gemini/Codex
+tích hợp với suy giảm nhẹ nhàng; Codex L4 guard được thực thi; dashboard đọc
+dữ liệu trực tiếp.

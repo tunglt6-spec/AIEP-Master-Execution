@@ -1,21 +1,21 @@
 ---
 id: SPRINT-03
-name: "Production Readiness"
+name: "Sẵn sàng Production"
 status: done
-goal: "Installer/packaging, release validation, documentation completion, release candidate."
+goal: "Trình cài đặt/đóng gói, release validation, hoàn tất tài liệu, release candidate."
 phase: P3-Release
 ---
 
 # Sprint 03 — Production Readiness
 
-**Goal:** Make AIEP installable, verifiable and releasable.
+**Mục tiêu:** Làm cho AIEP có thể cài đặt, kiểm chứng và phát hành được.
 
 ## Work Orders
 
 WO-0301 … WO-0303.
 
-## Outcome
+## Kết quả
 
-Install scripts and `aiep package`; finalized quality gates and release
-checklist; completed documentation, CHANGELOG and the Final Release Review
-Package — producing the AIEP v1.0 release candidate.
+Các script cài đặt và `aiep package`; hoàn thiện các quality gate và release
+checklist; hoàn tất tài liệu, CHANGELOG và Final Release Review
+Package — tạo ra release candidate AIEP v1.0.

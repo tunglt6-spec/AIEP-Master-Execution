@@ -1,11 +1,11 @@
 # Prompt: Review Summary Synthesis
 
 **Title:** Review Summary Synthesis
-**Purpose:** Synthesize the per-reviewer artifacts of a Work Order into a single
-`review-summary.md` and a clear pass/block disposition.
-**When to use:** After all reviewers for the Work Order's level have produced their
-artifacts (L2+). Produces `.aiep/artifacts/<WO-ID>/review-summary.md` and feeds the
-`decision.json` outcome.
+**Purpose:** Tổng hợp các artifact theo từng reviewer của một Work Order thành một
+`review-summary.md` duy nhất và một disposition pass/block rõ ràng.
+**When to use:** Sau khi tất cả reviewer cho mức của Work Order đã tạo ra
+artifact của chúng (L2+). Tạo ra `.aiep/artifacts/<WO-ID>/review-summary.md` và cung cấp
+đầu vào cho kết quả `decision.json`.
 
 ## Prompt body
 
@@ -42,17 +42,17 @@ Rules:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{WO_ID}}` | Work Order identifier. |
-| `{{CLAUDE_SELF_REVIEW}}` | Contents of `claude-self-review.md`. |
-| `{{DEEPSEEK_REVIEW}}` | Contents of `deepseek-review.md`. |
-| `{{QWEN_REVIEW}}` | Contents of `qwen-review.md`. |
-| `{{GEMINI_REVIEW}}` | Contents of `gemini-review.md` (L3+). |
-| `{{CODEX_AUDIT}}` | Contents of `codex-audit.md` (L4). |
+| `{{WO_ID}}` | Định danh Work Order. |
+| `{{CLAUDE_SELF_REVIEW}}` | Nội dung của `claude-self-review.md`. |
+| `{{DEEPSEEK_REVIEW}}` | Nội dung của `deepseek-review.md`. |
+| `{{QWEN_REVIEW}}` | Nội dung của `qwen-review.md`. |
+| `{{GEMINI_REVIEW}}` | Nội dung của `gemini-review.md` (L3+). |
+| `{{CODEX_AUDIT}}` | Nội dung của `codex-audit.md` (L4). |
 
 ## Expected output
 
-A concise `review-summary.md` with a single unambiguous verdict (BLOCKED/PASSED) driven
-strictly by the blocking-severity rule, a blocking-findings list, and a recommended
-action. This summary is the human- and PMO-readable roll-up that backs `decision.json`.
+Một `review-summary.md` súc tích với một verdict duy nhất, rõ ràng (BLOCKED/PASSED) được điều khiển
+nghiêm ngặt bởi quy tắc blocking-severity, một danh sách blocking-findings, và một recommended
+action. Bản tổng hợp này là bản roll-up mà con người và PMO đọc được, làm nền cho `decision.json`.

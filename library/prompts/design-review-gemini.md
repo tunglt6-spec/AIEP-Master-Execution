@@ -1,11 +1,11 @@
 # Prompt: Gemini Design Reviewer
 
 **Title:** Gemini Design Reviewer
-**Purpose:** Drive the Gemini reviewer to evaluate a change at the design level: design
-consistency, architecture alignment, design-system / scope compliance, and integration
-risk.
-**When to use:** On Work Orders at review level **L3 or higher** only. Gemini runs after
-DeepSeek and Qwen. Its output is written to
+**Purpose:** Dẫn dắt reviewer Gemini đánh giá một thay đổi ở mức thiết kế: tính nhất quán
+thiết kế, sự đồng nhất kiến trúc, tuân thủ design-system / scope, và rủi ro tích hợp
+(integration risk).
+**When to use:** Chỉ trên Work Order ở review level **L3 hoặc cao hơn**. Gemini chạy sau
+DeepSeek và Qwen. Đầu ra của nó được ghi vào
 `.aiep/artifacts/<WO-ID>/gemini-review.md`.
 
 ## Prompt body
@@ -49,17 +49,17 @@ Rules:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{WO_ID}}` | Work Order identifier. |
-| `{{WO_TITLE}}` | Short title of the Work Order. |
-| `{{REVIEW_LEVEL}}` | Must be L3 or L4 for Gemini to run. |
-| `{{DESIGN_INTENT}}` | The intended design/approach for the change. |
-| `{{CHANGE_SUMMARY}}` | One-paragraph description of the change. |
-| `{{DIFF}}` | The git delta being reviewed. |
+| `{{WO_ID}}` | Định danh Work Order. |
+| `{{WO_TITLE}}` | Tiêu đề ngắn của Work Order. |
+| `{{REVIEW_LEVEL}}` | Phải là L3 hoặc L4 thì Gemini mới chạy. |
+| `{{DESIGN_INTENT}}` | Thiết kế/cách tiếp cận dự kiến cho thay đổi. |
+| `{{CHANGE_SUMMARY}}` | Mô tả một đoạn văn về thay đổi. |
+| `{{DIFF}}` | Git delta đang được review. |
 
 ## Expected output
 
-A Markdown review body for `gemini-review.md`. The distinguishing behavior of this
-reviewer is the Scope Lock check: any move toward an out-of-scope v2.0 feature must be
-raised as CRITICAL so the decision cannot pass while scope is violated.
+Một phần thân review Markdown cho `gemini-review.md`. Hành vi phân biệt của reviewer này
+là kiểm tra Scope Lock: bất kỳ động thái nào hướng tới một tính năng v2.0 ngoài phạm vi đều phải
+được nêu lên như CRITICAL để quyết định không thể pass khi scope bị vi phạm.

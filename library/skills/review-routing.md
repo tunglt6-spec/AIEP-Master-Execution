@@ -1,49 +1,49 @@
-# Skill: Review Routing by Review Level
+# Skill: Review Routing theo Review Level
 
-**Type:** Repeatable engineering procedure (SOP)
-**Owner surface:** `aiep review [WO-ID]` (CLI), driven by `src/reviewers/*`.
-**Goal:** Given a Work Order's `reviewLevel`, run exactly the right reviewers in the
-right order — no more, no less — and never invoke Codex outside L4.
+**Type:** Quy trình kỹ thuật lặp lại được (SOP)
+**Owner surface:** `aiep review [WO-ID]` (CLI), được điều khiển bởi `src/reviewers/*`.
+**Goal:** Cho một `reviewLevel` của Work Order, chạy đúng các reviewer đúng theo
+đúng thứ tự — không hơn, không kém — và không bao giờ gọi Codex ngoài L4.
 
 ## Inputs
 
-- A validated Work Order with a single `reviewLevel` in `{L1, L2, L3, L4}`.
-- Reviewer backends available per the environment (see `graceful-degradation`).
+- Một Work Order đã được validate với một `reviewLevel` duy nhất trong `{L1, L2, L3, L4}`.
+- Các reviewer backend khả dụng theo môi trường (xem `graceful-degradation`).
 
-## Procedure
+## Quy trình
 
-1. Read `reviewLevel` from the WO frontmatter.
-2. Route to the fixed pipeline for that level:
+1. Đọc `reviewLevel` từ frontmatter của WO.
+2. Route tới pipeline cố định cho mức đó:
 
-   | Level | Pipeline (in order) | Summary produced? |
+   | Mức | Pipeline (theo thứ tự) | Có tạo summary? |
    |-------|---------------------|-------------------|
-   | L1 | claude | no |
-   | L2 | claude → deepseek → qwen | yes |
-   | L3 | claude → deepseek → qwen → gemini | yes |
-   | L4 | claude → deepseek → qwen → gemini → codex | yes |
+   | L1 | claude | không |
+   | L2 | claude → deepseek → qwen | có |
+   | L3 | claude → deepseek → qwen → gemini | có |
+   | L4 | claude → deepseek → qwen → gemini → codex | có |
 
-3. Run reviewers sequentially. Write each artifact to `.aiep/artifacts/<WO-ID>/`:
+3. Chạy reviewer tuần tự. Ghi mỗi artifact vào `.aiep/artifacts/<WO-ID>/`:
    `claude-self-review.md`, `deepseek-review.md`, `qwen-review.md`,
    `gemini-review.md` (L3+), `codex-audit.md` (L4).
-4. For L2+, synthesize `review-summary.md` (see the review-summary-synthesis prompt).
-5. Record the outcome in `decision.json`.
+4. Với L2+, tổng hợp `review-summary.md` (xem prompt review-summary-synthesis).
+5. Ghi kết quả vào `decision.json`.
 
-## CODEX GUARD (mandatory)
+## CODEX GUARD (bắt buộc)
 
-- Codex is the **External Independent Auditor** and is invoked **only at L4**.
-- Never run Codex at L1, L2, or L3.
-- Do not inflate a WO to L4 merely to get more review. L4 is reserved for genuinely
-  high-risk changes: auth, authz, critical security, payment, critical data migration,
-  core runtime with system-wide impact, major production release, or an unresolvable
-  reviewer conflict.
+- Codex là **External Independent Auditor** và chỉ được gọi **ở L4**.
+- Không bao giờ chạy Codex ở L1, L2, hoặc L3.
+- Không thổi phồng một WO lên L4 chỉ để được review nhiều hơn. L4 dành riêng cho các thay đổi
+  thực sự rủi ro cao: auth, authz, bảo mật trọng yếu, thanh toán, migration dữ liệu trọng yếu,
+  core runtime có tác động toàn hệ thống, một bản phát hành production lớn, hoặc một xung đột
+  reviewer không thể giải quyết.
 
-## Failure / edge handling
+## Xử lý thất bại / trường hợp biên
 
-- If `reviewLevel` is missing or not in the set, fail validation — do not guess a level.
-- If a required reviewer backend is unavailable, apply the `graceful-degradation` skill
-  and record a documented disposition rather than silently skipping.
+- Nếu `reviewLevel` thiếu hoặc không nằm trong tập, làm validation thất bại — không đoán một mức.
+- Nếu một reviewer backend bắt buộc không khả dụng, áp dụng skill `graceful-degradation`
+  và ghi một disposition được ghi lại thay vì âm thầm bỏ qua.
 
 ## Definition of done
 
-The artifacts present in `.aiep/artifacts/<WO-ID>/` exactly match the level's pipeline,
-and `decision.json` reflects the aggregated blocking status.
+Các artifact hiện diện trong `.aiep/artifacts/<WO-ID>/` khớp chính xác với pipeline của mức,
+và `decision.json` phản ánh trạng thái chặn đã tổng hợp.

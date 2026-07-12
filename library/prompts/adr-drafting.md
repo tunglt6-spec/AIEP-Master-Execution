@@ -1,12 +1,12 @@
-# Prompt: Architecture Decision Record (ADR) Drafting
+# Prompt: Soạn thảo Architecture Decision Record (ADR)
 
 **Title:** Architecture Decision Record Drafting
-**Purpose:** Draft a clear, durable ADR that captures an architectural decision, its
-context, the options considered, and the consequences.
-**When to use:** When a Work Order makes a decision worth remembering — a choice that
-future engineers should not silently reverse (module boundaries, data format, a
-zero-dependency trade-off, a reviewer-routing rule). Often the "Standard Asset" a WO
-produces under the Rule of Three.
+**Purpose:** Soạn một ADR rõ ràng, bền vững, ghi lại một quyết định kiến trúc, bối cảnh của nó,
+các phương án đã cân nhắc, và các hệ quả.
+**When to use:** Khi một Work Order đưa ra một quyết định đáng ghi nhớ — một lựa chọn mà
+các kỹ sư tương lai không nên âm thầm đảo ngược (ranh giới module, định dạng dữ liệu, một
+đánh đổi zero-dependency, một quy tắc reviewer-routing). Thường là "Standard Asset" mà một WO
+tạo ra theo Rule of Three.
 
 ## Prompt body
 
@@ -45,18 +45,18 @@ Rules:
 
 ## Variables
 
-| Variable | Meaning |
+| Variable | Ý nghĩa |
 |----------|---------|
-| `{{ADR_ID}}` | ADR identifier (e.g. `ADR-0007`). |
-| `{{DECISION_TOPIC}}` | What is being decided. |
-| `{{WO_ID}}` | Work Order that drove the decision. |
-| `{{OPTIONS}}` | Options that were considered. |
-| `{{CHOSEN_OPTION}}` | The option selected. |
-| `{{CONSTRAINTS}}` | Constraints shaping the decision. |
-| `{{DATE}}` | Decision date. |
+| `{{ADR_ID}}` | Định danh ADR (ví dụ `ADR-0007`). |
+| `{{DECISION_TOPIC}}` | Điều đang được quyết định. |
+| `{{WO_ID}}` | Work Order đã dẫn dắt quyết định. |
+| `{{OPTIONS}}` | Các phương án đã được cân nhắc. |
+| `{{CHOSEN_OPTION}}` | Phương án được chọn. |
+| `{{CONSTRAINTS}}` | Các ràng buộc định hình quyết định. |
+| `{{DATE}}` | Ngày quyết định. |
 
 ## Expected output
 
-A complete ADR document with valid frontmatter and the five body sections. The record is
-self-contained: a reader who was not present can understand the context, the choice, and
-why the alternatives were rejected, without consulting other sources.
+Một tài liệu ADR hoàn chỉnh với frontmatter hợp lệ và năm phần thân. Bản ghi này
+tự chứa (self-contained): một người đọc không có mặt lúc đó vẫn hiểu được bối cảnh, lựa chọn, và
+vì sao các phương án thay thế bị bác bỏ, mà không cần tham chiếu nguồn khác.
