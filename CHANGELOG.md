@@ -4,6 +4,24 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.4.0] — 2026-07-12
+
+### Changed
+
+- **Việt hóa tài liệu (Nhóm 1 + Nhóm 2)** theo yêu cầu Product Owner. Dịch sang
+  tiếng Việt, giữ nguyên cấu trúc/liên kết/code/sơ đồ và thuật ngữ kỹ thuật:
+  - Nhóm 1 (WO-0112): PROJECT.md, README.md, Constitution, Governance, Review
+    Level Policy, Scope Lock v1.0, Architecture Freeze v1.0.
+  - Nhóm 2 (WO-0113): Design Specification, Data Model, ADR-0001..0003,
+    RFC-0001/0002, các INDEX.
+
+### Notes
+
+- Chỉ dịch nội dung — không thay đổi chính sách, thiết kế hay quyết định.
+- Reviewed L1 (WO-0112, WO-0113). 31 tests pass, 9/9 gates.
+- Tài liệu chưa dịch (SOP-001..004, Library, release docs cũ, một số PMO doc) sẽ
+  dịch ở bản kế tiếp.
+
 ## [1.3.0] — 2026-07-12
 
 ### Changed
