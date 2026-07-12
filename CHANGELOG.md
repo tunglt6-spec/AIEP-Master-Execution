@@ -4,6 +4,25 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.5.0] — 2026-07-12
+
+### Changed
+
+- **Việt hóa tài liệu (Nhóm 3)** — hoàn tất Việt hóa nhóm tài liệu còn lại (WO-0114):
+  - SOP-001..004 + INDEX.
+  - AI Engineering Library: README, prompts (giữ nguyên prompt body tiếng Anh),
+    skills, knowledge, mcp README.
+  - Release docs cũ: RELEASE-NOTES v1.0–v1.2, QUALITY-GATES, RELEASE-CHECKLIST,
+    FINAL-RELEASE-REVIEW-PACKAGE.
+  - PMO docs: README, backlog, risks, issues, milestones, decision log, 3 sprints.
+
+### Notes
+
+- Chỉ dịch nội dung; giữ nguyên frontmatter key, code/prompt block, .json
+  descriptor, liên kết và thuật ngữ kỹ thuật tiếng Anh.
+- Với bản này, **toàn bộ tài liệu chính của AIEP đã ở tiếng Việt** (Nhóm 1+2+3).
+- Reviewed L1 (WO-0114). 31 tests pass, 9/9 gates.
+
 ## [1.4.0] — 2026-07-12
 
 ### Changed

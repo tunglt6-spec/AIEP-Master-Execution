@@ -1,6 +1,6 @@
 # AIEP — AI Engineering Platform
 
-[![version](https://img.shields.io/badge/version-1.4.0-3b5bdb)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.5.0-3b5bdb)](CHANGELOG.md)
 [![runtime](https://img.shields.io/badge/node-%3E%3D18-2f9e44)](package.json)
 [![deps](https://img.shields.io/badge/dependencies-0-2f9e44)](package.json)
 
