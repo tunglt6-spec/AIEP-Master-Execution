@@ -1,6 +1,6 @@
 {
   "name": "@tunglt6/aiep",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI Engineering Platform (AIEP) — governance-driven engineering platform with AI-assisted multi-level code review, PMO, knowledge library and dashboard.",
   "type": "module",
   "bin": {

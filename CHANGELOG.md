@@ -4,6 +4,22 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.1.0] — 2026-07-12
+
+### Added
+
+- **`aiep init [dir]`** — scaffold a working AIEP workspace into any project
+  (WO-0108). Reuses the installed platform's config, dashboard frontend and
+  templates; writes concise starter governance/PMO docs and a sample Work Order;
+  idempotent (no overwrite without `--force`). `aiep validate` passes in a freshly
+  initialized workspace. Addresses the v1.0 "no init" limitation.
+
+### Notes
+
+- Reviewed at L2 (Claude self review + DeepSeek; Qwen degraded on CPU timeout and
+  recorded as a documented disposition). A DeepSeek false-positive CRITICAL was
+  verified against source and tests, then dismissed. 26 tests passing.
+
 ## [1.0.0] — 2026-07-12
 
 Initial release candidate. Full AIEP v1.0 scope across five product deliverables.
