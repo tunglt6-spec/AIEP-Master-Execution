@@ -3,7 +3,7 @@
   "platform": {
     "name": "AIEP",
     "displayName": "AI Engineering Platform",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "scopeLock": "v1.0",
     "architectureFreeze": "v1.0"
   },

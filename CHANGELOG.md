@@ -4,6 +4,15 @@ All notable changes to AIEP are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/); versioning is
 [SemVer](https://semver.org/).
 
+## [1.5.1] — 2026-07-12
+
+### Changed
+
+- **Việt hóa nốt templates + docs/README** (WO-0115): 7 template (work-order, adr,
+  rfc, sop, review-summary, claude-self-review, INDEX) và `docs/README.md`. Giữ
+  nguyên placeholder `{{...}}`, frontmatter key/enum, code và thuật ngữ tiếng Anh.
+  Hoàn tất Việt hóa toàn bộ tài liệu AIEP.
+
 ## [1.5.0] — 2026-07-12
 
 ### Changed
