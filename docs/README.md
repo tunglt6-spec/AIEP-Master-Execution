@@ -16,6 +16,7 @@ organized as:
 ## Reading order for newcomers
 
 1. [PROJECT.md](../PROJECT.md) — what AIEP is and how to run it.
+1. [User Guide](USER-GUIDE.md) — detailed install & usage for every command.
 2. [Constitution](constitution/CONSTITUTION.md) — the principles.
 3. [Governance](governance/GOVERNANCE.md) — how work flows.
 4. [Review Level Policy](governance/REVIEW-LEVEL-POLICY.md) — L1–L4 and the Codex guard.

@@ -31,6 +31,7 @@ node bin/aiep.js dashboard   # open the live dashboard
 ## Documentation
 
 - [PROJECT.md](PROJECT.md) — overview, install, usage, layout.
+- [User Guide](docs/USER-GUIDE.md) — detailed, step-by-step usage for every command.
 - [Documentation index](docs/README.md).
 - [Review Level Policy](docs/governance/REVIEW-LEVEL-POLICY.md).
 - [Design Specification](docs/design/DESIGN-SPECIFICATION-v1.0.md).
