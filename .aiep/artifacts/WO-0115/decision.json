@@ -1,0 +1,53 @@
+{
+  "workOrder": "WO-0115",
+  "title": "Việt hóa templates + docs/README (patch)",
+  "reviewLevel": "L1",
+  "reviewers": [
+    "claude"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 9,
+    "files": [
+      "docs/README.md",
+      "pmo/work-orders/WO-0115/work-order.md",
+      "templates/INDEX.md",
+      "templates/adr.template.md",
+      "templates/claude-self-review.template.md",
+      "templates/review-summary.template.md",
+      "templates/rfc.template.md",
+      "templates/sop.template.md",
+      "templates/work-order.template.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 0,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 0,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    }
+  ],
+  "verdict": "PASS"
+}
