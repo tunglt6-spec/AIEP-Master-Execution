@@ -5,6 +5,7 @@
 import { loadConfig } from '../core/config.js';
 import { loadAllWorkOrders } from '../core/workorders.js';
 import { resolvePipeline } from '../core/reviewMatrix.js';
+import { changedFiles } from '../core/gitdelta.js';
 import { runReview } from '../reviewers/index.js';
 import { c, log } from '../core/logger.js';
 
@@ -13,6 +14,7 @@ function parseArgs(args) {
   for (let i = 0; i < args.length; i += 1) {
     const a = args[i];
     if (a === '--json') opts.json = true;
+    else if (a === '--last') opts.base = 'HEAD~1'; // review the most recent commit's delta
     else if (a === '--base') opts.base = args[++i];
     else if (a.startsWith('--base=')) opts.base = a.slice(7);
     else if (!a.startsWith('-')) opts.ids.push(a);
@@ -44,6 +46,12 @@ export async function cmdReview(args) {
     if (!opts.json) {
       log.header(`Reviewing ${wo.meta.id} — ${wo.meta.title}`);
       log.info(`  ReviewLevel ${c.bold(level)} → pipeline: ${reviewers.join(' → ')}`);
+      const preview = changedFiles(root, opts.base);
+      if (preview.length === 0) {
+        log.warn('No change delta detected. Reviewing against a clean tree — use --last to review the most recent commit, or --base <ref> to pick a base.');
+      } else {
+        log.info(`  Delta: ${preview.length} changed file(s)${opts.base ? ` vs ${opts.base}` : ''}`);
+      }
     }
     const decision = await runReview({
       config,

@@ -1,20 +1,14 @@
 // src/cli/status.js
-import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { loadAllWorkOrders, summarizeWorkOrders } from '../core/workorders.js';
 import { currentBranch, headCommit, isGitRepo } from '../core/gitdelta.js';
+import { loadResolvedDecision } from '../core/dispositions.js';
 import { c, log, symbols } from '../core/logger.js';
 
-/** Read a WO's decision.json if present. */
+/** Read a WO's decision.json (with dispositions applied) if present. */
 function readDecision(paths, id) {
-  const f = join(paths.artifacts, id, 'decision.json');
-  if (!existsSync(f)) return null;
-  try {
-    return JSON.parse(readFileSync(f, 'utf8'));
-  } catch {
-    return null;
-  }
+  return loadResolvedDecision(join(paths.artifacts, id));
 }
 
 export function gatherStatus() {

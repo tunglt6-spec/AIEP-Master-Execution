@@ -36,6 +36,7 @@ function printHelp() {
   log.info('  aiep status');
   log.info('  aiep validate');
   log.info('  aiep review WO-0105');
+  log.info('  aiep review WO-0105 --last ' + c.dim('# review the most recent commit'));
   log.info('  aiep review            ' + c.dim('# review all non-done Work Orders'));
   log.info('  aiep artifacts WO-0105');
   log.info('  aiep doctor');

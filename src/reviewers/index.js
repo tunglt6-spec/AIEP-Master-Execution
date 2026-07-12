@@ -9,6 +9,7 @@ import { join } from 'node:path';
 import { resolvePipeline, codexAllowed, ARTIFACT_FILES } from '../core/reviewMatrix.js';
 import { changedFiles, diffText } from '../core/gitdelta.js';
 import { countBySeverity } from './findings.js';
+import { loadDispositions, resolveFindings } from '../core/dispositions.js';
 import { runClaudeSelfReview } from './claude.js';
 import { runOllamaReviewer } from './ollama.js';
 import { runGeminiReviewer } from './gemini.js';
@@ -77,7 +78,11 @@ export async function runReview({ config, paths, root, wo, base, onProgress }) {
   );
   const severityCounts = countBySeverity(allFindings);
   const blocking = (config.blockingSeverities || ['CRITICAL', 'HIGH']);
-  const unresolvedBlocking = allFindings.filter((f) => blocking.includes(f.severity));
+
+  // Apply any documented dispositions already present for this Work Order so a
+  // re-review preserves earlier resolutions of blocking findings.
+  const dispositions = loadDispositions(artifactDir);
+  const resolved = resolveFindings(allFindings, dispositions, blocking);
 
   const decision = {
     workOrder: wo.meta.id,
@@ -91,10 +96,13 @@ export async function runReview({ config, paths, root, wo, base, onProgress }) {
     },
     delta: { changedFiles: files.length, files },
     severityCounts,
-    findings: allFindings,
-    unresolvedBlockingCount: unresolvedBlocking.length,
+    findings: resolved.findings,
+    dispositions,
+    unresolvedCritical: resolved.unresolvedCritical,
+    unresolvedHigh: resolved.unresolvedHigh,
+    unresolvedBlockingCount: resolved.unresolvedBlocking,
     reviewerStatuses: results.map((r) => ({ reviewer: r.reviewer, status: r.status, model: r.model || null })),
-    verdict: unresolvedBlocking.length === 0 ? 'PASS' : 'CHANGES_REQUESTED',
+    verdict: resolved.unresolvedBlocking === 0 ? 'PASS' : 'CHANGES_REQUESTED',
   };
 
   writeFileSync(join(artifactDir, 'decision.json'), `${JSON.stringify(decision, null, 2)}\n`, 'utf8');
@@ -128,7 +136,7 @@ function renderSummary(decision, results) {
     '## All findings',
     '',
     ...(decision.findings.length
-      ? decision.findings.map((f) => `- **${f.severity}** [${f.reviewer}] — ${f.message}`)
+      ? decision.findings.map((f) => `- **${f.severity}** [${f.reviewer}] — ${f.message}${f.disposition ? ` _(${f.disposition.status}: ${f.disposition.rationale})_` : ''}`)
       : ['- (none)']),
     '',
     '## Disposition',

@@ -2,13 +2,14 @@
 // Repository & governance validation — the AIEP quality gates.
 // Exit code is non-zero if any gate FAILs (warnings do not fail the build).
 
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { loadAllWorkOrders } from '../core/workorders.js';
 import { expectedArtifacts, codexAllowed, ARTIFACT_FILES } from '../core/reviewMatrix.js';
 import { scanFiles } from '../core/secrets.js';
 import { isGitRepo } from '../core/gitdelta.js';
+import { loadResolvedDecision } from '../core/dispositions.js';
 import { execFileSync } from 'node:child_process';
 import { c, log } from '../core/logger.js';
 
@@ -93,18 +94,16 @@ export function runValidation() {
     artifactGaps.length ? artifactGaps.join('; ') : 'Complete (for reviewed WOs)');
 
   // ---- Gate 5: no unresolved CRITICAL/HIGH findings across decisions.
+  // Counts are post-disposition: findings with a documented disposition are
+  // treated as resolved.
   let critical = 0;
   let high = 0;
   for (const wo of workOrders) {
-    const f = join(paths.artifacts, wo.meta.id || '', 'decision.json');
-    if (!existsSync(f)) continue;
-    try {
-      const d = JSON.parse(readFileSync(f, 'utf8'));
-      critical += (d.severityCounts?.CRITICAL || 0);
-      high += (d.severityCounts?.HIGH || 0);
-    } catch {
-      /* ignore */
-    }
+    const dir = join(paths.artifacts, wo.meta.id || '');
+    const d = loadResolvedDecision(dir);
+    if (!d) continue;
+    critical += d.unresolvedCritical ?? (d.severityCounts?.CRITICAL || 0);
+    high += d.unresolvedHigh ?? (d.severityCounts?.HIGH || 0);
   }
   add('No unresolved CRITICAL findings', critical ? 'fail' : 'pass', critical ? `${critical} CRITICAL` : 'none');
   add('No unresolved HIGH findings', high ? 'warn' : 'pass',

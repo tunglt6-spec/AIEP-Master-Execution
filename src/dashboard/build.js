@@ -11,6 +11,7 @@ import { currentBranch, headCommit, isGitRepo } from '../core/gitdelta.js';
 import { runValidation } from '../cli/validate.js';
 import { runDoctor } from '../cli/doctor.js';
 import { parseFrontmatter } from '../core/frontmatter.js';
+import { loadResolvedDecision } from '../core/dispositions.js';
 
 function countFiles(dir, exts) {
   if (!existsSync(dir)) return 0;
@@ -57,15 +58,7 @@ export async function buildDashboardData() {
   let low = 0;
   let info = 0;
   for (const wo of workOrders) {
-    const dPath = join(paths.artifacts, wo.meta.id || '', 'decision.json');
-    let decision = null;
-    if (existsSync(dPath)) {
-      try {
-        decision = JSON.parse(readFileSync(dPath, 'utf8'));
-      } catch {
-        /* ignore */
-      }
-    }
+    const decision = loadResolvedDecision(join(paths.artifacts, wo.meta.id || ''));
     reviewRows.push({
       id: wo.meta.id,
       title: wo.meta.title,
