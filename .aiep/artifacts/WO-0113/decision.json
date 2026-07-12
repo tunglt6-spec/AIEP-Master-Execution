@@ -1,0 +1,55 @@
+{
+  "workOrder": "WO-0113",
+  "title": "Việt hóa tài liệu Nhóm 2 (Design + ADR + RFC)",
+  "reviewLevel": "L1",
+  "reviewers": [
+    "claude"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 11,
+    "files": [
+      "docs/adr/ADR-0001-tech-stack.md",
+      "docs/adr/ADR-0002-review-level-policy.md",
+      "docs/adr/ADR-0003-codex-l4-guard.md",
+      "docs/adr/INDEX.md",
+      "docs/design/DATA-MODEL.md",
+      "docs/design/DESIGN-SPECIFICATION-v1.0.md",
+      "docs/design/INDEX.md",
+      "docs/rfc/INDEX.md",
+      "docs/rfc/RFC-0001-review-level-policy.md",
+      "docs/rfc/RFC-0002-ai-coding-agent.md",
+      "pmo/work-orders/WO-0113/work-order.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 0,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 0,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    }
+  ],
+  "verdict": "PASS"
+}
