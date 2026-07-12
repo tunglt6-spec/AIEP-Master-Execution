@@ -1,0 +1,8 @@
+# Exclude generated / transient content from the published npm package.
+# (package.json "files" is the allowlist; this further removes build artifacts.)
+dashboard/data/
+.aiep/cache/
+.aiep/artifacts/
+dist/
+*.log
+*.tgz

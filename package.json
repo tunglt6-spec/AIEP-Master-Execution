@@ -19,7 +19,9 @@
   "files": [
     "bin/",
     "src/",
-    "dashboard/",
+    "dashboard/index.html",
+    "dashboard/app.js",
+    "dashboard/styles.css",
     "templates/",
     "docs/",
     "pmo/",
