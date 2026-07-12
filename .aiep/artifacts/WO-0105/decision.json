@@ -1,0 +1,74 @@
+{
+  "workOrder": "WO-0105",
+  "title": "Review Matrix & Routing",
+  "reviewLevel": "L3",
+  "reviewers": [
+    "claude",
+    "deepseek",
+    "qwen",
+    "gemini"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 2,
+    "files": [
+      "docs/release/FINAL-RELEASE-REVIEW-PACKAGE.md",
+      "docs/release/RELEASE-NOTES-v1.0.md"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 1,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 2
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    },
+    {
+      "severity": "CRITICAL",
+      "message": "The `npm test` command is failing with an error message indicating that it cannot find module 'node'. This could be due to incorrect paths or missing dependencies in your project's package.json file, which should include a field for node and its version (e.g., \"\\\"node\\\": \\\"^10.24.0 || >=13.6.0 <15.0.0\\\"\").",
+      "reviewer": "deepseek"
+    },
+    {
+      "severity": "INFO",
+      "message": "No blocking issues found.",
+      "reviewer": "qwen"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 1,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 1,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    },
+    {
+      "reviewer": "deepseek",
+      "status": "completed",
+      "model": "deepseek-coder:1.3b"
+    },
+    {
+      "reviewer": "qwen",
+      "status": "completed",
+      "model": "qwen3:8b"
+    },
+    {
+      "reviewer": "gemini",
+      "status": "degraded",
+      "model": null
+    }
+  ],
+  "verdict": "CHANGES_REQUESTED"
+}

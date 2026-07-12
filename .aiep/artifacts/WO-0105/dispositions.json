@@ -1,0 +1,14 @@
+{
+  "workOrder": "WO-0105",
+  "dispositions": [
+    {
+      "reviewer": "deepseek",
+      "severity": "CRITICAL",
+      "matches": "npm test",
+      "status": "dismissed",
+      "rationale": "False positive (model hallucination). `npm test` does NOT fail — it runs 23 tests, all passing (verified 2026-07-12). The claimed error 'cannot find module node' is fabricated, and package.json already declares engines.node '>=18.0.0'. The DeepSeek (deepseek-coder:1.3b) reviewer invented a non-existent test failure from a partial diff. Qwen (technical reviewer) independently found no blocking issues. Verified by the Execution Lead.",
+      "by": "claude-execution-lead",
+      "date": "2026-07-12"
+    }
+  ]
+}
