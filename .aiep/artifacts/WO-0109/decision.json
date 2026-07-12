@@ -1,0 +1,69 @@
+{
+  "workOrder": "WO-0109",
+  "title": "AI Coding Agent RFC + aiep plan PoC",
+  "reviewLevel": "L2",
+  "reviewers": [
+    "claude",
+    "deepseek",
+    "qwen"
+  ],
+  "codexGuard": {
+    "requiresCodex": false,
+    "codexAllowed": false,
+    "guardBlockedCodex": false
+  },
+  "delta": {
+    "changedFiles": 8,
+    "files": [
+      "docs/USER-GUIDE.md",
+      "docs/rfc/INDEX.md",
+      "docs/rfc/RFC-0002-ai-coding-agent.md",
+      "pmo/work-orders/WO-0109/work-order.md",
+      "src/cli/index.js",
+      "src/cli/plan.js",
+      "src/reviewers/ollama.js",
+      "test/plan.test.js"
+    ]
+  },
+  "severityCounts": {
+    "CRITICAL": 1,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 1
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "message": "Self review passed all automated checks.",
+      "reviewer": "claude"
+    },
+    {
+      "severity": "CRITICAL",
+      "message": "The `ollamaGenerate` function is not properly handling HTTP errors or timeouts, which could cause it to fail in certain scenarios due to these issues being unaddressed by callers of this method.",
+      "reviewer": "deepseek"
+    }
+  ],
+  "dispositions": [],
+  "unresolvedCritical": 1,
+  "unresolvedHigh": 0,
+  "unresolvedBlockingCount": 1,
+  "reviewerStatuses": [
+    {
+      "reviewer": "claude",
+      "status": "completed",
+      "model": null
+    },
+    {
+      "reviewer": "deepseek",
+      "status": "completed",
+      "model": "deepseek-coder:1.3b"
+    },
+    {
+      "reviewer": "qwen",
+      "status": "degraded",
+      "model": null
+    }
+  ],
+  "verdict": "CHANGES_REQUESTED"
+}
